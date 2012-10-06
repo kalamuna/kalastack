@@ -1,0 +1,8 @@
+server {
+	server_name <%= server_name %>;
+	root <%= root %>;
+
+	<% if server_name === '_' %>
+	server_name_in_redirect off;
+	<% end %>
+}
