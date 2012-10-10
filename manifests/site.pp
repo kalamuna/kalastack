@@ -9,7 +9,7 @@ node "default" {
     # initialize core packages
     include network
     include puppet
-    include ssh
+    # include ssh
     include git
     include samba
     
