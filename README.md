@@ -30,7 +30,8 @@ COMMON POST INSTALLATION SERVER SET UP
 2. run git config --global user.name "Your Name"
 3. run git config --global user.email name@domain.example
 4. run sudo usermod -g www-data YOURUSERNAME
-4. If running natively add "xdebug.kala" to 127.0.0.1 in /etc/hosts
+5. If running natively add "xdebug.kala" to 127.0.0.1 in /etc/hosts
+6. run sudo reboot
 
 COMMON POST INSTALLTION HOST SET UP
 1. If running in a Virtual Box add "HOST IP ADDRESS   xdebug.kala" to your server's /etc/hosts
