@@ -2,7 +2,7 @@
 class nginx::install {
 	
 	package { "nginx":
-		ensure => installed,
+		ensure => "1.1.19",
 	}
 	
 }
