@@ -1,9 +1,7 @@
 
 class git {
 
-  include git::params
-
-  package { $git::params::packages:
-    ensure => present,
+  package { "git-core":
+    ensure => "1:1.7.9.5-1",
   }
 }

@@ -11,7 +11,7 @@ class phpfpm::extensions::xdebug (
 	
 ){
 
-  phpfpm::extension { "php5-xdebug": }
+  phpfpm::extension { "php5-xdebug": version => "2.1.0-1", }
   
   file {
     "xdebug.ini":

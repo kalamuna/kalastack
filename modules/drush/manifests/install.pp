@@ -2,6 +2,6 @@
 class drush::install {
 	
   package { "drush":
-    ensure   => latest,
+    ensure   => "4.5-6",
   }
 }

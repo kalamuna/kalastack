@@ -1,5 +1,5 @@
 class ssh::server::install {
     package { "openssh-server":
-        ensure => present,
+        ensure => "1:5.9p1-5ubuntu1",
     }
 }

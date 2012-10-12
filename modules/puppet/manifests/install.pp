@@ -1,6 +1,6 @@
 
 class puppet::install {
 	package { "puppet" : 
-		ensure => present,
+		ensure => "2.7.11-1ubuntu2.1",
 	}
 }

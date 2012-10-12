@@ -1,6 +1,6 @@
 
 class phpfpm::extensions::gd {
 
-  phpfpm::extension { "php5-gd": }
+  phpfpm::extension { "php5-gd": version => "5.3.10-1ubuntu3.4", }
   
 }

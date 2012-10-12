@@ -5,7 +5,7 @@ class phpfpm::extensions::apc (
 	$rfc1867  = 1
 ){
 
-  phpfpm::extension { "php-apc": }
+  phpfpm::extension { "php-apc": version => "3.1.7-1", }
   
   file {
     "apc.ini":

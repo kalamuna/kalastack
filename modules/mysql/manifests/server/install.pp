@@ -3,7 +3,7 @@ class mysql::server::install {
   $password = "password"
   
   package { "mysql-server": 
-  	ensure => present
+  	ensure => "5.5.24-0ubuntu0.12.04.1"
   }
     
   phpfpm::extension { "php5-mysql": }

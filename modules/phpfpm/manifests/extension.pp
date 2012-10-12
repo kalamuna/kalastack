@@ -1,8 +1,10 @@
 
-define phpfpm::extension {
+define phpfpm::extension (
+  $version,
+){
   
   package { "${name}":
-    ensure => present,
+    ensure => "${version}",
     require => Class["phpfpm::install"],
     notify => [Class["phpfpm::service"], Class["nginx::service"]],
   }
