@@ -12,21 +12,28 @@ define drupal::nginx::vhost (
     
     include nginx
 
-    file { "/etc/nginx/sites-available/${vhost}":
-        ensure  => file,
-        content => template("drupal/nginx/vhost.conf.erb"),
-        require => [
-            File["/etc/nginx/sites-enabled/${vhost}"],
-        ],
-        notify  => Class["nginx::service"],
-    }
-
     if ($enabled == TRUE) {
         file { "/etc/nginx/sites-enabled/${vhost}":
             ensure  => link,
             target  => "/etc/nginx/sites-available/${vhost}",
             require => Class["nginx::install"],
         }  
+        
+        file { "/etc/nginx/sites-available/${vhost}":
+            ensure  => file,
+            content => template("drupal/nginx/vhost.conf.erb"),
+            require => [
+                File["/etc/nginx/sites-enabled/${vhost}"],
+            ],
+            notify  => Class["nginx::service"],
+        }
+    }
+    else {
+        file { "/etc/nginx/sites-available/${vhost}":
+            ensure  => file,
+            content => template("drupal/nginx/vhost.conf.erb"),
+            notify  => Class["nginx::service"],
+        }
     }
     
     file { $root:
