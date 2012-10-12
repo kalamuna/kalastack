@@ -28,7 +28,7 @@ node "default" {
 	
 	# build basic drupal site
 	drupal::nginx::vhost { "drupaldefault":
-        server_name => "kala",
+        server_name => "drupal.kala",
         root        => "/var/www/drupal",
         enabled     => "FALSE",
         custom      => "# THIS IS MEANT TO BE USED FOR BUILDING OTHER DRUPAL VHOSTS"
