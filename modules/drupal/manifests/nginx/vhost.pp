@@ -33,6 +33,7 @@ define drupal::nginx::vhost (
             ensure  => file,
             content => template("drupal/nginx/vhost.conf.erb"),
             notify  => Class["nginx::service"],
+            require => Class["nginx::install"],
         }
     }
     
