@@ -27,5 +27,10 @@ node "default" {
 	include phpmyadmin
 	
 	# build basic drupal site
-	# drupal::site { basic }
+	drupal::nginx::vhost { "drupaldefault":
+        server_name => "kala",
+        root        => "/var/www/drupal",
+        enabled     => "FALSE",
+        custom      => "# THIS IS MEANT TO BE USED FOR BUILDING OTHER DRUPAL VHOSTS"
+    }
 }
