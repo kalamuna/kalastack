@@ -1,4 +1,4 @@
 
 class drush {
-  include drush::install
+  include drush::install, drush::config
 }
