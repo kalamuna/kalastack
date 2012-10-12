@@ -1,19 +1,19 @@
 class drush::config {
     
-    file { "~/.drush":
+    file { "/usr/share/drush/commands/kala":
       ensure => directory,
-      owner  => www-data,
-      group  => www-data,
-      mode   => 777,
+      owner  => root,
+      group  => root,
+      mode   => 755,
     }
     
-    file { "~/.drush/index.php":
+    file { "/usr/share/drush/commands/kala/createvhost.drush.inc":
       ensure  => file,
-      owner   => www-data,
-      group   => www-data,
-      mode    => 777,
+      owner   => root,
+      group   => root,
+      mode    => 644,
       source  => "puppet:///modules/drush/createvhost.drush.inc",
-      require => File["~/.drush"],
+      require => File["/usr/share/drush/commands/kala"],
     }
     
 }
