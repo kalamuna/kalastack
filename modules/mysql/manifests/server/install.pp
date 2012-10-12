@@ -6,7 +6,7 @@ class mysql::server::install {
   	ensure => "5.5.24-0ubuntu0.12.04.1"
   }
     
-  phpfpm::extension { "php5-mysql": }
+  phpfpm::extension { "php5-mysql": version => "5.3.10-1ubuntu3.4", }
 
   exec { "Set MySQL server root password":
     subscribe => Package["mysql-server"],
