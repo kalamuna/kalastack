@@ -1,11 +1,5 @@
 node "default" {
-	# set a static ip for our webserver
-    # NOT DOING THIS YET
-    #
-    # network::interface { box:
-	# 	style => webserver,
-    # }
-   
+       
     # initialize core packages
     include network
     include puppet
