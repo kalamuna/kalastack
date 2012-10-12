@@ -29,6 +29,7 @@ COMMON POST INSTALLATION SERVER SET UP
 1. run ssh-keygen
 2. run git config --global user.name "Your Name"
 3. run git config --global user.email name@domain.example
+4. run sudo usermod -g www-data YOURUSERNAME
 4. If running natively add "xdebug.kala" to 127.0.0.1 in /etc/hosts
 
 COMMON POST INSTALLTION HOST SET UP
