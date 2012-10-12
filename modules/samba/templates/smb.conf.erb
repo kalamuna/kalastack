@@ -130,7 +130,7 @@
 # This option controls how unsuccessful authentication attempts are mapped
 # to anonymous connections
    map to guest = bad user
-   guest account = <%= scope.lookupvar('id')  %>
+   guest account = www-data
 
 ########## Domains ###########
 
@@ -347,5 +347,5 @@ public = yes
 
 force create mode = 0775
 force directory mode = 0775
-force user = <%= scope.lookupvar('id')  %>
+force user = www-data
 force group = www-data
