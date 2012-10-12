@@ -99,7 +99,7 @@
 # in this server for every user accessing the server. See
 # /usr/share/doc/samba-doc/htmldocs/Samba3-HOWTO/ServerType.html
 # in the samba-doc package for details.
-#   security = user
+   security = share
 
 # You may wish to use password encryption.  See the section on
 # 'encrypt passwords' in the smb.conf(5) manpage before enabling.
@@ -130,6 +130,7 @@
 # This option controls how unsuccessful authentication attempts are mapped
 # to anonymous connections
    map to guest = bad user
+   guest account = <%= scope.lookupvar('id')  %>
 
 ########## Domains ###########
 
@@ -322,21 +323,29 @@
 ;   guest ok = yes
 
 # The next two parameters show how to auto-mount a CD-ROM when the
-#	cdrom share is accesed. For this to work /etc/fstab must contain
-#	an entry like this:
+#   cdrom share is accesed. For this to work /etc/fstab must contain
+#   an entry like this:
 #
 #       /dev/scd0   /cdrom  iso9660 defaults,noauto,ro,user   0 0
 #
 # The CD-ROM gets unmounted automatically after the connection to the
 #
 # If you don't want to use auto-mounting/unmounting make sure the CD
-#	is mounted on /cdrom
+#   is mounted on /cdrom
 #
 ;   preexec = /bin/mount /cdrom
 ;   postexec = /bin/umount /cdrom
 
 [www]
 path = /var/www
+writable = yes
 read only = no
 guest ok = yes
+guest only = yes
 browseable = yes
+public = yes
+
+force create mode = 0775
+force directory mode = 0775
+force user = <%= scope.lookupvar('id')  %>
+force group = www-data
