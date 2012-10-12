@@ -1,7 +1,7 @@
 
 class phpfpm::extensions::xdebug (
 	$remote_enable = "On",
-	$remote_host = "kala",
+	$remote_host = "xdebug.kala",
 	$remote_port  = 9000,
 	$remote_handler = "dbgp",
 	$profiler_enable = 1,
