@@ -1,0 +1,99 @@
+KALABOX 
+=====================
+Kalabox is a local server environment optimzized for PHP development. It was built with Drupal in mind but, with 
+small tweaks, can be used for any PHP development. It currently ships with the following packages, all configured and 
+tuned and optimized for a fast, best-practices lcoal development experience.
+
+1.  nginx
+2.  PHP5 (with common extensions including apc and xdebug)
+3.  MySQL
+4.  Apache Solr
+5.  Apache Tomcat
+6.  SSH
+7.  git
+8.  drush
+9.  PHPMyAdmin
+10. samba
+
+Kalabox was intended to be run on Ubuntu 12.04 LTS and has not been tested (and likely does not work) on other operating systems.  
+You can run Kalabox natively in Ubuntuy 12.04 LTS or, with some additional setup, you can run it on Ubuntu 12.04 LTS Server inside
+of a Virtual Box. 
+
+Kalabox does not ship with an IDE to give people the flexibility to choose their own. 
+
+
+Supported 
+=====================
+Drupal 6, 7
+
+
+Changelog
+======================
+Version 1.1
+- Fixed SSH config issue
+- Fixed writability of /var/www to guest machines
+- Ensured specific package versions for hopefully improved stability
+- Raised apc.shm_size to 128M
+- Added default domains into hosts file
+- Added a generic nginx vhost file for drupal sites
+- Added drush command to build drupal nginx vhosts
+- Updated README
+
+Version 1.0
+- Proof of concept
+
+
+Installation
+======================
+We are going to assume that you are installing Ubuntu 12.04 Server in a Virtual Box.
+
+SET UP YOUR SERVER
+1. Install Ubuntu 12.04 LTS Server*
+2. run sudo apt-get update
+3. run sudo apt-get upgrade
+4. run sudo apt-get install puppet
+5. run sudo puppet agent --verbose --test --server kalabox.kalamuna.com
+
+* If running in Virtual Box make sure you use Bridged Networking. You do not need to install any of the packages offered at the end
+  such as SSH or the LAMP Server. 
+
+
+POST INSTALLATION SERVER SET UP
+You will want to find the IP addresses of your HOST (the machine running Virtual Box) and your GUEST (the Virtual Box running your Kalabox).
+
+*On Your HOST
+1. Add the following line to your /etc/hosts file: "GUEST_IPADDRESS     kala GUESTHOSTNAME php.kala" 
+
+*On Your GUEST
+1. run ssh-keygen
+2. run git config --global user.name "Your Name"
+3. run git config --global user.email name@domain.example
+4. run sudo usermod -g www-data YOURUSERNAME
+5. add the following line to your /etc/hosts file: "HOST_IPADDRESS      xdebug.kala" (this will let you use xdebug from an IDE on your HOST)
+6. run sudo reboot
+
+
+Adding a Virtual Host
+======================
+BUILD YOUR DRUPAL SITE
+
+1. Git clone your code repo into /var/www/SITENAME
+2. Create and import your database either by command line or using php.kala. Remember to update your settings.php. Your MYSQL user:pass is root:password.
+3. Dump your files directory into /var/www/SITENAME/sites/default/files
+
+At this point you should have a working Drupal site which you can verify by running "drush status" from the webroot of your new site.
+
+You can now easily create a new virtual host by running "sudo drush createvhost SITENAME". This will configure a vhost with server name SITENAME.kala and 
+in the /var/www/SITENAME directory you created earlier. 
+
+It will automatically update /etc/hosts on your GUEST MACHINE but on your hostmachine you will want to find this line:
+
+"GUEST_IPADDRESS     kala GUESTHOSTNAME php.kala"
+
+and add your new site to it
+
+"GUEST_IPADDRESS     kala GUESTHOSTNAME php.kala SITENAME.kala"
+
+You should now be able to navigate to SITENAME.kala and get to your site! 
+
+
