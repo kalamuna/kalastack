@@ -1,5 +1,10 @@
-
+/**
+ * 
+ * Definition to build a basic PHP5 vhost for nginx
+ * 
+ */
 define phpfpm::nginx::vhost (
+    
 	$vhost = $title,
 	$root = "/var/www",
 	$server_name = "_",
@@ -7,6 +12,7 @@ define phpfpm::nginx::vhost (
 	$upstream = "unix:/tmp/php-fpm.sock",
 	$custom = "",
 	$options = {},
+	
 ) {
 	
 	include nginx
@@ -32,4 +38,5 @@ define phpfpm::nginx::vhost (
 	    group  => "www-data",
 	    mode   => 755,
 	}
+	
 }

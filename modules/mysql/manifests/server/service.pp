@@ -1,5 +1,10 @@
-
+/**
+ * 
+ * Makes sure the mysql service is running
+ * 
+ */
 class mysql::server::service {
+    
   service { "mysql-server":
     ensure      => running,
     name        => "mysql",
@@ -8,4 +13,5 @@ class mysql::server::service {
     enable      => true,
     require     => Class["mysql::server::install"],
   }
+  
 }

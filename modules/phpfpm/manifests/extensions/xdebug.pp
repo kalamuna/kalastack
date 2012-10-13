@@ -1,5 +1,10 @@
-
+/**
+ * 
+ * Installs and configures the XDEBUG extension for PHP5
+ * 
+ */
 class phpfpm::extensions::xdebug (
+    
 	$remote_enable = "On",
 	$remote_host = "xdebug.kala",
 	$remote_port  = 9000,
@@ -8,6 +13,7 @@ class phpfpm::extensions::xdebug (
 	$profile_output_dir = "/tmp/xprofile",
 	$collect_params = "On",
 	$show_local_vars = "On",
+	
 	
 ){
 

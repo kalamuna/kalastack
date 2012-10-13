@@ -1,4 +1,10 @@
-
+/**
+ * 
+ * Configures PHP5-FPM
+ * Creates a basic pool
+ * Loads all PHP extensions
+ * 
+ */
 class phpfpm::config {
 	
 	php5::ini { "fpm": 

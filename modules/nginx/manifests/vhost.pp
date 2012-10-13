@@ -1,8 +1,14 @@
-
+/**
+ * 
+ * Basic definition for a barebones nginx vhost
+ * 
+ */
 define nginx::vhost (
+    
 	$vhost = $title,
 	$root = "/var/www", 
 	$server_name = "_",
+	
 ) {
 	
 	file { "/etc/nginx/sites-available/${vhost}":
@@ -19,4 +25,5 @@ define nginx::vhost (
 		target 	=> "/etc/nginx/sites-available/${vhost}",
 		require => Class["nginx::install"],
 	}
+	
 }

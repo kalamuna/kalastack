@@ -1,5 +1,10 @@
-
+/**
+ * 
+ * Defines and sets default values for a my.cnf file
+ * 
+ */
 define mysql::my (
+    
   # basic settings
   $path = "/etc/mysql/my.cnf",
   $port = 3306,
@@ -33,6 +38,7 @@ define mysql::my (
   $isort_buffer_size = "256M",
   $iread_buffer = "2M",
   $iwrite_buffer = "2M",
+  
 ) {
 	
   file {
@@ -40,4 +46,5 @@ define mysql::my (
       path      => "${path}",
       content   => template("mysql/my.cnf.erb"),
   }
+  
 }

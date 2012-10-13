@@ -1,3 +1,8 @@
+/**
+ * 
+ * Makes sure tomcat is running
+ * 
+ */
 class solr::service {
 	service { $solr::params::tomcat:
 		ensure => running,

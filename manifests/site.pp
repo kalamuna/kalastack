@@ -1,3 +1,10 @@
+/**
+ * 
+ * This will build a basic LEMP stack with some extra goodies for every node that connects to the puppetmaster
+ * at kalabox.kalamuna.com
+ * 
+ */
+
 node "default" {
        
     # initialize core packages
@@ -27,4 +34,5 @@ node "default" {
         enabled     => "FALSE",
         custom      => "# THIS IS MEANT TO BE USED FOR BUILDING OTHER DRUPAL VHOSTS"
     }
+    
 }

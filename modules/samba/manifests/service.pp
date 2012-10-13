@@ -1,5 +1,10 @@
-
+/**
+ * 
+ * Makes sure the file server is running
+ * 
+ */
 class samba::service {
+    
 	service { "samba":
 		name => "smbd",
 		ensure => running,
@@ -8,4 +13,5 @@ class samba::service {
 		enable => true,
 		require => Class["samba::install"],
 	}
+	
 }

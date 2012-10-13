@@ -1,4 +1,9 @@
-
+/**
+ * 
+ * Makes sure the puppet agent does not need to be re-run with the --server flag 
+ * Sets up reporting
+ * 
+ */
 class puppet::config {
 	
 	$puppetserver = "kalabox.kalamuna.com"

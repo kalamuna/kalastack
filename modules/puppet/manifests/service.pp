@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * Makes sure the agent is running
+ * 
+ */
 class puppet::service {
 	service { "puppet":
 		ensure => running,

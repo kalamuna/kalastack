@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * Builds a basic php.ini file for CLI
+ * 
+ */
 class php5::config {
 	
 	php5::ini { "cli": 

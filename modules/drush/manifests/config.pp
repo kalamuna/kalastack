@@ -1,3 +1,8 @@
+/**
+ * 
+ * Provides some custom drush commands
+ * 
+ */
 class drush::config {
     
     file { "/usr/share/drush/commands/kala":

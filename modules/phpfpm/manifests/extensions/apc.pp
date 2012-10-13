@@ -1,8 +1,14 @@
-
+/**
+ * 
+ * Installs and configures the APC extension for PHP5
+ * 
+ */
 class phpfpm::extensions::apc (
+    
 	$enabled  = 1,
 	$shm_size = "128M",
 	$rfc1867  = 1
+	
 ){
 
   phpfpm::extension { "php-apc": version => "3.1.7-1", }
@@ -15,4 +21,5 @@ class phpfpm::extensions::apc (
       notify => [Class["phpfpm::service"], Class["nginx::service"]],
       content   => template("phpfpm/extensions/apc.ini.erb")
   } 
+  
 }

@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * Class that governs the creation of the mysql-server configuration
+ * 
+ */
 class mysql::server::config {
 	
 	mysql::my { "my.cnf": 

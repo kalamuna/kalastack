@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * Configures samba and shares /var/www
+ * 
+ */
 class samba::config {
 	
 	file { "/etc/samba/smb.conf" :

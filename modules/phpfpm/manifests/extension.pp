@@ -1,6 +1,12 @@
-
+/**
+ * 
+ * Definition for a PHP5 extension
+ * 
+ */
 define phpfpm::extension (
+    
   $version,
+  
 ){
   
   package { "${name}":

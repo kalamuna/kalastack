@@ -1,3 +1,8 @@
+/**
+ * 
+ * This is a basic definition for creating a drupal based nginx vhost file
+ * 
+ */
 
 define drupal::nginx::vhost (
     $vhost = $title,
@@ -12,6 +17,7 @@ define drupal::nginx::vhost (
     
     include nginx
 
+    # Enable the site if enabled = true
     if ($enabled == TRUE) {
         file { "/etc/nginx/sites-enabled/${vhost}":
             ensure  => link,
@@ -28,6 +34,8 @@ define drupal::nginx::vhost (
             notify  => Class["nginx::service"],
         }
     }
+    
+    # Only make the site available
     else {
         file { "/etc/nginx/sites-available/${vhost}":
             ensure  => file,
@@ -37,10 +45,4 @@ define drupal::nginx::vhost (
         }
     }
     
-    file { $root:
-        ensure => "directory",
-        owner  => "www-data",
-        group  => "www-data",
-        mode   => 755,
-    }
 }

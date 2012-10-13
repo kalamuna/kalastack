@@ -1,5 +1,11 @@
-
+/**
+ * 
+ * Defintion to set up a basic KALAMUNA splash screen
+ * @todo derecate in favor of dashboard
+ * 
+ */
 define phpfpm::nginx::kalabox (
+    
 	$vhost = $title,
 	$root = "/var/www",
 	$server_name = "_",
@@ -7,6 +13,7 @@ define phpfpm::nginx::kalabox (
 	$upstream = "unix:/tmp/php-fpm.sock",
 	$custom = "",
 	$options = {}, 
+	
 ){	
 	
 	include nginx
@@ -48,4 +55,5 @@ define phpfpm::nginx::kalabox (
 	  mode   => 777,
 	  source => "puppet:///modules/phpfpm/kalamuna.jpg",
 	}
+	
 }
