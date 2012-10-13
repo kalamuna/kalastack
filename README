@@ -29,7 +29,7 @@ Drupal 6, 7
 
 Changelog
 ======================
-Version 1.1
+Version 1.0-beta1
 - Fixed SSH config issue
 - Fixed writability of /var/www to guest machines
 - Ensured specific package versions for hopefully improved stability
@@ -39,7 +39,7 @@ Version 1.1
 - Added drush command to build drupal nginx vhosts
 - Updated README
 
-Version 1.0
+Version 1.0-alpha1
 - Proof of concept
 
 
