@@ -10,7 +10,7 @@ class ssh::server::config {
       path => "/bin:/usr/bin",
       unless => "cat /home/${::kala_user}/.ssh/id_rsa.pub",
       command => "sudo -u ${::kala_user}  ssh-keygen",
-      require => Class["ssh:server::install"],
+      require => Class["ssh::server::install"],
       notify => Class["ssh::server::service"],
     }
     
