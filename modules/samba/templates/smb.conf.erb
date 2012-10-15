@@ -130,7 +130,7 @@
 # This option controls how unsuccessful authentication attempts are mapped
 # to anonymous connections
    map to guest = bad user
-   guest account = www-data
+   guest account = <%= scope.lookupvar('kala_user') %>
 
 ########## Domains ###########
 
@@ -345,7 +345,7 @@ guest only = yes
 browseable = yes
 public = yes
 
-force user = www-data
+force user = <%= scope.lookupvar('kala_user') %>
 force group = www-data
 
 create mask = 0775
