@@ -9,16 +9,16 @@ class network::config {
 		ensure => present,
 	}
 	
-	prepend_if_no_such_line { "kala":
+	network::prepend { "kala":
 	   file => "/etc/hosts",
 	   line => "127.0.0.1  kala",
-	   require => File["/etc/hosts"]
+	   require => File["/etc/hosts"],
 	}
 	
-	prepend_if_no_such_line { "php.kala":
+	network::prepend  { "php.kala":
        file => "/etc/hosts",
        line => "127.0.0.1  php.kala",
-       require => File["/etc/hosts"]
+       require => File["/etc/hosts"],
     }
 	
 }

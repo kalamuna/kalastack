@@ -3,7 +3,7 @@
  * Prepend a line to a file if that line doesn't already exist
  * 
  */
-define prepend_if_no_such_line ( 
+define network::prepend ( 
     $file, 
     $line, 
     $refreshonly = 'FALSE',
