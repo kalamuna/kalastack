@@ -26,6 +26,7 @@ class phpmyadmin::config {
 	# Builds the phpmyadmin config DB
     exec { "phpmyadmindbconfig":
 	  path => "/bin:/usr/bin",
+	  unless => "mysql -uroot -p${php_pass} ${pma_db}",
 	  command => "gunzip < /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | mysql -u${pma_user} -p${pma_pass} -h${pma_server}",
 	  require => [
 	  	Class[phpmyadmin::install],
@@ -36,6 +37,7 @@ class phpmyadmin::config {
 	# Adds the pma user
 	exec { "phpmyadmincontrolconfig":
 	  path => "/bin:/usr/bin",
+	  unless => "mysqladmin -u${pma_user} -p${pma_pass} status",
 	  command => "mysql -u${pma_user} -p${pma_pass} -h${pma_server} -e \"GRANT ALL PRIVILEGES ON ${pma_db}.* TO ${pma_user}@${pma_server} IDENTIFIED BY '${pma_pass}';\"",
 	  require => Exec["phpmyadmindbconfig"],
 	}
