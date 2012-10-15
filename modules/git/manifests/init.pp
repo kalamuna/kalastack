@@ -1,12 +1,10 @@
 /**
  * 
- * Nothing special, just a basic version of git
+ * Install and config git
  * 
  */
 class git {
     
-  package { "git-core":
-    ensure => "1:1.7.9.5-1",
-  }
-  
+    include git::install, git::config
+    
 }
