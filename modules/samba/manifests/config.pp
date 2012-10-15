@@ -13,4 +13,5 @@ class samba::config {
 		require => Class["samba::install"],
 		notify => Class["samba::service"],
 	}
+	
 }
