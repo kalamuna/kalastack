@@ -6,7 +6,7 @@
 define network::prepend ( 
     $file, 
     $line, 
-    $refreshonly = 'FALSE',
+    $refreshonly = FALSE,
 ) {
     
     exec { "/usr/bin/perl -p0i -e 's/^/$line\n/;' '$file'":
