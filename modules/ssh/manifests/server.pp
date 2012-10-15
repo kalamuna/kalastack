@@ -5,7 +5,6 @@
  */
 class ssh::server {
     
-  include ssh::server::install
-  include ssh::server::service
+  include ssh::server::install, ssh::server::config, ssh::server::service
   
 }

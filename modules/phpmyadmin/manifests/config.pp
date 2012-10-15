@@ -29,8 +29,8 @@ class phpmyadmin::config {
 	  unless => "mysql -uroot -p${php_pass} ${pma_db}",
 	  command => "gunzip < /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | mysql -u${pma_user} -p${pma_pass} -h${pma_server}",
 	  require => [
-	  	Class[phpmyadmin::install],
-	  	Class[network::config]
+	  	Class["phpmyadmin::install"],
+	  	Class["network::config"]
 	  ],
 	}
 	
@@ -50,7 +50,7 @@ class phpmyadmin::config {
 		owner => "root",
 		group => "root",
         mode => 0444,
-        require => Class[phpmyadmin::install],
+        require => Class["phpmyadmin::install"],
     }
     
     # Sets the above creds for the DB
@@ -61,7 +61,7 @@ class phpmyadmin::config {
 		owner => "root",
 		group => "root",
         mode => 0444,
-        require => Class[phpmyadmin::install],
+        require => Class["phpmyadmin::install"],
     }
     
 }
