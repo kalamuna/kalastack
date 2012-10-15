@@ -1,8 +1,8 @@
 KALABOX 
 =====================
-Kalabox is a local server environment optimzized for PHP development. It was built with Drupal in mind but, with 
+Kalabox is a local server environment optimized for PHP development. It was built with Drupal in mind but, with 
 small tweaks, can be used for any PHP development. It currently ships with the following packages, all configured and 
-tuned and optimized for a fast, best-practices lcoal development experience.
+tuned, optimized for a fast, best-practices local development experience.
 
 1.  nginx
 2.  PHP5 (with common extensions including apc and xdebug)
@@ -11,15 +11,17 @@ tuned and optimized for a fast, best-practices lcoal development experience.
 5.  Apache Tomcat
 6.  SSH
 7.  git
-8.  drush
+8.  drush (with custom commands for Pantheon integration)
 9.  PHPMyAdmin
-10. samba
+10. samba (to expose your webroot to your VB host)
 
 Kalabox was intended to be run on Ubuntu 12.04 LTS and has not been tested (and likely does not work) on other operating systems.  
 You can run Kalabox natively in Ubuntuy 12.04 LTS or, with some additional setup, you can run it on Ubuntu 12.04 LTS Server inside
-of a Virtual Box. 
+of a Virtual Box. Kalamuna recommends running Kalabox in Virtual Box.
 
-Kalabox does not ship with an IDE to give people the flexibility to choose their own. 
+Kalabox does not ship with an IDE so people have the flexibility to choose their own. 
+
+Kalabox was also built to work seamlessly with Pantheon Systems.
 
 
 Supported 
@@ -29,6 +31,15 @@ Drupal 6, 7
 
 Changelog
 ======================
+Version 1.0-beta2
+- Improved handling of /etc/hosts initial setup
+- Improved phpmyadmin config code
+- Uses installation user for samba, git, ssh setup
+- Auto generates SSH keys for installation user
+- Custom facts to grab the installation user and full name
+- Auto git config
+- Auto add installation user to www-data group
+
 Version 1.0-beta1
 - Fixed SSH config issue
 - Fixed writability of /var/www to guest machines
@@ -52,25 +63,36 @@ SET UP YOUR SERVER
 2. run sudo apt-get update
 3. run sudo apt-get upgrade
 4. run sudo apt-get install puppet
-5. run sudo puppet agent --verbose --test --server kalabox.kalamuna.com
+5. run sudo puppet agent --verbose --test --pluginsync --server kalabox.kalamuna.com
 
 * If running in Virtual Box make sure you use Bridged Networking. You do not need to install any of the packages offered at the end
   such as SSH or the LAMP Server. 
 
 
-POST INSTALLATION SERVER SET UP
+Post Installation Setup + Tips & Tricks
+======================
 You will want to find the IP addresses of your HOST (the machine running Virtual Box) and your GUEST (the Virtual Box running your Kalabox).
 
+CONFIGURING HOSTS
 *On Your HOST
 1. Add the following line to your /etc/hosts file: "GUEST_IPADDRESS     kala GUESTHOSTNAME php.kala" 
 
+    To find the address of your GUEST machine run "ifconfig" from the GUEST machine's command line and your IP will be the 
+    address after "inet addr:" 
+
 *On Your GUEST
-1. run ssh-keygen
-2. run git config --global user.name "Your Name"
-3. run git config --global user.email name@domain.example
-4. run sudo usermod -g www-data YOURUSERNAME
-5. add the following line to your /etc/hosts file: "HOST_IPADDRESS      xdebug.kala" (this will let you use xdebug from an IDE on your HOST)
-6. run sudo reboot
+2. add the following line to your /etc/hosts file: "HOST_IPADDRESS      xdebug.kala" (this will let you use xdebug from an IDE on your HOST)
+
+    To find the address of your HOST machine make sure you complete Step 1 above and then visit http://kala/ in a webrowser on your HOST machine. 
+    The IP ADDRESS of your host will be listed in the phpinfo() below the KALAMUNA screen as the _SERVER["REMOTE_ADDR"] variable. 
+    
+USING SSH
+Once you have completed the CONFIGURING HOSTS setup we recommend that you minimize VB and the VB Terminal in favor of using your HOST's terminal. This
+allows for a more authenticate experience as it relates to development. Open a terminal in your host and type "ssh USERNAME@kala" to connect to
+your kalabox. You will use the username you set up during installation of Ubuntu 12.04 LTS Server.
+
+ACCESSING YOUR WEBROOT
+You may want to edit your code using an IDE on your host. To do so 
 
 
 Adding a Virtual Host
