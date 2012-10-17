@@ -13,12 +13,12 @@ class drush::config {
       require => Class["drush::install"],
     }
     
-    file { "/usr/share/drush/commands/kala/createvhost.drush.inc":
+    file { "/usr/share/drush/commands/kala/kala.drush.inc":
       ensure  => file,
       owner   => root,
       group   => root,
       mode    => 644,
-      source  => "puppet:///modules/drush/createvhost.drush.inc",
+      source  => "puppet:///modules/drush/kala.drush.inc",
       require => File["/usr/share/drush/commands/kala"],
     }
     
