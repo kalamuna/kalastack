@@ -116,9 +116,21 @@ CHANGING LOCATION (AKA GETTING NEW IP ADDRESSES)
 
 Working with Pantheon
 ======================
+SITE ALIASES
 The first step to working with pantheon is to get your site aliases. These are available for download on your pantheon account page. You will want to 
 open up your HOME network share and put them in the .drush folder. You can verify that they are in there by running "drush sa" on your GUEST.
 
+SSH KEYS
+You are also going to want to make sure you add your kalabox ssh public key to pantheon. Kalabox automatically generates these keys for you on installation.
+You can find the public key in ~/.ssh/id_rsa.pub. You may be able to open it by going to the HOME network share on your host or you can run the following 
+command on your GUEST:
+
+cat ~/.ssh/id_rsa.pub
+
+Just copy and paste the output into pantheon.
+
+
+DRUSH
 Kalabox ships with 6 custom drush commands designed specifically for Pantheon and Kalabox. They are useless without pantheon's site alias file. 
 These commands only work with your dev environment. You will use the same naming convention as your pantheon aliases (PANTHEON.SITENAME.ENV) but you
 will omit the @. Here are the commands.
