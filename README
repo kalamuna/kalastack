@@ -104,7 +104,7 @@ USING SSH
     your kalabox. You will use the username you set up during installation of Ubuntu 12.04 LTS Server.
 
 ACCESSING YOUR WEBROOT/DRUSH/HOME
-    You may want to edit your code using an IDE on your HOST, downlaod your Pantheon aliases or add custom drush commands. Check the network on your HOST
+    You may want to edit your code using an IDE on your HOST, download your Pantheon aliases or add custom drush commands. Check the network on your HOST
     and you should see three shares for your vbox: 
     
     1. WWW <- Your Webroot
