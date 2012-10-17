@@ -19,13 +19,11 @@ class phpfpm::extensions::xdebug (
 
   phpfpm::extension { "php5-xdebug": version => "2.1.0-1", }
   
-  file {
-    "xdebug.ini":
-      ensure => file,
-      path      => "/etc/php5/conf.d/xdebug.ini",
-      require => Class["phpfpm::install"],
-      notify => [Class["phpfpm::service"], Class["nginx::service"]],
-      content   => template("phpfpm/extensions/xdebug.ini.erb")
-  } 
-  
+  exec { "appendxdebug":
+    path => "/bin:/usr/bin",
+    unless => "grep xdebug.remote_enable /etc/php5/conf.d/xdebug.ini",
+    command => "sed -i '\$a xdebug.remote_enable=${remote_enable}' /etc/php5/conf.d/xdebug.ini && sed -i '\$a xdebug.remote_host=${remote_host}' /etc/php5/conf.d/xdebug.ini && sed -i '\$a xdebug.remote_port=${remote_port}' /etc/php5/conf.d/xdebug.ini && sed -i '\$a xdebug.remote_handler=${remote_handler}' /etc/php5/conf.d/xdebug.ini",
+    require => Package["php5-xdebug"],
+    notify => [Class["phpfpm::service"], Class["nginx::service"]],
+  }  
 }
