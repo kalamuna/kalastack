@@ -129,25 +129,37 @@ function kala_drush_help($section) {
  *
  */
 function kala_vhost(){
-  // create the log files
+  $args = func_get_args();
+  $pantheon = _kala_get_pantheon($args[0]);
   
-  _kala_get_pantheon();
-  
-  // search and replace in apache configuration
-  //drush_shell_exec("sudo cp /etc/nginx/sites-available/drupaldefault /tmp/" . $site);
-  //$vhost_default_string = kala_get_file("/tmp/" . $site);
-  //$search = array("drupal.kala", "/var/www/drupal", "# THIS IS MEANT TO BE USED FOR BUILDING OTHER DRUPAL VHOSTS");
-  //$replace = array($site . ".kala", "/var/www/" . $site, "");
-  //$vhost_default_string = str_replace($search, $replace, $vhost_default_string);
-  # drush_shell_exec("mkdir /var/www/" . $site);
-  // write the file 
-  //kala_write_file("/tmp/" . $site, $vhost_default_string);
-  //drush_shell_exec ("sudo cp /tmp/" . $site . " /etc/nginx/sites-available/" . $site);
-  //drush_shell_exec ("sudo ln -s /etc/nginx/sites-available/" . $site . " /etc/nginx/sites-enabled/" . $site);
-
-  // reload apache
-  //drush_shell_exec ("sudo service nginx restart");
-  //kala_update_etc_hosts($site . ".kala");
+  $site = $pantheon['site'];
+    
+  if ($pantheon != FALSE) {
+    if (!file_exists("/etc/nginx/sites-available/" . $site)) {
+      if (is_dir("/var/www/" . $site)) {
+        drush_shell_exec("cp /etc/nginx/sites-available/drupaldefault /tmp/" . $site);
+        $vhost_default_string = kala_get_file("/tmp/" . $site);
+        
+        $search = array("drupal.kala", "/var/www/drupal", "# THIS IS MEANT TO BE USED FOR BUILDING OTHER DRUPAL VHOSTS");
+        $replace = array($site . ".kala", "/var/www/" . $site, "");
+        $vhost_default_string = str_replace($search, $replace, $vhost_default_string);
+        
+        
+        kala_write_file("/tmp/" . $site, $vhost_default_string);
+        drush_shell_exec ("cp /tmp/" . $site . " /etc/nginx/sites-available/" . $site);
+        drush_shell_exec ("ln -s /etc/nginx/sites-available/" . $site . " /etc/nginx/sites-enabled/" . $site);
+      
+        drush_shell_exec ("service nginx restart");
+        kala_update_etc_hosts($site . ".kala");
+      }
+    }
+    else {
+      drush_log('vhost file already exists', 'warning');
+    }
+  }
+  else {
+    return;
+  }
 }
 
 /**
@@ -284,10 +296,20 @@ function kala_build(){
     drush_print('preparing to build yoru pantheon site... this might take awhile');
     
     kala_code($args[0]);
-    kala_data($args[0]);
-    kala_files($args[0]);
+    drush_log('Codebase: Success!', 'success');
     
-    drush_log('BUILD/REFRESH COMPLETE!', 'success');
+    kala_data($args[0]);
+    drush_log('Database: Success!', 'success');
+    
+    kala_files($args[0]);
+    drush_log('Files: Success!', 'success');
+    
+    _kala_reset_settings($pantheon);
+    drush_log('Settings: Rebuilt!, check git status', 'success');
+    
+    drush_shell_exec("sudo drush vhost " . $args[0]);
+    
+    drush_log('Build: Success!', 'success');
 
   }
   else {
@@ -394,5 +416,40 @@ function _kala_get_pantheon($sitename) {
   }
   else {
     drush_log('pantheon alias does not exist, please make sure you have a recent copy of all your aliases', 'error');
+  }
+}
+
+
+/**
+ * rebuild settings.php with kala settings
+ */
+function _kala_reset_settings($pantheon) {
+  require_once("/var/www/" . $pantheon['site'] . "/sites/default/settings.php");
+  
+  if ($databases['default']['default']['database'] != $pantheon['site'] . '_kala' ) {
+    
+    // haven't decided if we should enforce this or an autocommit or what
+    // drush_shell_exec("git --git-dir=/var/www/" . $pantheon['site'] . "/.git update-index --assume-unchanged /var/www/" . $pantheon['site'] . "/sites/default/settings.php");
+    
+    $settingsfile = "/var/www/" . $pantheon['site'] . "/sites/default/settings.php";
+    $fh = fopen($settingsfile, 'a') or die("can't open file");
+    $settings =
+    '
+    /**
+    * Kalabox local settings
+    */
+     
+    $databases[\'default\'][\'default\'] = array(
+    \'driver\' => \'mysql\',
+    \'database\' => \'' . $pantheon['site'] . '_kala\',
+    \'username\' => \'root\',
+    \'password\' => \'password\',
+    \'host\' => \'kala\',
+    \'prefix\' => \'\',
+    );
+  
+    ';
+    fwrite($fh, $settings);
+    fclose($fh);
   }
 }
