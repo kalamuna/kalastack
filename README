@@ -26,11 +26,22 @@ Kalabox was also built to work seamlessly with Pantheon Systems.
 
 Supported 
 =====================
-Drupal 6, 7
+Drupal 7
 
 
 Changelog
 ======================
+Version 1.0-rc1
+- Drush commands for Pantheon
+    - get/refresh files
+    - get/refresh database
+    - get/refresh codebase
+    - build/refresh entire site
+    - build vhost
+    - rebuilt settings
+- Added drush directory to samba
+- Added home directory to samba
+
 Version 1.0-beta2
 - Improved handling of /etc/hosts initial setup
 - Improved phpmyadmin config code
@@ -74,41 +85,52 @@ Post Installation Setup + Tips & Tricks
 You will want to find the IP addresses of your HOST (the machine running Virtual Box) and your GUEST (the Virtual Box running your Kalabox).
 
 CONFIGURING HOSTS
-*On Your HOST
-1. Add the following line to your /etc/hosts file: "GUEST_IPADDRESS     kala GUESTHOSTNAME php.kala" 
+    *On Your HOST
+    1. Add the following line to your /etc/hosts file: "GUEST_IPADDRESS     kala GUESTHOSTNAME php.kala" 
 
     To find the address of your GUEST machine run "ifconfig" from the GUEST machine's command line and your IP will be the 
     address after "inet addr:" 
 
-*On Your GUEST
-2. add the following line to your /etc/hosts file: "HOST_IPADDRESS      xdebug.kala" (this will let you use xdebug from an IDE on your HOST)
+    *On Your GUEST
+    2. add the following line to your /etc/hosts file: "HOST_IPADDRESS      xdebug.kala" (this will let you use xdebug from an IDE on your HOST)
 
     To find the address of your HOST machine make sure you complete Step 1 above and then visit http://kala/ in a webrowser on your HOST machine. 
     The IP ADDRESS of your host will be listed in the phpinfo() below the KALAMUNA screen as the _SERVER["REMOTE_ADDR"] variable. 
     
 USING SSH
-Once you have completed the CONFIGURING HOSTS setup we recommend that you minimize VB and the VB Terminal in favor of using your HOST's terminal. This
-allows for a more authenticate experience as it relates to development. Open a terminal in your host and type "ssh USERNAME@kala" to connect to
-your kalabox. You will use the username you set up during installation of Ubuntu 12.04 LTS Server.
+    Once you have completed the CONFIGURING HOSTS setup we recommend that you minimize VB and the VB Terminal in favor of using your HOST's terminal. This
+    allows for a more authenticate experience as it relates to development. Open a terminal in your host and type "ssh USERNAME@kala" to connect to
+    your kalabox. You will use the username you set up during installation of Ubuntu 12.04 LTS Server.
 
-ACCESSING YOUR WEBROOT
-You may want to edit your code using an IDE on your host. To do so 
+ACCESSING YOUR WEBROOT/DRUSH/HOME
+    You may want to edit your code using an IDE on your HOST, downlaod your Pantheon aliases or add custom drush commands. Check the network on your HOST
+    and you should see three shares for your vbox: 
+    
+    1. WWW <- Your Webroot
+    2. DRUSH <- Your drush library
+    3. HOME <- Your home folder
+    
+CHANGING LOCATION (AKA GETTING NEW IP ADDRESSES)
+    If you are moving location you may be getting assigned new IP addresses when you move. When this happens you should reboot your GUEST machine
+    and go through the CONFIGURING HOSTS steps again. We realize this is annoying and it will not be an issue in the 2.0 release.
 
-
-Adding a Virtual Host
+Working with Pantheon
 ======================
-BUILD YOUR DRUPAL SITE
+The first step to working with pantheon is to get your site aliases. These are available for download on your pantheon account page. You will want to 
+open up your HOME network share and put them in the .drush folder. You can verify that they are in there by running "drush sa" on your GUEST.
 
-1. Git clone your code repo into /var/www/SITENAME
-2. Create and import your database either by command line or using php.kala. Remember to update your settings.php. Your MYSQL user:pass is root:password.
-3. Dump your files directory into /var/www/SITENAME/sites/default/files
+Kalabox ships with 6 custom drush commands designed specifically for Pantheon and Kalabox. They are useless without pantheon's site alias file. 
+These commands only work with your dev environment. You will use the same naming convention as your pantheon aliases (PANTHEON.SITENAME.ENV) but you
+will omit the @. Here are the commands.
 
-At this point you should have a working Drupal site which you can verify by running "drush status" from the webroot of your new site.
+    drush code pantheon.SITENAME.dev    - Will either git clone or git pull from your pantheon codebase to your kalabox at /var/www/SITENAME
+    drush data pantheon.SITENAME.dev    - Will either download and import from your pantheon database to your kalabox at kala:SITENAME_kala
+    drush files pantheon.SITENAME.dev   - Will sync your pantheon files to your kalabox at /var/www/SITENAME/sites/default/files
+    drush vhost pantheon.SITENAME.dev   - Will build and enable a nginx vhost file of your pantheon site on your kalabax at SITENAME.kala
+    drush build pantheon.SITENAME.dev   - Will completely build your pantheon site on your kalabox, this will edit settings.php
+    drush krefresh pantheon.SITENAMEdev - Will refresh the code, database and files on your kalabox from your pantheon site
 
-You can now easily create a new virtual host by running "sudo drush createvhost SITENAME". This will configure a vhost with server name SITENAME.kala and 
-in the /var/www/SITENAME directory you created earlier. 
-
-It will automatically update /etc/hosts on your GUEST MACHINE but on your hostmachine you will want to find this line:
+Remember that the GUEST does not automatically update the /etc/hosts file on your HOST so you will have to check for and edit the following line.
 
 "GUEST_IPADDRESS     kala GUESTHOSTNAME php.kala"
 
