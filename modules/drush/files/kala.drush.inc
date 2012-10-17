@@ -66,6 +66,30 @@ function kala_drush_command() {
     ),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
+  $items['kalabuild'] = array(
+    'callback' => 'kala_build',
+    'description' => dt('Imports your Pantheon site'),
+    'aliases' => array('build', 'kb'),
+    'examples' => array(
+      'drush build pantheon.sitename.dev' => 'Imports the code, data and files of your pantheon site. Must use valid Pantheon alias as first argument.',
+    ),
+    'arguments' => array(
+      'site' => 'A valid Pantheon site alias. Do not use the @ convention for this alias as we are not using it as our site.',
+    ),
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+  );
+  $items['kalarefresh'] = array(
+    'callback' => 'kala_build',
+    'description' => dt('Refreses your Pantheon site'),
+    'aliases' => array('krefresh', 'kr'),
+    'examples' => array(
+      'drush kr pantheon.sitename.dev' => 'Refreshes the code, data and files of your pantheon site. Must use valid Pantheon alias as first argument.',
+    ),
+    'arguments' => array(
+      'site' => 'A valid Pantheon site alias. Do not use the @ convention for this alias as we are not using it as our site.',
+    ),
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+  );
   
   return $items;
 }
@@ -93,6 +117,10 @@ function kala_drush_help($section) {
       return dt("Gets Pantheon database.");
     case 'drush:kalafiles':
       return dt("Gets Pantheon files.");
+    case 'drush:kalabuild':
+      return dt("Builds your Pantheon site.");
+    case 'drush:kalabuild':
+      return dt("Refreshes your Pantheon site.");
   }
 }
 
@@ -126,6 +154,7 @@ function kala_vhost(){
  *
  */
 function kala_code(){
+  
   $args = func_get_args();
   $pantheon = _kala_get_pantheon($args[0]);
   
@@ -174,32 +203,23 @@ function kala_code(){
  *
  */
 function kala_data(){
-  // get pantheon config
-
+  
   $args = func_get_args();
   $pantheon = _kala_get_pantheon($args[0]);
   if ($pantheon != FALSE) {
-    // print pantheon vars
+
     drush_print_table(drush_key_value_to_array_table($pantheon));
     drush_log('pantheon environment and database variables loaded', 'success');
 
-    // git clone
     drush_print('attempting a database download, this may take a few minutes so please be patient...');
     
-    // get sql from pantheon
-    if (drush_shell_exec("mysqldump 
-        -u" . $pantheon['database_user'] . " 
-        -hdbserver." . $pantheon['env'] ."." . $pantheon['id'] .".drush.in 
-        -P" . $pantheon['database_port'] ." 
-        -p" . $pantheon['database_password'] . " " . 
-        $pantheon['database_database'] ." > /tmp/" . $pantheon['id'] .".sql")) {    
+    if (drush_shell_exec("mysqldump -u" . $pantheon['database_user'] . " -hdbserver." . $pantheon['env'] ."." . $pantheon['id'] .".drush.in -P" . $pantheon['database_port'] ." -p" . $pantheon['database_password'] . " " . $pantheon['database_database'] ." > /tmp/" . $pantheon['id'] .".sql")) {    
       drush_log('data downloaded from pantheon', 'success');
     }
     else {
       drush_log('could not get data from pantheon', 'error');
     }
     
-    // create new mysql db for pantheon data if needed
     if (drush_shell_exec("mysql -uroot -ppassword -hkala -e \"create database " . $pantheon['site'] . "_kala\"")) {
       drush_log('new local database ' . $pantheon['site'] . '_kala created', 'success');
     }
@@ -207,7 +227,6 @@ function kala_data(){
       drush_log('database already exists, skipping', 'notice');
     }
     
-    // import data
     if (drush_shell_exec("mysql -uroot -ppassword -hkala " . $pantheon['site'] . "_kala < /tmp/" . $pantheon['id'] .".sql")) {
       drush_log('your pantheon data has been imported to ' . $pantheon['site'] . '_kala', 'success');
     }
@@ -226,12 +245,11 @@ function kala_data(){
  *
  */
 function kala_files(){
-  // get pantheon config
 
   $args = func_get_args();
   $pantheon = _kala_get_pantheon($args[0]);
   if ($pantheon != FALSE) {
-    // print pantheon vars
+
     drush_print_table(drush_key_value_to_array_table($pantheon));
     drush_log('pantheon environment and database variables loaded', 'success');
     
@@ -247,6 +265,29 @@ function kala_files(){
     
     drush_shell_exec("rsync -rlztv --ipv4 -e 'ssh -p 2222' --exclude 'js' --exclude 'css' --exclude 'ctools' --exclude 'imagecache' --exclude 'xmlsitemap' --exclude 'backup_migrate' --exclude 'styles' " . $pantheon['env'] . "." . $pantheon['id'] . "@appserver." . $pantheon['env'] . "." . $pantheon['id'] . ".drush.in:code/sites/default/files/. /var/www/" . $pantheon['site'] . "/sites/default/files");
     drush_log('files synced!', 'success');
+
+  }
+  else {
+    return;
+  }
+}
+
+/**
+ *
+ */
+function kala_build(){
+  
+  $args = func_get_args();
+  $pantheon = _kala_get_pantheon($args[0]);
+  if ($pantheon != FALSE) {
+    
+    drush_print('preparing to build yoru pantheon site... this might take awhile');
+    
+    kala_code($args[0]);
+    kala_data($args[0]);
+    kala_files($args[0]);
+    
+    drush_log('BUILD/REFRESH COMPLETE!', 'success');
 
   }
   else {
