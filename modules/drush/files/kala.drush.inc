@@ -430,18 +430,20 @@ function _kala_reset_settings($pantheon) {
   $pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
   
   if (isset($db_url)) {
-    $settingsfile = "/var/www/" . $pantheon['site'] . "/sites/default/settings.php";
-    $fh = fopen($settingsfile, 'a') or die("can't open file");
-    $settings =
-    '
-    /**
-    * Kalabox local settings
-    */
-     
-    $db_url = \'mysql://root:password@kala/' . $pantheon['kaladb'] . ';\'';
-    
-    fwrite($fh, $settings);
-    fclose($fh);
+  	if (strpos($db_url, $pantheon['kaladb']) != FALSE) {
+	  $settingsfile = "/var/www/" . $pantheon['site'] . "/sites/default/settings.php";
+	  $fh = fopen($settingsfile, 'a') or die("can't open file");
+	  $settings =
+	  '
+	  /**
+	   * Kalabox local settings
+	   */
+	   
+	  $db_url = \'mysql://root:password@kala/' . $pantheon['kaladb'] . ';\'';
+	  
+	  fwrite($fh, $settings);
+	  fclose($fh);
+  	}
   }
   else {
     if ($databases['default']['default']['database'] != $pantheon['kaladb'] ) {
