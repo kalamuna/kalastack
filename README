@@ -127,7 +127,7 @@ command on your GUEST:
 
 cat ~/.ssh/id_rsa.pub
 
-Just copy and paste the output into pantheon.
+Just copy and paste the output into pantheon. If you are prompted for a password try rebooting your GUEST.
 
 
 DRUSH
