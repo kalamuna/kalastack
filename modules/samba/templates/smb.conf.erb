@@ -379,3 +379,25 @@ directory mask = 0775
 force directory mode = 0775
 directory security mask = 0775
 force directory security mode = 0775
+
+[home]
+path = /home/<%= scope.lookupvar('kala_user') %>
+writable = yes
+read only = no
+guest ok = yes
+guest only = yes
+browseable = yes
+public = yes
+
+force user = <%= scope.lookupvar('kala_user') %>
+force group = <%= scope.lookupvar('kala_user') %>
+
+create mask = 0644
+force create mode = 0644
+security mask = 0644
+force security mode = 0644
+
+directory mask = 0775
+force directory mode = 0775
+directory security mask = 0775
+force directory security mode = 0775
