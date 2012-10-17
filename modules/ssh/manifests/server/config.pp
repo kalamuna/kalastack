@@ -14,4 +14,13 @@ class ssh::server::config {
       notify => Class["ssh::server::service"],
     }
     
+    file { "/etc/ssh/ssh_config" :
+      ensure => present,
+      content => template("ssh/ssh_config.erb"),
+      owner => "root",
+      group => "root",
+      require => Class["ssh::server::install"],
+      notify => Class["ssh::server::service"],
+    }
+    
 }
