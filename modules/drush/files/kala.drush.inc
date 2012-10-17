@@ -427,11 +427,7 @@ function _kala_get_pantheon($sitename) {
 function _kala_reset_settings($pantheon) {
   require_once("/var/www/" . $pantheon['site'] . "/sites/default/settings.php");
   
-  if ($databases['default']['default']['database'] != $pantheon['site'] . '_kala' ) {
-    
-    // haven't decided if we should enforce this or an autocommit or what
-    // drush_shell_exec("git --git-dir=/var/www/" . $pantheon['site'] . "/.git update-index --assume-unchanged /var/www/" . $pantheon['site'] . "/sites/default/settings.php");
-    
+  if (isset($db_url)) {
     $settingsfile = "/var/www/" . $pantheon['site'] . "/sites/default/settings.php";
     $fh = fopen($settingsfile, 'a') or die("can't open file");
     $settings =
@@ -440,17 +436,37 @@ function _kala_reset_settings($pantheon) {
     * Kalabox local settings
     */
      
-    $databases[\'default\'][\'default\'] = array(
-    \'driver\' => \'mysql\',
-    \'database\' => \'' . $pantheon['site'] . '_kala\',
-    \'username\' => \'root\',
-    \'password\' => \'password\',
-    \'host\' => \'kala\',
-    \'prefix\' => \'\',
-    );
-  
-    ';
+    $db_url = \'mysql://root:password@kala/\'' . $pantheon['site'] . '_kala\'';
+    
     fwrite($fh, $settings);
     fclose($fh);
+  }
+  else {
+    if ($databases['default']['default']['database'] != $pantheon['site'] . '_kala' ) {
+      
+      // haven't decided if we should enforce this or an autocommit or what
+      // drush_shell_exec("git --git-dir=/var/www/" . $pantheon['site'] . "/.git update-index --assume-unchanged /var/www/" . $pantheon['site'] . "/sites/default/settings.php");
+      
+      $settingsfile = "/var/www/" . $pantheon['site'] . "/sites/default/settings.php";
+      $fh = fopen($settingsfile, 'a') or die("can't open file");
+      $settings =
+      '
+      /**
+      * Kalabox local settings
+      */
+       
+      $databases[\'default\'][\'default\'] = array(
+      \'driver\' => \'mysql\',
+      \'database\' => \'' . $pantheon['site'] . '_kala\',
+      \'username\' => \'root\',
+      \'password\' => \'password\',
+      \'host\' => \'kala\',
+      \'prefix\' => \'\',
+      );
+    
+      ';
+      fwrite($fh, $settings);
+      fclose($fh);
+    }
   }
 }
