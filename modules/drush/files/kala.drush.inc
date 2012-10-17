@@ -405,7 +405,6 @@ function _kala_get_pantheon($sitename) {
       
       // parse connection string
       $db_array = explode("--", $db_string);
-      $pantheon['database_type'] = $db_array[0]; 
       array_shift($db_array);
       
       foreach ($db_array as $row) {
