@@ -77,7 +77,7 @@ SET UP YOUR SERVER
 5. run sudo puppet agent --verbose --test --pluginsync --server kalabox.kalamuna.com
 
 * If running in Virtual Box make sure you use Bridged Networking. You do not need to install any of the packages offered at the end
-  such as SSH or the LAMP Server. 
+  such as SSH or the LAMP Server. We recommend you set your Virtual Box to have 2048MB of RAM with 50GB of storage.
 
 
 Post Installation Setup + Tips & Tricks
