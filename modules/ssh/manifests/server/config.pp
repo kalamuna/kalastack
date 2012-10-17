@@ -9,7 +9,7 @@ class ssh::server::config {
     exec { "sshkeygen":
       path => "/bin:/usr/bin",
       unless => "cat /home/${::kala_user}/.ssh/id_rsa.pub",
-      command => "sudo -u ${::kala_user} ssh-keygen -b 1024 -N \'\' -f /home/${::kala_user}/.ssh/id_rsa -t rsa -q",
+      command => "sudo -u ${::kala_user} ssh-keygen -b 2048 -N \'\' -f /home/${::kala_user}/.ssh/id_rsa -t rsa -q",
       require => Class["ssh::server::install"],
       notify => Class["ssh::server::service"],
     }
