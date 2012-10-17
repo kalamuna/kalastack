@@ -218,6 +218,8 @@ function kala_data(){
   
   $args = func_get_args();
   $pantheon = _kala_get_pantheon($args[0]);
+  $pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
+  
   if ($pantheon != FALSE) {
 
     drush_print_table(drush_key_value_to_array_table($pantheon));
@@ -232,15 +234,15 @@ function kala_data(){
       drush_log('could not get data from pantheon', 'error');
     }
     
-    if (drush_shell_exec("mysql -uroot -ppassword -hkala -e \"create database " . $pantheon['site'] . "_kala\"")) {
-      drush_log('new local database ' . $pantheon['site'] . '_kala created', 'success');
+    if (drush_shell_exec("mysql -uroot -ppassword -hkala -e \"create database " . $pantheon['kaladb'] . "\"")) {
+      drush_log('new local database ' . $pantheon['kaladb'] . ' created', 'success');
     }
     else {
       drush_log('database already exists, skipping', 'notice');
     }
     
-    if (drush_shell_exec("mysql -uroot -ppassword -hkala " . $pantheon['site'] . "_kala < /tmp/" . $pantheon['id'] .".sql")) {
-      drush_log('your pantheon data has been imported to ' . $pantheon['site'] . '_kala', 'success');
+    if (drush_shell_exec("mysql -uroot -ppassword -hkala " . $pantheon['kaladb'] . " < /tmp/" . $pantheon['id'] .".sql")) {
+      drush_log('your pantheon data has been imported to ' . $pantheon['kaladb'], 'success');
     }
     else {
       drush_log('pantheon data unable to be imported', 'error');
@@ -426,6 +428,7 @@ function _kala_get_pantheon($sitename) {
  */
 function _kala_reset_settings($pantheon) {
   require_once("/var/www/" . $pantheon['site'] . "/sites/default/settings.php");
+  $pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
   
   if (isset($db_url)) {
     $settingsfile = "/var/www/" . $pantheon['site'] . "/sites/default/settings.php";
@@ -436,13 +439,13 @@ function _kala_reset_settings($pantheon) {
     * Kalabox local settings
     */
      
-    $db_url = \'mysql://root:password@kala/' . $pantheon['site'] . '_kala;\'';
+    $db_url = \'mysql://root:password@kala/' . $pantheon['kaladb'] . ';\'';
     
     fwrite($fh, $settings);
     fclose($fh);
   }
   else {
-    if ($databases['default']['default']['database'] != $pantheon['site'] . '_kala' ) {
+    if ($databases['default']['default']['database'] != $pantheon['kaladb'] ) {
       
       // haven't decided if we should enforce this or an autocommit or what
       // drush_shell_exec("git --git-dir=/var/www/" . $pantheon['site'] . "/.git update-index --assume-unchanged /var/www/" . $pantheon['site'] . "/sites/default/settings.php");
@@ -457,7 +460,7 @@ function _kala_reset_settings($pantheon) {
        
       $databases[\'default\'][\'default\'] = array(
       \'driver\' => \'mysql\',
-      \'database\' => \'' . $pantheon['site'] . '_kala\',
+      \'database\' => \'' . $pantheon['kaladb'] . '\',
       \'username\' => \'root\',
       \'password\' => \'password\',
       \'host\' => \'kala\',
