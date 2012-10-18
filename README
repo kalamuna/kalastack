@@ -68,7 +68,6 @@ SET UP YOUR SERVER
 	sudo apt-get upgrade
 	sudo apt-get install puppet
 	sudo puppet agent --verbose --test --pluginsync --server kalabox.kalamuna.com
-       sudo reboot
 
 That should be it! Your Kalabox should be ready to go! Please see below for some useful tips!
 
