@@ -430,7 +430,7 @@ function _kala_reset_settings($pantheon) {
   $pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
   
   if (isset($db_url)) {
-  	if (strstr($db_url, 'kala') !== FALSE) {
+  	if (strpos($db_url, $pantheon['kaladb']) === FALSE) { 
 	  $settingsfile = "/var/www/" . $pantheon['site'] . "/sites/default/settings.php";
 	  $fh = fopen($settingsfile, 'a') or die("can't open file");
 	  $settings =
