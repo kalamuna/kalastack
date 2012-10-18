@@ -227,7 +227,7 @@ function kala_data(){
 
     drush_print('attempting a database download, this may take a few minutes so please be patient...');
     
-    if (drush_shell_exec("mysqldump -u" . $pantheon['database_user'] . " -hdbserver." . $pantheon['env'] ."." . $pantheon['id'] .".drush.in -P" . $pantheon['database_port'] ." -p" . $pantheon['database_password'] . " " . $pantheon['database_database'] ." > /tmp/" . $pantheon['id'] .".sql")) {    
+    if (drush_shell_exec("mysqldump -u" . $pantheon['database_user'] . " -hdbserver." . $pantheon['env'] ."." . $pantheon['id'] .".drush.in -P" . $pantheon['database_port'] ." -p" . $pantheon['database_password'] . " --opt " . $pantheon['database_database'] ." > /tmp/" . $pantheon['id'] .".sql")) {    
       drush_log('data downloaded from pantheon', 'success');
     }
     else {
