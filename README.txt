@@ -24,6 +24,7 @@ Supported
 =====================
 Drupal 6
 Drupal 7
+Pantheon Systems V2
 
 Useful Locations
 =====================
