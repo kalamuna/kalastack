@@ -24,7 +24,7 @@ class phpmyadmin::config {
 	$pma_server = "kala"
 	
 	# Builds the phpmyadmin config DB
-    exec { "phpmyadmindbconfig":
+  exec { "phpmyadmindbconfig":
 	  path => "/bin:/usr/bin",
 	  unless => "mysql -uroot -p${php_pass} ${pma_db}",
 	  command => "gunzip < /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | mysql -u${pma_user} -p${pma_pass} -h${pma_server}",
