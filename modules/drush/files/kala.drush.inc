@@ -224,6 +224,15 @@ function kala_data(){
 
     drush_print_table(drush_key_value_to_array_table($pantheon));
     drush_log('pantheon environment and database variables loaded', 'success');
+
+    drush_print('attempting a database download, this may take a few minutes so please be patient...');
+    
+    if (drush_shell_exec("mysqldump -u" . $pantheon['database_user'] . " -hdbserver." . $pantheon['env'] ."." . $pantheon['id'] .".drush.in -P" . $pantheon['database_port'] ." -p" . $pantheon['database_password'] . " " . $pantheon['database_database'] ." > /tmp/" . $pantheon['id'] .".sql")) {    
+      drush_log('data downloaded from pantheon', 'success');
+    }
+    else {
+      drush_log('could not get data from pantheon', 'error');
+    }
     
     if (drush_shell_exec("mysql -uroot -ppassword -hkala -e \"create database " . $pantheon['kaladb'] . "\"")) {
       drush_log('new local database ' . $pantheon['kaladb'] . ' created', 'success');
@@ -231,39 +240,12 @@ function kala_data(){
     else {
       drush_log('database already exists, skipping', 'notice');
     }
-
-    drush_print('attempting a database download, this may take a few minutes so please be patient...');
-    
-    // structure
-    if (drush_shell_exec("mysqldump -d -u" . $pantheon['database_user'] . " -hdbserver." . $pantheon['env'] ."." . $pantheon['id'] .".drush.in -P" . $pantheon['database_port'] ." -p" . $pantheon['database_password'] . " " . $pantheon['database_database'] ." > /tmp/" . $pantheon['id'] .".sql")) {    
-      drush_log('structure downloaded from pantheon', 'success');
-    }
-    else {
-      drush_log('could not get structure from pantheon', 'error');
-    }
     
     if (drush_shell_exec("mysql -uroot -ppassword -hkala " . $pantheon['kaladb'] . " < /tmp/" . $pantheon['id'] .".sql")) {
-      drush_log('your pantheon structure has been imported to ' . $pantheon['kaladb'], 'success');
+      drush_log('your pantheon data has been imported to ' . $pantheon['kaladb'], 'success');
     }
     else {
-      drush_log('pantheon structure unable to be imported', 'error');
-    }
-    
-    drush_shell_exec("rm /tmp/" . $pantheon['id'] .".sql");
-    
-    // data
-    if (drush_shell_exec("mysqldump --skip-triggers --compact --no-create-info --ignore-table=" .$pantheon['kaladb'] . ".watchdog  --ignore-table=" .$pantheon['kaladb'] . ".sessions --ignore-table=" .$pantheon['kaladb'] . ".search_index --ignore-table=" .$pantheon['kaladb'] . ".cache_views_data  --ignore-table=" .$pantheon['kaladb'] . ".cache_views --ignore-table=" .$pantheon['kaladb'] . ".cache_update --ignore-table=" .$pantheon['kaladb'] . ".cache_page --ignore-table=" .$pantheon['kaladb'] . ".cache_menu --ignore-table=" .$pantheon['kaladb'] . ".cache_form --ignore-table=" .$pantheon['kaladb'] . ".cache_filter  --ignore-table=" .$pantheon['kaladb'] . ".cache_content --ignore-table=" .$pantheon['kaladb'] . ".cache_block --ignore-table=" .$pantheon['kaladb'] . ".cache --ignore-table=" .$pantheon['kaladb'] . ".cache -u" . $pantheon['database_user'] . " -hdbserver." . $pantheon['env'] ."." . $pantheon['id'] .".drush.in -P" . $pantheon['database_port'] ." -p" . $pantheon['database_password'] . " " . $pantheon['database_database'] ." > /tmp/" . $pantheon['id'] .".sql")) {
-    	drush_log('data downloaded from pantheon', 'success');
-    }
-    else {
-    	drush_log('could not get data from pantheon', 'error');
-    }
-    
-    if (drush_shell_exec("mysql -uroot -ppassword -hkala " . $pantheon['kaladb'] . " < /tmp/" . $pantheon['id'] .".sql")) {
-    	drush_log('your pantheon data has been imported to ' . $pantheon['kaladb'], 'success');
-    }
-    else {
-    	drush_log('pantheon data unable to be imported', 'error');
+      drush_log('pantheon data unable to be imported', 'error');
     }
     
     drush_shell_exec("rm /tmp/" . $pantheon['id'] .".sql");
