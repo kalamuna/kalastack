@@ -29,6 +29,12 @@ class network::config {
 	  require => File["/etc/hosts"],
 	}
 	
+	network::prepend { "host.kala":
+    file => "/etc/hosts",
+    line => "192.168.56.1  host.kala",
+    require => File["/etc/hosts"],
+  }
+	
 	network::prepend  { "php.kala":
     file => "/etc/hosts",
     line => "127.0.0.1  php.kala",
