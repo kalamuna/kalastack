@@ -140,7 +140,9 @@ SSH KEYS
 
 	cat ~/.ssh/id_rsa.pub
 
-	Just copy and paste the output into Pantheon. If you are prompted for a password try rebooting your Kalabox.
+	Just copy and paste the output into Pantheon. If you are prompted for a password try rebooting your Kalabox. If this still doesn't work try running the following command
+
+	ssh -v -i ~/.ssh/id_rsa git@code.getpantheon.com
 
 
 DRUSH
