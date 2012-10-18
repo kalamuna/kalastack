@@ -1,0 +1,52 @@
+################################################################################
+
+Changelog
+======================
+Version 1.0-rc2
+- Visibility of Samba shares now restricted to host machine
+- Fixed xdebug.ini directory location on x386 machines
+- Fixed some typos
+- Moved ssh-keygen to 2048
+- Removed Pantheon DB type
+- Fixed MySQL hyphen hating 
+- Ensure .drush folder exists
+- Disabled strict host checking
+- Support for Drupal 6 settings rebuilds
+- Faster MySQL downloads and imports
+- Drush destroy command
+- Use vboxnet0 for static host/guest networking
+- Reverted to NAT networking for eth0
+- Automatically builds eth1 vboxnet0 interface
+
+Version 1.0-rc1
+- Drush commands for Pantheon
+    - get/refresh files
+    - get/refresh database
+    - get/refresh codebase
+    - build/refresh entire site
+    - build vhost
+    - rebuilt settings
+- Added drush directory to samba
+- Added home directory to samba
+
+Version 1.0-beta2
+- Improved handling of /etc/hosts initial setup
+- Improved phpmyadmin config code
+- Uses installation user for samba, git, ssh setup
+- Auto generates SSH keys for installation user
+- Custom facts to grab the installation user and full name
+- Auto git config
+- Auto add installation user to www-data group
+
+Version 1.0-beta1
+- Fixed SSH config issue
+- Fixed writability of /var/www to guest machines
+- Ensured specific package versions for hopefully improved stability
+- Raised apc.shm_size to 128M
+- Added default domains into hosts file
+- Added a generic nginx vhost file for drupal sites
+- Added drush command to build drupal nginx vhosts
+- Updated README
+
+Version 1.0-alpha1
+- Proof of concept
