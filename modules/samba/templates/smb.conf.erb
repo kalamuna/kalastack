@@ -345,6 +345,8 @@ guest only = yes
 browseable = yes
 public = yes
 
+hosts allow = 192.168.56.1
+
 force user = <%= scope.lookupvar('kala_user') %>
 force group = www-data
 
@@ -367,6 +369,8 @@ guest only = yes
 browseable = yes
 public = yes
 
+hosts allow = 192.168.56.1
+
 force user = root
 force group = root
 
@@ -388,6 +392,8 @@ guest ok = yes
 guest only = yes
 browseable = yes
 public = yes
+
+hosts allow = 192.168.56.1
 
 force user = <%= scope.lookupvar('kala_user') %>
 force group = <%= scope.lookupvar('kala_user') %>
