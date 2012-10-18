@@ -90,6 +90,18 @@ function kala_drush_command() {
     ),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
+  $items['kaladestroy'] = array(
+  	'callback' => 'kala_destroy',
+  	'description' => dt('Removes a pantheon site'),
+  	'aliases' => array('destroy', 'crush', 'wmb', 'kd'),
+  	'examples' => array(
+  	  'drush crush pantheon.sitename.dev' => 'Deletes the Pantheon site. Must use valid Pantheon alias as first argument.',
+     ),
+  	'arguments' => array(
+      'site' => 'A valid Pantheon site alias. Do not use the @ convention for this alias as we are not using it as our site.',
+  	),
+  	'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+  );
   
   return $items;
 }
@@ -296,7 +308,7 @@ function kala_build(){
   $pantheon = _kala_get_pantheon($args[0]);
   if ($pantheon != FALSE) {
     
-    drush_print('preparing to build yoru pantheon site... this might take awhile');
+    drush_print('preparing to build your pantheon site... this might take awhile');
     
     kala_code($args[0]);
     drush_log('Codebase: Success!', 'success');
@@ -314,6 +326,44 @@ function kala_build(){
     
     drush_log('Build: Success!', 'success');
 
+  }
+  else {
+    return;
+  }
+}
+
+/**
+ *
+ */
+function kala_destroy(){
+
+  $args = func_get_args();
+  $pantheon = _kala_get_pantheon($args[0]);
+  $pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
+  
+  if ($pantheon != FALSE) {
+
+    drush_print('preparing to crush your pantheon site... this might take awhile');
+
+	if (drush_shell_exec("sudo rm -rf /var/www/" . $pantheon['site'])) {
+	  drush_log('code and files crushed', 'success');
+	}
+	if (drush_shell_exec("mysql -uroot -ppassword -hkala -e \"drop database " . $pantheon['kaladb'] . "\"")) {
+	  drush_log('database crushed', 'success');
+	}
+	
+	if (drush_shell_exec("sudo rm -rf /etc/nginx/sites-available/" . $pantheon['site'])) {
+	  if (drush_shell_exec("sudo rm -rf /etc/nginx/sites-enabled/" . $pantheon['site'])) {
+	  	drush_log('vhosts removed', 'success');
+	  }
+	} 
+	
+	if (drush_shell_exec("sudo service nginx restart")) {
+	  drush_log('nginx restart', 'success');
+	}
+
+	drush_log('site destroyed', 'success');
+	
   }
   else {
     return;
