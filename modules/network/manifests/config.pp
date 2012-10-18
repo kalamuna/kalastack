@@ -14,13 +14,13 @@ class network::config {
     content => template("network/interfaces.erb"),
     owner => "root",
     group => "root",
-    notify => Exec["vboxnetup"],
   }
   
   exec { "vboxnetup":
     path => "/bin:/usr/bin",
-    command => "ifup eth1",
-    require => File["/etc/network/interfaces"],
+    command => "ifconfig eth1 192.168.56.101 netmask 255.255.255.0 up",
+    subscribe   => File["/etc/network/interfaces"],
+    refreshonly => true
   }
 	
 	network::prepend { "kala":
