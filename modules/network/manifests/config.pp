@@ -17,7 +17,7 @@ class network::config {
   }
   
   exec { "vboxnetup":
-    path => "/bin:/usr/bin",
+    path => "/bin:/usr/bin:/sbin",
     unless => "ifconfig | grep 192.168.56.101",
     command => "ifconfig eth1 192.168.56.101 netmask 255.255.255.0 up",
   }
