@@ -439,7 +439,7 @@ function _kala_reset_settings($pantheon) {
 	   * Kalabox local settings
 	   */
 	   
-	  $db_url = \'mysql://root:password@kala/' . $pantheon['kaladb'] . ';\'';
+	  $db_url = \'mysql://root:password@kala/' . $pantheon['kaladb'] . '\';';
 	  
 	  fwrite($fh, $settings);
 	  fclose($fh);
