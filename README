@@ -36,7 +36,10 @@ You can install Kalabox manually as this allows for additional configuration and
 1. Install Virtual Box (https://www.virtualbox.org/wiki/Downloads)
 2. Add the following entry to the /etc/hosts file on your computer.
 	
-	192.168.56.101 kala php.kala 
+	192.168.56.101 kala KALABOXHOSTNAME php.kala 
+
+	If you are using a pre made box KALABOXHOSTNAME = kalabox, if you are installing manually you should replace KALABOXHOSTNAME
+	with whatever you plan on entering as a hostname during the installation of Ubuntu 12.04 Server
 
 3. Make sure you have a VBOXNET network adapter in your Virtual Box. 
 
@@ -51,6 +54,7 @@ If you wish to install our pre made Kalabox you can download that at LINK.
 In Virtual Box go to File -> Import Appliance and select the Kalabox that you downloaded. If you installed a pre made Kalabox all you will need to do is start the box after import is complete and that is it! If you were more adventurous and installed the blank box please continue reading!
 
 SET UP YOUR SERVER
+
 1. Install Ubuntu 12.04 LTS Server*
 
 	* Start your blank box and select the Ubuntu image you downloaded.
@@ -64,6 +68,7 @@ SET UP YOUR SERVER
 	sudo apt-get upgrade
 	sudo apt-get install puppet
 	sudo puppet agent --verbose --test --pluginsync --server kalabox.kalamuna.com
+       sudo reboot
 
 That should be it! Your Kalabox should be ready to go! Please see below for some useful tips!
 
