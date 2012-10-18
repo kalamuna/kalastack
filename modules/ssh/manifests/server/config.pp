@@ -23,4 +23,13 @@ class ssh::server::config {
       notify => Class["ssh::server::service"],
     }
     
+    file { "/home/${::kala_user}/.ssh/config" :
+      ensure => present,
+      content => template("ssh/config.erb"),
+      owner => "${::kala_user}",
+      group => "${::kala_user}",
+      require => Class["ssh::server::install"],
+      notify => Class["ssh::server::service"],
+    }
+    
 }
