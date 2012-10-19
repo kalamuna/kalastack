@@ -100,7 +100,8 @@ should see three shares for your vbox:
     3. HOME <- Your home folder
     
 If you don't see them you can try connecting to smb://kala. In MaxOSX you can 
-do this by going to Finder -> Go -> Connect to Server. 
+do this by going to Finder -> Go -> Connect to Server. In Ubuntu 12.04 the
+shares are mounted in ~/.gvfs.
     
 
 Working with Pantheon
