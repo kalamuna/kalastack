@@ -19,6 +19,13 @@ experience.
 9.  PHPMyAdmin
 10. samba (to expose your webroot, drush and home to your VB host)
 
+Kalabox is a local server environment only and is not meant to be run as a
+production server. 
+
+Kalabox is meant to be run either natively in Ubuntu 12.04 or in a Virtual 
+Box. It has been tested with Ubuntu 12.04 and MacOSX 10.7 - 10.8 as the host
+machine. It should theoretically work with Windows but has not been tested.
+
 
 Supported 
 =====================
