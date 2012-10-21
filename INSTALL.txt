@@ -47,8 +47,8 @@ http://files.kalamuna.com/kalabox1rc2.tar.gz
 Import your Box
 ================
 In Virtual Box go to File -> Import Appliance and select the Kalabox that you 
-downloaded. If you installed a pre made Kalabox all you will need to do is start 
-the box after import is complete and that is it! 
+downloaded. If you installed a pre made Kalabox all you need to do is start 
+the box, login with user:kala, password:box and you will be good to go!
 
 If you were more adventurous and installed the blank box please continue reading!
 
