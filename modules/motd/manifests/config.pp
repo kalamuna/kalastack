@@ -16,6 +16,7 @@ class motd::config {
   # replace ubuntu docs with kalabox docs
   file { "/etc/update-motd.d/10-help-text" :
     ensure => present,
+    mode => 0755,
     content => template("motd/10-help-text.erb"),
     owner => "root",
     group => "root",
@@ -23,13 +24,15 @@ class motd::config {
   
   file { "/etc/update-motd.d/60-kala-help" :
     ensure => present,
+    mode => 0755,
     content => template("motd/60-kala-help.erb"),
     owner => "root",
     group => "root",
   }
   
-  file { "/etc/update-motd.d/90-updates" :
+  file { "/etc/update-motd.d/90-updates-available" :
     ensure => absent,
+    mode => 0755,
     owner => "root",
     group => "root",
   }
