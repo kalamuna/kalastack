@@ -22,10 +22,10 @@ class motd::config {
     group => "root",
   }
   
-  file { "/etc/update-motd.d/60-kala-help" :
+  file { "/etc/update-motd.d/05-kala-help" :
     ensure => present,
     mode => 0755,
-    content => template("motd/60-kala-help.erb"),
+    content => template("motd/05-kala-help.erb"),
     owner => "root",
     group => "root",
   }
