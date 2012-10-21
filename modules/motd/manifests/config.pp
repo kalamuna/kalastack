@@ -8,6 +8,7 @@ class motd::config {
   # replace welcome to ubuntu with welcome to kalabox
   file { "/etc/update-motd.d/00-header" :
     ensure => present,
+    mode => 0755,
     content => template("motd/00-header.erb"),
     owner => "root",
     group => "root",
