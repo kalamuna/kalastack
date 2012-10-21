@@ -14,6 +14,7 @@ node "default" {
     include ssh
     include git
     include samba
+    include motd
     
     # initialize LEMP stack
     include phpfpm
