@@ -33,14 +33,31 @@ Drupal 6
 Drupal 7
 Pantheon Systems V2
 
+
 Useful Locations
 =====================
+Home/phpinfo()            - http://kala
+phpMyAdmin                - http://php.kala
+solr                      - http://kala:8080/solr
+drush                     - /usr/share/drush
+SSH public key            - ~/.ssh/id_rsa.pub
+Pantheon aliases          - ~/.drush/pantheon.aliases.drushrc.php
 
-1. Home/phpinfo()   - http://kala
-2. phpMyAdmin       - http://php.kala
-3. solr             - http://kala:8080/solr
-4. drush            - /usr/share/drush
-5. SSH public key   - ~/.ssh/id_rsa.pub
-6. Pantheon aliases - ~/.drush/pantheon.aliases.drushrc.php
+
+Useful Commands
+=====================
+Generate new SSH key      - ssh-keygen
+Display SSH public key    - cat ~/.ssh/id_rsa.pub
+
+FOR PANTHEON
+Show info                 - drush kala
+  
+Get/refresh code          - drush code pantheon.SITENAME.dev
+Get/refresh database      - drush data pantheon.SITENAME.dev
+Get/refresh files         - drush files pantheon.SITENAME.dev
+  
+Build entire site         - drush build pantheon.SITENAME.dev
+Refresh entire site       - drush krefresh pantheon.SITENAME.dev
+Destroy entire site       - drush crush pantheon.SITENAME.dev
 
 

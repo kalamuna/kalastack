@@ -2,6 +2,13 @@
 
 Changelog
 ======================
+Version 1.0-rc3
+- Improved documentation
+- SECURITY FIX: Premade kalabox now uses unique sshkey
+- MOTD displays useful information about your kalabox
+- Removes /etc/hosts entry when you destroy a site
+- Drush kala command prints useful info
+
 Version 1.0-rc2
 - Visibility of Samba shares now restricted to host machine
 - Fixed xdebug.ini directory location on x386 machines
