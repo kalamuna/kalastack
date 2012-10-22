@@ -42,7 +42,7 @@ http://www.ubuntu.com/download/server.
 Premade Install
 ===============
 If you wish to install our pre made Kalabox you can download that at.
-http://files.kalamuna.com/kalabox1rc2.tar.gz
+http://files.kalamuna.com/kalabox1rc3.tar.gz
 
 Import your Box
 ================
@@ -135,7 +135,7 @@ command
 
 DRUSH
 
-Kalabox ships with 7 custom drush commands designed specifically for Pantheon 
+Kalabox ships with 8 custom drush commands designed specifically for Pantheon 
 and Kalabox. They are useless without Pantheon's site alias file.
  
 These commands only work with your dev environments. You will use the same 
@@ -143,39 +143,43 @@ naming convention as your pantheon aliases 	(PANTHEON.SITENAME.ENV) but you will
 omit the @. You are using the alias name as an argument, not as an alias.
 Here are the commands.
 
-	1. drush code pantheon.SITENAME.dev    
+    1. drush kala
+    
+        Will show helpful info
+        
+	2. drush code pantheon.SITENAME.dev    
 
 		Will either git clone or git pull from your pantheon codebase to your 
 		Kalabox at /var/www/SITENAME
     
-	2. drush data pantheon.SITENAME.dev    
+	3. drush data pantheon.SITENAME.dev    
 
 		Will either download and import from your pantheon database to your 
 		Kalabox at kala:SITENAME_kala
 		
-	3. drush files pantheon.SITENAME.dev   
+	4. drush files pantheon.SITENAME.dev   
 
 		Will sync your pantheon files to your Kalabox at 
 		/var/www/SITENAME/sites/default/files
 		
-	4. drush vhost pantheon.SITENAME.dev   
+	5. drush vhost pantheon.SITENAME.dev   
 
 		Will build and enable a nginx vhost file of your pantheon site on your 
 		Kalabox at SITENAME.kala
 
-	5. drush build pantheon.SITENAME.dev   
+	6. drush build pantheon.SITENAME.dev   
 
 		Will completely build your pantheon site on your Kalabox, this will 
 		edit settings.php and set up a vhost. After running this command and
 		adding your server name to your hosts /etc/hosts file you should be
 		able to browse to the site.
 
-	6. drush krefresh pantheon.SITENAME.dev 
+	7. drush krefresh pantheon.SITENAME.dev 
 
 		Will refresh the code, database and files on your Kalabox from your 
 		pantheon site
 
-	7. drush crush pantheon.SITENAME.dev
+	8. drush crush pantheon.SITENAME.dev
 
 		Will completely remove pantheon.SITENAME.dev from your Kalabox.
 
@@ -189,3 +193,7 @@ your HOST so you will have to add the following line manually.
 
 You should now be able to navigate to SITENAME.kala in your browser and get to 
 your site! 
+
+################################################################################
+
+(C) 2012 Kalamuna LLC

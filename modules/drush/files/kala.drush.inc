@@ -463,7 +463,7 @@ function kala_update_etc_hosts($hostname) {
 
 function kala_remove_etc_hosts($hostname) {
   // create new hosts file and reload server
-  drush_shell_exec("sed /" . $hostname . ".kala/d /etc/hosts > /tmp/hosts");
+  drush_shell_exec("sed /" . $hostname . "/d /etc/hosts > /tmp/hosts");
   drush_shell_exec("sudo cp -f /tmp/hosts /etc/hosts");
   drush_shell_exec("rm /tmp/hosts");
 }
