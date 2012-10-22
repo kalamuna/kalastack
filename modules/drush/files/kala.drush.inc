@@ -157,7 +157,7 @@ function kala_vhost(){
   
   $site = $pantheon['site'];
     
-  if ($pantheon != FALSE) {
+  if ($pantheon !== FALSE) {
     if (!file_exists("/etc/nginx/sites-available/" . $site)) {
       if (is_dir("/var/www/" . $site)) {
         drush_shell_exec("cp /etc/nginx/sites-available/drupaldefault /tmp/" . $site);
@@ -226,7 +226,7 @@ function kala_code(){
   $args = func_get_args();
   $pantheon = _kala_get_pantheon($args[0]);
   
-  if ($pantheon != FALSE) {
+  if ($pantheon !== FALSE) {
     drush_print_table(drush_key_value_to_array_table($pantheon));
     drush_log('pantheon environment and database variables loaded', 'success');
     
@@ -276,7 +276,7 @@ function kala_data(){
   $pantheon = _kala_get_pantheon($args[0]);
   $pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
   
-  if ($pantheon != FALSE) {
+  if ($pantheon !== FALSE) {
 
     drush_print_table(drush_key_value_to_array_table($pantheon));
     drush_log('pantheon environment and database variables loaded', 'success');
@@ -318,7 +318,7 @@ function kala_files(){
 
   $args = func_get_args();
   $pantheon = _kala_get_pantheon($args[0]);
-  if ($pantheon != FALSE) {
+  if ($pantheon !== FALSE) {
 
     drush_print_table(drush_key_value_to_array_table($pantheon));
     drush_log('pantheon environment and database variables loaded', 'success');
@@ -350,7 +350,7 @@ function kala_build(){
   
   $args = func_get_args();
   $pantheon = _kala_get_pantheon($args[0]);
-  if ($pantheon != FALSE) {
+  if ($pantheon !== FALSE) {
     
     drush_print('preparing to build your pantheon site... this might take awhile');
     
@@ -385,7 +385,7 @@ function kala_destroy(){
   $pantheon = _kala_get_pantheon($args[0]);
   $pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
   
-  if (isset($pantheon)) {
+  if ($pantheon !== FALSE) {
 
     drush_print('preparing to crush your pantheon site... this might take awhile');
 
@@ -520,6 +520,7 @@ function _kala_get_pantheon($sitename) {
   }
   else {
     drush_log('pantheon alias does not exist, please make sure you have a recent copy of all your aliases', 'error');
+    return FALSE;
   }
 }
 
