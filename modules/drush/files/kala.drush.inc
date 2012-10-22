@@ -361,6 +361,8 @@ function kala_destroy(){
 	if (drush_shell_exec("sudo service nginx restart")) {
 	  drush_log('nginx restart', 'success');
 	}
+	
+	kala_remove_etc_hosts($pantheon['site'] . ".kala");
 
 	drush_log('site destroyed', 'success');
 	
@@ -402,7 +404,7 @@ function kala_write_file($filename, $contents) {
   }
 }
 
-function kala_update_etc_hosts($hostname){
+function kala_update_etc_hosts($hostname) {
     // create new hosts file and reload server
     $hosts_file_str = file_get_contents("/etc/hosts");
     $new_host = "127.0.0.1\t$hostname\n";
@@ -410,9 +412,16 @@ function kala_update_etc_hosts($hostname){
       $new_hosts_file_str =  $new_host . $hosts_file_str;
       file_put_contents("/tmp/hosts", $new_hosts_file_str);
       drush_shell_exec("sudo cp -f /tmp/hosts /etc/hosts");
-      drush_shell_exec("sudo service nginx restart");
+      #drush_shell_exec("sudo service nginx restart");
       drush_shell_exec("rm /tmp/hosts");
     }
+}
+
+function kala_remove_etc_hosts($hostname) {
+  // create new hosts file and reload server
+  drush_shell_exec("sed /" . $hostname . ".kala/d /etc/hosts > /tmp/hosts");
+  drush_shell_exec("sudo cp -f /tmp/hosts /etc/hosts");
+  drush_shell_exec("rm /tmp/hosts");
 }
 
 
