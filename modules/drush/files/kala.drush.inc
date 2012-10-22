@@ -385,7 +385,7 @@ function kala_destroy(){
   $pantheon = _kala_get_pantheon($args[0]);
   $pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
   
-  if ($pantheon != FALSE) {
+  if (isset($pantheon)) {
 
     drush_print('preparing to crush your pantheon site... this might take awhile');
 
@@ -407,7 +407,6 @@ function kala_destroy(){
 	}
 	
 	kala_remove_etc_hosts($pantheon['site'] . ".kala");
-
 	drush_log('site destroyed', 'success');
 	
   }
