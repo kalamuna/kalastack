@@ -154,11 +154,10 @@ function kala_drush_help($section) {
 function kala_vhost(){
   $args = func_get_args();
   $pantheon = _kala_get_pantheon($args[0]);
-  
-  $site = $pantheon['site'];
     
   if ($pantheon !== FALSE) {
-    if (!file_exists("/etc/nginx/sites-available/" . $site)) {
+  	$site = $pantheon['site'];
+  	if (!file_exists("/etc/nginx/sites-available/" . $site)) {
       if (is_dir("/var/www/" . $site)) {
         drush_shell_exec("cp /etc/nginx/sites-available/drupaldefault /tmp/" . $site);
         $vhost_default_string = kala_get_file("/tmp/" . $site);
@@ -274,10 +273,11 @@ function kala_data(){
   
   $args = func_get_args();
   $pantheon = _kala_get_pantheon($args[0]);
-  $pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
   
   if ($pantheon !== FALSE) {
 
+  	$pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
+  	
     drush_print_table(drush_key_value_to_array_table($pantheon));
     drush_log('pantheon environment and database variables loaded', 'success');
 
@@ -318,6 +318,7 @@ function kala_files(){
 
   $args = func_get_args();
   $pantheon = _kala_get_pantheon($args[0]);
+  
   if ($pantheon !== FALSE) {
 
     drush_print_table(drush_key_value_to_array_table($pantheon));
@@ -350,6 +351,7 @@ function kala_build(){
   
   $args = func_get_args();
   $pantheon = _kala_get_pantheon($args[0]);
+  
   if ($pantheon !== FALSE) {
     
     drush_print('preparing to build your pantheon site... this might take awhile');
@@ -383,9 +385,10 @@ function kala_destroy(){
 
   $args = func_get_args();
   $pantheon = _kala_get_pantheon($args[0]);
-  $pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
   
   if ($pantheon !== FALSE) {
+  	
+  	$pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
 
     drush_print('preparing to crush your pantheon site... this might take awhile');
 

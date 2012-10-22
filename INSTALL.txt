@@ -42,7 +42,7 @@ http://www.ubuntu.com/download/server.
 Premade Install
 ===============
 If you wish to install our pre made Kalabox you can download that at.
-http://files.kalamuna.com/kalabox1rc5.tar.gz
+http://files.kalamuna.com/kalabox1rc4.tar.gz
 
 Import your Box
 ================
