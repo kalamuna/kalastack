@@ -17,7 +17,16 @@
  */
 function kala_drush_command() {
   $items = array();
-
+  
+  $items['kala'] = array(
+    'callback' => 'kala_kala',
+    'description' => dt('Shows some useful information for your kalabox'),
+    'aliases' => array('ks'),
+    'examples' => array(
+      'drush kala' => 'Shows some useful information for your kalabox',
+     ),
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+  );
   $items['kalavhost'] = array(
     'callback' => 'kala_vhost',
     'description' => dt('Builds a basic Drupal nginx vhost. Must use valid Pantheon alias as first argument.'),
@@ -121,6 +130,8 @@ function kala_drush_command() {
  */
 function kala_drush_help($section) {
   switch ($section) {
+    case 'drush:kala':
+      return dt("Shows useful info.");
     case 'drush:kalavhost':
       return dt("Build a basic drupal nginx vhost.");
     case 'drush:kalacode':
@@ -172,6 +183,39 @@ function kala_vhost(){
   else {
     return;
   }
+}
+
+/** 
+ *
+ */
+function kala_kala(){
+  drush_print("
+  Useful Locations
+  =====================
+  Home/phpinfo()            - http://kala
+  phpMyAdmin                - http://php.kala
+  solr                      - http://kala:8080/solr
+  drush                     - /usr/share/drush
+  SSH public key            - ~/.ssh/id_rsa.pub
+  Pantheon aliases          - ~/.drush/pantheon.aliases.drushrc.php
+
+  Useful Commands
+  =====================
+  Generate new SSH key      - ssh-keygen
+  Display SSH public key    - cat ~/.ssh/id_rsa.pub
+
+  FOR PANTHEON
+  Show info                 - drush kala
+      
+  Get/refresh code          - drush code pantheon.SITENAME.dev
+  Get/refresh database      - drush data pantheon.SITENAME.dev
+  Get/refresh files         - drush files pantheon.SITENAME.dev
+  
+  Build entire site         - drush build pantheon.SITENAME.dev
+  Refresh entire site       - drush krefresh pantheon.SITENAME.dev
+  Destroy entire site       - drush crush pantheon.SITENAME.dev
+  
+  ");
 }
 
 /**
