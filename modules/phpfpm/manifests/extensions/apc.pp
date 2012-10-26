@@ -6,7 +6,7 @@
 class phpfpm::extensions::apc (
     
 	$enabled  = 1,
-	$shm_size = "128M",
+	$shm_size = "196M",
 	$rfc1867  = 1
 	
 ){

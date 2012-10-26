@@ -3,8 +3,27 @@ extension=apc.so
 apc.shm_size=<%= shm_size %> 
 apc.enabled=<%= enabled %> 
 apc.shm_segments=1
-apc.ttl=7200
-apc.user_ttl=7200
+apc.ttl=3600
+apc.user_ttl=3600
 apc.stat=1
 apc.include_once_override=0
 apc.rfc1867=<%= rfc1867 %>
+apc.optimization=0
+apc.num_files_hint=512
+apc.user_entries_hint=1024
+apc.gc_ttl=600
+apc.cache_by_default=1
+apc.filters="apc\.php$"
+apc.slam_defense=0
+apc.use_request_time=1
+apc.mmap_file_mask=/dev/zero
+apc.file_update_protection=2
+apc.enable_cli=0
+apc.max_file_size=2M
+apc.write_lock=1
+apc.report_autofilter=0
+apc.rfc1867_freq=0
+apc.localcache=1
+apc.localcache.size=512
+apc.coredump_unmap=0
+apc.stat_ctime=0
