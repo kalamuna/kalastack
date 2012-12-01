@@ -11,6 +11,7 @@ class phpfpm::config {
 	  path     => "/etc/php5/fpm/php.ini",
 	  require  => Class["phpfpm::install"],
 	  notify => Class["phpfpm::service"],
+	  max_execution_time => 900,
 	}
 	
 	file { "/etc/php5/fpm/pool.d/www.conf": 
