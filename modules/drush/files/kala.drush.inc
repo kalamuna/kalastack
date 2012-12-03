@@ -330,14 +330,15 @@ function kala_files(){
     }
     else {
       mkdir("/var/www/" . $pantheon['site'] . "/sites/default/files");     
+      mkdir("/var/www/" . $pantheon['site'] . "/sites/default/files/private");
       drush_log('files directory created', 'success');
       drush_shell_exec("chmod 775 /var/www/" . $pantheon['site'] . "/sites/default/files");
+      drush_shell_exec("chmod 775 /var/www/" . $pantheon['site'] . "/sites/default/files/private");
     }
     
     drush_log('starting files sync, this may take a few minutes...', 'success');
     drush_shell_exec("rsync -rlztv --ipv4 -e 'ssh -p 2222' --exclude 'js' --exclude 'css' --exclude 'ctools' --exclude 'imagecache' --exclude 'xmlsitemap' --exclude 'backup_migrate' --exclude 'styles' " . $pantheon['env'] . "." . $pantheon['id'] . "@appserver." . $pantheon['env'] . "." . $pantheon['id'] . ".drush.in:code/sites/default/files/. /var/www/" . $pantheon['site'] . "/sites/default/files");
     drush_log('files synced!', 'success');
-
   }
   else {
     return;
