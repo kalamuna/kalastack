@@ -16,5 +16,12 @@ class solr::config {
     require => Class["solr::install"],
     notify => Class["solr::service"],
   }
+  
+  solr::server { "server.xml": 
+    path => "/etc/tomcat6/server.xml",
+    port => 8983,
+    require => Class["solr::install"],
+    notify => Class["solr::service"],
+  }
 
 }

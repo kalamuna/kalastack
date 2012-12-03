@@ -1,6 +1,6 @@
 /**
  * 
- * Defines and sets default values for a my.cnf file
+ * Defines and sets default values for the schema.pp
  * 
  */
 define solr::schema (
