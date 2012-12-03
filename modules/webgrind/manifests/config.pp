@@ -13,7 +13,7 @@ class webgrind::config {
     content   => template("webgrind/webgrind.ini.erb")
   } 
   
-  phpfpm::nginx::kalabox { "webgrind":
+  phpfpm::nginx::vhost { "webgrind":
     server_name => "grind.kala",
     root        => "/var/www/webgrind",
   }
