@@ -3,7 +3,7 @@
  * Defines and sets default values for the solrconf
  * 
  */
-define solr::solrconf (
+define solr::solrconfig (
     
   # basic settings
   $path = "/etc/solr/conf/solrconfig.xml",
