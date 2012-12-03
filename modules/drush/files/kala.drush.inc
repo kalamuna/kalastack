@@ -337,7 +337,7 @@ function kala_files(){
     }
     
     drush_log('starting files sync, this may take a few minutes...', 'success');
-    drush_shell_exec("rsync -rlztv --ipv4 -e 'ssh -p 2222' --exclude 'js' --exclude 'css' --exclude 'ctools' --exclude 'imagecache' --exclude 'xmlsitemap' --exclude 'backup_migrate' --exclude 'styles' " . $pantheon['env'] . "." . $pantheon['id'] . "@appserver." . $pantheon['env'] . "." . $pantheon['id'] . ".drush.in:code/sites/default/files/. /var/www/" . $pantheon['site'] . "/sites/default/files");
+    drush_shell_exec("rsync -rlztv --ipv4 -e 'ssh -p 2222' --exclude 'js' --exclude 'css' --exclude 'ctools' --exclude 'imagecache' --exclude 'xmlsitemap' --exclude 'backup_migrate' --exclude 'styles' " . $pantheon['env'] . "." . $pantheon['id'] . "@appserver." . $pantheon['env'] . "." . $pantheon['id'] . ".drush.in:files /var/www/" . $pantheon['site'] . "/sites/default/files");
     drush_log('files synced!', 'success');
   }
   else {
