@@ -28,6 +28,7 @@ node "default" {
 	include solr
 	include drush
 	include phpmyadmin
+	include webgrind
 	
 	# build basic drupal site
 	drupal::nginx::vhost { "drupaldefault":
