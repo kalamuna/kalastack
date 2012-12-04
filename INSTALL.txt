@@ -5,21 +5,14 @@ Installation
 
 PRE-INSTALLATION CHECKS
 
-You can install Kalabox manually as this allows for additional configuration and
-customization or you can download our premade box and get up 
-and running right away! However before you do either there are a couple of 
+Kalabox currently shops as a premade Virtual Box image. This way you can get up 
+and running right away! However before you do this there are a couple of 
 steps you need to do first.
 
 1. Install Virtual Box (https://www.virtualbox.org/wiki/Downloads)
 2. Add the following entry to the /etc/hosts* file on your computer.
 	
-	192.168.56.101 kala KALABOXHOSTNAME php.kala 
-
-	If you are using a pre made box KALABOXHOSTNAME = kalabox, if you are 
-	installing manually you should replace KALABOXHOSTNAME with whatever you plan 
-	on entering as a hostname during the installation of Ubuntu 12.04 Server. 
-	Do notuse the hostname kalabox as this is reserved for our premade box.
-	
+	192.168.56.101 kala kalabox php.kala grind.kala
 	* On Windows XP this is located at c:\WINDOWS\system32\drivers\etc\hosts
 
 3. Make sure you have a VBOXNET network adapter in your Virtual Box. 
@@ -31,18 +24,10 @@ adapter is set to 192.168.56.1.
 
 IMPORTING YOUR VB APPLIANCE
 
-Manual Install
-==============
-If you wish to install manually you can start by downloading our blank Kalabox at 
-http://files.kalamuna.com/blankbox.tar.gz
-
-You will also need to download the 64 bit version of Ubuntu 12.04 Server at 
-http://www.ubuntu.com/download/server. 
-
-Premade Install
+Download
 ===============
-If you wish to install our pre made Kalabox you can download that at.
-http://files.kalamuna.com/kalabox1rc4.tar.gz
+If you wish to install our pre made Kalabox you can download it at:
+http://files.kalamuna.com/kalabox1rc5.tar.gz
 
 Import your Box
 ================
@@ -50,35 +35,12 @@ In Virtual Box go to File -> Import Appliance and select the Kalabox that you
 downloaded. If you installed a pre made Kalabox all you need to do is start 
 the box, login with user:kala, password:box and you will be good to go!
 
-Please also check the "Post Installation Setup + Tips & Tricks" and
-"Working with Pantheon" sections below.
-
-If you were more adventurous and installed the blank box please continue reading!
-
-SETTING UP YOUR SERVER
-
-1. Install Ubuntu 12.04 LTS Server*
-
-	* Start your blank box and select the Ubuntu image you downloaded.
-	* Run through the installation normally but make sure you select eth0 as 
-	  your primary network adapter and do not select any of the packages such as 
-	  SSH or LAMP when it asks you at the end.
-	* After installation load up your box and login!
-	* Some machines may throw a kernal error. If this happens you should check your
-	  machine's settings -> System -> Processor and check "Enable PAE/NX".
-
-2. Run the following commands once you have logged in:
-
-	sudo apt-get update
-	sudo apt-get upgrade
-	sudo apt-get install puppet
-	sudo puppet agent --verbose --test --pluginsync --server kalabox.kalamuna.com
-
-That should be it! Your Kalabox should be ready to go! 
-Please see below for some useful tips!
+Please also check the "Post Installation Setup + Tips & Tricks" below and
+the other documentation that comes with the download.
 
 Post Installation Setup + Tips & Tricks
 ======================
+
 USING SSH
 
 Once you have completed the setup we recommend that you minimize VB and the 
@@ -86,113 +48,29 @@ VB Terminal in favor of using your HOST's terminal. This allows for a more
 authenticate experience as it relates to development. Open a terminal in your 
 host and type 
 
-	ssh USERNAME@kala
+	ssh kala@kala
 
-This will connect you to your Kalabox. Your will use the username you set up 
-during installation of Ubuntu 12.04 LTS Server. If 	you installed a pre made box 
-then your user will be "kala" and your password will be "box." 
+This will connect you to your Kalabox. Your user will be "kala" and your password
+will be "box." 
 
 ACCESSING YOUR WEBROOT/DRUSH/HOME
 
-You may want to edit your code using an IDE on your HOST, download your Pantheon 
-aliases or add custom drush commands. Check the network on your HOST and you 
-should see three shares for your vbox: 
+You may want to edit your code using an IDE on your HOST. Check the network on your HOST 
+and you should see a share for your vbox: 
     
 	1. WWW <- Your Webroot
-    2. DRUSH <- Your drush library
-    3. HOME <- Your home folder
     
 If you don't see them you can try connecting to smb://kala. In MaxOSX you can 
 do this by going to Finder -> Go -> Connect to Server. In Ubuntu 12.04 the
 shares are mounted in ~/.gvfs.
-    
 
-Working with Pantheon
-======================
-SITE ALIASES
+GITCONFIG
 
-The first step to working with Pantheon is to get your site aliases. These are 
-available for download on your Pantheon account page. You will want to open up 
-your HOME network share and put them in the .drush folder. You can verify that 
-they are in there by running "drush sa" on your Kalabox.
+You should also override the default gitconfig directives with your name and email.
+From kalabox run:
 
-SSH KEYS
-
-You are also going to want to make sure you add your Kalabox ssh public key to 
-pantheon. Kalabox automatically generates these keys for you on installation.
-You can find the public key in ~/.ssh/id_rsa.pub. You may be able to open it by 
-going to the HOME network share on your host or you can run the following command 
-on your Kalabox:
-
-	cat ~/.ssh/id_rsa.pub
-
-Just copy and paste the output into Pantheon. If you are prompted for a password 
-try rebooting your Kalabox. If this still doesn't work try running the following 
-command
-
-	ssh -v -i ~/.ssh/id_rsa git@code.getpantheon.com
-
-
-DRUSH
-
-Kalabox ships with 8 custom drush commands designed specifically for Pantheon 
-and Kalabox. They are useless without Pantheon's site alias file.
- 
-These commands only work with your dev environments. You will use the same 
-naming convention as your pantheon aliases 	(PANTHEON.SITENAME.ENV) but you will 
-omit the @. You are using the alias name as an argument, not as an alias.
-Here are the commands.
-
-    1. drush kala
-    
-        Will show helpful info
-        
-	2. drush code pantheon.SITENAME.dev    
-
-		Will either git clone or git pull from your pantheon codebase to your 
-		Kalabox at /var/www/SITENAME
-    
-	3. drush data pantheon.SITENAME.dev    
-
-		Will either download and import from your pantheon database to your 
-		Kalabox at kala:SITENAME_kala
-		
-	4. drush files pantheon.SITENAME.dev   
-
-		Will sync your pantheon files to your Kalabox at 
-		/var/www/SITENAME/sites/default/files
-		
-	5. drush vhost pantheon.SITENAME.dev   
-
-		Will build and enable a nginx vhost file of your pantheon site on your 
-		Kalabox at SITENAME.kala
-
-	6. drush build pantheon.SITENAME.dev   
-
-		Will completely build your pantheon site on your Kalabox, this will 
-		edit settings.php and set up a vhost. After running this command and
-		adding your server name to your hosts /etc/hosts file you should be
-		able to browse to the site.
-
-	7. drush krefresh pantheon.SITENAME.dev 
-
-		Will refresh the code, database and files on your Kalabox from your 
-		pantheon site
-
-	8. drush crush pantheon.SITENAME.dev
-
-		Will completely remove pantheon.SITENAME.dev from your Kalabox.
-
-UPDATING YOUR HOST HOSTS FILE
-
-Remember that the Kalabox does not automatically update the /etc/hosts file on 
-your HOST so you will have to add the following line manually.
-
-
-	"192.168.56.101    SITENAME.kala"
-
-You should now be able to navigate to SITENAME.kala in your browser and get to 
-your site! 
+git config --global user.name "YOUR NAME"
+git config --global user.email user@example.com
 
 ################################################################################
 

@@ -18,6 +18,7 @@ experience.
 8.  drush (with custom commands for Pantheon integration)
 9.  PHPMyAdmin
 10. samba (to expose your webroot, drush and home to your VB host)
+11. webgrind (for profiling)
 
 Kalabox is a local server environment only and is not meant to be run as a
 production server. 

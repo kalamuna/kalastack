@@ -1,0 +1,27 @@
+################################################################################
+
+Working with Solr
+======================
+
+Kalabox ships with Solr running inside of Tomcat6. However, there are a couple
+of caveats to working with Solr locally. 
+
+	1. Tomcat is using port 8983 instead of 8080
+	
+	2. You may have to use kala as your servername instead of localhost.
+	
+	3. The solr server is built with search_api_solr in mind. It has not
+	been tested with other Drupal Solr modules. For best results we
+	recommend you use this patched version of search_api_solr:
+	http://files.kalamuna.com/search_api_solr.tar.gz
+	
+	4. If you are downloading a Pantheon site that uses Pantheon's Solr 
+	infrastruture you are going to need to disable the pantheon_apachesolr
+	module when you are doign local development. 
+
+	5. You may have to regenerate your index locally. 
+
+
+################################################################################
+
+(C) 2012 Kalamuna LLC

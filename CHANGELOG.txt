@@ -2,6 +2,17 @@
 
 Changelog
 ======================
+Version 1.0-rc5
+- Added docs for SOLR, XDEBUG
+- Improved documentation
+- Bumped APC shm size
+- Added webgrind and conditional profiling with xdebug (grind.kala)
+- Updated solr to work with drupal's search_api_solr
+- Corrected permission error with private files directory
+- Updated rsync command
+- Excluding less directory from files sync
+- Remove home/drush samba shares in prep for dashboard
+
 Version 1.0-rc4
 - Fixed image cache files not generating
 - Fixed NUCLEAR drush crush bug
