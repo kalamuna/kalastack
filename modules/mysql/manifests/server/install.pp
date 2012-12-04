@@ -13,7 +13,7 @@ class mysql::server::install {
   
   # Install mysql-server
   package { "mysql-server": 
-  	ensure => "5.5.24-0ubuntu0.12.04.1"
+  	ensure => "5.5.28-0ubuntu0.12.04.2"
   }
     
   # Install php5 extension
