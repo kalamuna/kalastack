@@ -13,7 +13,6 @@ node "default" {
   include puppet
   include ssh
   include git
-  include samba
   include motd
   include unzip
   

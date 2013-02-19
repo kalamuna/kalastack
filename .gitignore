@@ -6,6 +6,7 @@
 
 # Vagrant
 .vagrant
+www/
 
 # Package managers
 .librarian
