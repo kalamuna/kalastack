@@ -2,3 +2,13 @@
 .settings
 .buildpath
 .project
+.tmp/
+
+# Vagrant
+.vagrant
+
+# Package managers
+.librarian
+.bundle
+vendor/
+modules/
