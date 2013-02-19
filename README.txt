@@ -31,7 +31,10 @@ Installation
 ------------
 
     $ bundle install
-    $ bundle exec vagrant up
+    $ # A bit of a kludge to run `apt-get update` first.
+    $ bundle exec vagrant up --no-provision
+    $ bundle exec vagrant ssh -c "sudo apt-get update"
+    $ bundle exec vagrant provision
 
 
 Supported 
