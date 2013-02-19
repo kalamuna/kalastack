@@ -27,6 +27,15 @@ Kalabox is meant to be run either natively in Ubuntu 12.04 or in a Virtual
 Box. It has been tested with Ubuntu 12.04 and MacOSX 10.7 - 10.8 as the host
 machine. It should theoretically work with Windows but has not been tested.
 
+Installation
+------------
+
+    $ bundle install
+    $ # A bit of a kludge to run `apt-get update` first.
+    $ bundle exec vagrant up --no-provision
+    $ bundle exec vagrant ssh -c "sudo apt-get update"
+    $ bundle exec vagrant provision
+
 
 Supported 
 =====================

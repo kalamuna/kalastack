@@ -9,11 +9,9 @@ node "default" {
        
   # initialize core packages
   include user
-  include network
   include puppet
   include ssh
   include git
-  include samba
   include motd
   include unzip
   
