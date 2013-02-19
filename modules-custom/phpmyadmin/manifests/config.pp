@@ -21,7 +21,7 @@ class phpmyadmin::config {
 	$pma_db = "phpmyadmin"
 	$pma_user = "root"
 	$pma_pass = "password"
-	$pma_server = "kala"
+	$pma_server = "localhost"
 	
 	# Builds the phpmyadmin config DB
   exec { "phpmyadmindbconfig":
@@ -30,7 +30,6 @@ class phpmyadmin::config {
 	  command => "gunzip < /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | mysql -u${pma_user} -p${pma_pass} -h${pma_server}",
 	  require => [
 	  	Class["phpmyadmin::install"],
-	  	Class["network::config"]
 	  ],
 	}
 	

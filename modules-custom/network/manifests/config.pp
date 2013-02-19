@@ -8,13 +8,6 @@ class network::config {
 	file { "/etc/hosts" :
 		ensure => present,
 	}
-	
-  file { "/etc/network/interfaces" :
-    ensure => present,
-    content => template("network/interfaces.erb"),
-    owner => "root",
-    group => "root",
-  }
   
   exec { "vboxnetup":
     path => "/bin:/usr/bin:/sbin",

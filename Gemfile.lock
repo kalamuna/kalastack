@@ -33,6 +33,8 @@ GEM
       log4r (~> 1.1.9)
       net-scp (~> 1.0.4)
       net-ssh (~> 2.2.2)
+    vagrant-hostmaster (0.8.1)
+      vagrant (~> 1.0.3)
 
 PLATFORMS
   ruby
@@ -42,3 +44,4 @@ DEPENDENCIES
   librarian-puppet-vagrant
   puppet
   vagrant
+  vagrant-hostmaster

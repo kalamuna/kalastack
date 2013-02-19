@@ -26,10 +26,4 @@ class phpfpm::extensions::xdebug (
     require => Package["php5-xdebug"],
     notify => [Class["phpfpm::service"], Class["nginx::service"]],
   }  
-  
-  network::prepend { "xdebug.kala":
-    file => "/etc/hosts",
-    line => "192.168.56.1  xdebug.kala",
-    require => File["/etc/hosts"],
-  }
 }
