@@ -5,7 +5,7 @@
  */
 class phpmyadmin::install {
 	package { "phpmyadmin" : 
-		ensure => "4:3.4.10.1-1",
+		ensure => "present",
 		require => [
 			Class["phpfpm"],
 			Class["nginx"],
