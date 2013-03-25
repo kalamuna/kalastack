@@ -74,7 +74,6 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provision :puppet_server do |puppet|
     puppet.puppet_server = "kalabox.kalamuna.com"
-    puppet.puppet_node = "default"
     puppet.options = "--verbose --debug --test --environment dev"
   end
   config.vm.provision :puppet do |puppet|

@@ -6,8 +6,6 @@
  */
 class puppet::config {
 	
-	$puppetserver = "kalabox.kalamuna.com"
-	
 	file { "/etc/puppet/puppet.conf" :
 		ensure => present,
 		content => template("puppet/puppet.conf.erb"),
