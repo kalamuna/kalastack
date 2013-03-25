@@ -17,7 +17,7 @@ class phpfpm::extensions::xdebug (
 	
 ){
 
-  phpfpm::extension { "php5-xdebug": version => "2.1.0-1", }
+  phpfpm::extension { "php5-xdebug": version => present, }
   
   exec { "appendxdebug":
     path => "/bin:/usr/bin",
@@ -26,10 +26,4 @@ class phpfpm::extensions::xdebug (
     require => Package["php5-xdebug"],
     notify => [Class["phpfpm::service"], Class["nginx::service"]],
   }  
-  
-  network::prepend { "xdebug.kala":
-    file => "/etc/hosts",
-    line => "192.168.56.1  xdebug.kala",
-    require => File["/etc/hosts"],
-  }
 }

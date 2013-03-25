@@ -22,10 +22,8 @@ class drush::config {
       require => File["/usr/share/drush/commands/kala"],
     }
     
-    file { "/home/${::kala_user}/.drush":
+    file { "~/.drush":
       ensure  => directory,
-      owner   => $::kala_user,
-      group   => $::kala_user,
       mode    => 755,
       require => Class["drush::install"],
     }

@@ -8,13 +8,9 @@
 node "default" {
        
   # initialize core packages
-  include user
-  include network
+  include update
   include puppet
-  include ssh
   include git
-  include samba
-  include motd
   include unzip
   
   # initialize LEMP stack
@@ -27,10 +23,10 @@ node "default" {
 	include mysql
 	
 	# initialize bonus shit
-	include solr
-	include drush
-	include phpmyadmin
-	include webgrind
+	# include solr
+	# include drush
+	# include phpmyadmin
+	# include webgrind
 	
 	# build basic drupal site
 	drupal::nginx::vhost { "drupaldefault":

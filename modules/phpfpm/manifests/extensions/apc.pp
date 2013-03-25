@@ -11,7 +11,7 @@ class phpfpm::extensions::apc (
 	
 ){
 
-  phpfpm::extension { "php-apc": version => "3.1.7-1", }
+  phpfpm::extension { "php-apc": version => present, }
   
   file {
     "apc.ini":

@@ -13,11 +13,11 @@ class mysql::server::install {
   
   # Install mysql-server
   package { "mysql-server": 
-  	ensure => "5.5.28-0ubuntu0.12.04.2"
+  	ensure => present
   }
     
   # Install php5 extension
-  phpfpm::extension { "php5-mysql": version => "5.3.10-1ubuntu3.4", }
+  phpfpm::extension { "php5-mysql": version => present, }
 
   # Add the root user
   exec { "Set MySQL server root password":
