@@ -1,7 +1,8 @@
+
 /**
  * 
- * This will build a basic LEMP stack with some extra goodies for every node that connects to the puppetmaster
- * at kalabox.kalamuna.com
+ * This will build a basic LEMP stack with some extra goodies for every node that connects 
+ * to the puppetmaster at kalabox.kalamuna.com
  * 
  */
 
@@ -24,9 +25,9 @@ node "default" {
 	
 	# initialize bonus shit
 	# include solr
-	# include drush
-	# include phpmyadmin
-	# include webgrind
+	include drush
+	include phpmyadmin
+	include webgrind
 	
 	# build basic drupal site
 	drupal::nginx::vhost { "drupaldefault":
