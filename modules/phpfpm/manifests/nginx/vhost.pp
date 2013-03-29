@@ -34,8 +34,8 @@ define phpfpm::nginx::vhost (
 	
 	file { $root:
 	    ensure => "directory",
-	    owner  => "www-data",
-	    group  => "www-data",
+	    owner  => $::kalauser,
+	    group  => $::kalauser,
 	    mode   => 755,
 	}
 	

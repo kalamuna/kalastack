@@ -19,8 +19,8 @@
 ; Unix user/group of processes
 ; Note: The user is mandatory. If the group is not set, the default user's group
 ;       will be used.
-user = www-data
-group = www-data
+user = <%= kalauser %>
+group = <%= kalauser %>
 
 ; The address on which to accept FastCGI requests.
 ; Valid syntaxes are:
@@ -42,8 +42,8 @@ listen = /tmp/php-fpm.sock
 ; BSD-derived systems allow connections regardless of permissions. 
 ; Default Values: user and group are set as the running user
 ;                 mode is set to 0666
-;listen.owner = www-data
-;listen.group = www-data
+;listen.owner = <%= kalauser %>
+;listen.group = <%= kalauser %>
 ;listen.mode = 0666
  
 ; List of ipv4 addresses of FastCGI clients which are allowed to connect.
@@ -174,7 +174,7 @@ pm.max_spare_servers = 6
 ;   start time           - the date and time the process has started;
 ;   start since          - the number of seconds since the process has started;
 ;   requests             - the number of requests the process has served;
-;   request duration     - the duration in µs of the requests;
+;   request duration     - the duration in ï¿½s of the requests;
 ;   request method       - the request method (GET, POST, ...);
 ;   request URI          - the request URI with the query string;
 ;   content length       - the content length of the request (only with POST);
