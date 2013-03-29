@@ -253,10 +253,15 @@ function kala_code(){
     }
     else {
       drush_print('no local codebase, attempting a git clone, this may take a few minutes so please be patient...');
-      if (drush_shell_exec("git clone git@code.getpantheon.com:" . $pantheon['id'] . " /var/www/" . $pantheon['site'])) {
-        drush_log('all your pantheon codebase are belongs to you!', 'success');
+      // try to connect via ssh
+      if (drush_shell_exec("git clone ssh://codeserver.dev." . $pantheon['id'] . "@codeserver.dev." . $pantheon['id'] . ".drush.in:2222/~/repository.git /var/www/" . $pantheon['site'])) {
+          drush_log('all your pantheon codebase are belongs to you!', 'success');
       }
       else {
+        // try to connect via old git string
+        if (drush_shell_exec("git clone git@code.getpantheon.com:" . $pantheon['id'] . " /var/www/" . $pantheon['site'])) {
+          drush_log('all your pantheon codebase are belongs to you!', 'success');
+        }
         drush_log('could not git clone, check to see the directory /var/www/' . $pantheon['site'] . ' is empty and your ssh keys are installed correctly', 'error');
       }
     }
@@ -265,6 +270,7 @@ function kala_code(){
     return;
   }
 }
+
 
 /**
  *
@@ -290,14 +296,14 @@ function kala_data(){
       drush_log('could not get data from pantheon', 'error');
     }
     
-    if (drush_shell_exec("mysql -uroot -ppassword -hkala -e \"create database " . $pantheon['kaladb'] . "\"")) {
+    if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost -e \"create database " . $pantheon['kaladb'] . "\"")) {
       drush_log('new local database ' . $pantheon['kaladb'] . ' created', 'success');
     }
     else {
       drush_log('database already exists, skipping', 'notice');
     }
     
-    if (drush_shell_exec("mysql -uroot -ppassword -hkala " . $pantheon['kaladb'] . " < /tmp/" . $pantheon['id'] .".sql")) {
+    if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost " . $pantheon['kaladb'] . " < /tmp/" . $pantheon['id'] .".sql")) {
       drush_log('your pantheon data has been imported to ' . $pantheon['kaladb'], 'success');
     }
     else {
@@ -330,14 +336,14 @@ function kala_files(){
     }
     else {
       mkdir("/var/www/" . $pantheon['site'] . "/sites/default/files");     
-      mkdir("/var/www/" . $pantheon['site'] . "/sites/default/files/private");
+      mkdir("/var/www/" . $pantheon['site'] . "/sites/default/private");
       drush_log('files directory created', 'success');
       drush_shell_exec("chmod 775 /var/www/" . $pantheon['site'] . "/sites/default/files");
-      drush_shell_exec("chmod 775 /var/www/" . $pantheon['site'] . "/sites/default/files/private");
+      drush_shell_exec("chmod 775 /var/www/" . $pantheon['site'] . "/sites/default/private");
     }
     
     drush_log('starting files sync, this may take a few minutes...', 'success');
-    drush_shell_exec("rsync -rlztv --ipv4 -e 'ssh -p 2222' --exclude 'js' --exclude 'css' --exclude 'ctools' --exclude 'imagecache' --exclude 'xmlsitemap' --exclude 'backup_migrate' --exclude 'styles' --exclude 'less' " . $pantheon['env'] . "." . $pantheon['id'] . "@appserver." . $pantheon['env'] . "." . $pantheon['id'] . ".drush.in:files /var/www/" . $pantheon['site'] . "/sites/default/files");
+    drush_shell_exec("rsync -rlztv --ipv4 -e 'ssh -p 2222' --exclude 'js' --exclude 'css' --exclude 'ctools' --exclude 'imagecache' --exclude 'xmlsitemap' --exclude 'backup_migrate' --exclude 'styles' --exclude 'less' " . $pantheon['env'] . "." . $pantheon['id'] . "@appserver." . $pantheon['env'] . "." . $pantheon['id'] . ".drush.in:files /var/www/" . $pantheon['site'] . "/sites/default/");    
     drush_log('files synced!', 'success');
   }
   else {
@@ -396,7 +402,7 @@ function kala_destroy(){
 	if (drush_shell_exec("sudo rm -rf /var/www/" . $pantheon['site'])) {
 	  drush_log('code and files crushed', 'success');
 	}
-	if (drush_shell_exec("mysql -uroot -ppassword -hkala -e \"drop database " . $pantheon['kaladb'] . "\"")) {
+	if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost -e \"drop database " . $pantheon['kaladb'] . "\"")) {
 	  drush_log('database crushed', 'success');
 	}
 	
@@ -485,25 +491,29 @@ function _kala_get_pantheon($sitename) {
     $user = explode('.', $aliases['@' . $sitename]['remote-user']);
     
     // weak check if alias is valid pantheon alias
-    if ($site[0] != 'dev') {
+    
+    if ($user[0] != 'dev') {
       drush_log('we do not allow access to the live or test sites', 'error');
       return FALSE;
     }
-    elseif ($site[2] != 'gotpantheon' || !isset($aliases['@' . $sitename]['remote-host']) || !isset($aliases['@' . $sitename]['remote-user']) || !isset($aliases['@' . $sitename]['ssh-options'])) {
+    elseif (!isset($aliases['@' . $sitename]['remote-host']) || !isset($aliases['@' . $sitename]['remote-user']) || !isset($aliases['@' . $sitename]['db-url'] )) {
       drush_log('not a validly formatted pantheon alias', 'error');
       return FALSE;
     }
     else {
       drush_log('valid pantheon alias located', 'success');
       $pantheon = array();
+      
+      $siteal = explode('.', $sitename);
     
       // load environment
-      $pantheon['env'] = $site[0];
-      $pantheon['site'] = $site[1];
+      $pantheon['env'] = $user[0];
+      $pantheon['site'] = $siteal[0];
       $pantheon['id'] = $user[1];
       $pantheon['ssh'] = $aliases['@' . $sitename]['ssh-options'];
       
       // load database
+      // we shouldnt load this every time or we should at least check for the file 
       // get connect string, dump it into file, load it into php
       drush_shell_exec("ssh " . $pantheon['ssh'] . " '" . $pantheon['env'] . "." . $pantheon['id'] . "'@'appserver." . $pantheon['env'] . "." . $pantheon['id'] . ".drush.in' 'drush  --root='\''.'\'' --uri='\''" . $pantheon['env'] . "." . $pantheon['site'] .".gotpantheon.com'\'' sql-connect' > /tmp/" . $pantheon['id']);
       $db_string = file_get_contents("/tmp/" . $pantheon['id']);
@@ -546,7 +556,7 @@ function _kala_reset_settings($pantheon) {
 	   * Kalabox local settings
 	   */
 	   
-	  $db_url = \'mysql://root:password@kala/' . $pantheon['kaladb'] . '\';';
+	  $db_url = \'mysql://root:password@localhost/' . $pantheon['kaladb'] . '\';';
 	  
 	  fwrite($fh, $settings);
 	  fclose($fh);
@@ -571,7 +581,7 @@ function _kala_reset_settings($pantheon) {
       \'database\' => \'' . $pantheon['kaladb'] . '\',
       \'username\' => \'root\',
       \'password\' => \'password\',
-      \'host\' => \'kala\',
+      \'host\' => \'localhost\',
       \'prefix\' => \'\',
       );
     
@@ -581,3 +591,5 @@ function _kala_reset_settings($pantheon) {
     }
   }
 }
+
+
