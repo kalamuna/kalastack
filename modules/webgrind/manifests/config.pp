@@ -15,7 +15,7 @@ class webgrind::config {
   
   phpfpm::nginx::vhost { "webgrind":
     server_name => "grind.kala",
-    root        => "/var/www/webgrind",
+    root        => "/usr/share/webgrind",
   }
   
 }
