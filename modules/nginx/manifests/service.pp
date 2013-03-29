@@ -3,10 +3,10 @@
  * Makes sure nginx is running
  * 
  */
-class nginx::service ($ensure = "running") {
+class nginx::service {
 
 	service { "nginx":
-		ensure 		=> $ensure,
+		ensure 		=> running,
 		require 	=> Class["nginx::install"],
 	}
 
