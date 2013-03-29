@@ -28,5 +28,6 @@ class drush::config {
       group   => root,
       mode    => 644,
       source  => "puppet:///modules/drush/drushrc.php",
+      require => [Class["drush::install"], Class["drush::upgrade"]],
     }  
 }
