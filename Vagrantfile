@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
   
     # Create a private network, which allows host-only access to the machine
     # using a specific IP.
-    kalabox.vm.network :private_network, ip: "192.168.33.10"
+    kalabox.vm.network :private_network, ip: "192.168.42.10"
   
     # Create a public network, which generally matched to bridged network.
     # Bridged networks make the machine appear as another physical device on
@@ -80,12 +80,20 @@ Vagrant.configure("2") do |config|
     kalabox.vm.provision :puppet_server do |puppet_server|
       puppet_server.puppet_server = "kalabox.kalamuna.com"
       puppet_server.options = "--verbose --debug --test --environment dev"
+      puppet_server.facter = {
+        "vagrant" => "1",
+        "kalauser" => "vagrant",
+      }
     end
     kalabox.vm.provision :puppet do |puppet|
        puppet.manifests_path = "manifests"
        puppet.manifest_file  = "site.pp"
        puppet.module_path = "modules"
        puppet.options = "--verbose --debug"
+       puppet.facter = {
+        "vagrant" => "1",
+        "kalauser" => "vagrant",
+      }
     end
   
     # Enable provisioning with chef solo, specifying a cookbooks path, roles
