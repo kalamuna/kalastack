@@ -83,6 +83,7 @@ Vagrant.configure("2") do |config|
       puppet_server.facter = {
         "vagrant" => "1",
         "kalauser" => "vagrant",
+        "kalahost" => "192.168.42.1",
       }
     end
     kalabox.vm.provision :puppet do |puppet|
@@ -93,6 +94,7 @@ Vagrant.configure("2") do |config|
        puppet.facter = {
         "vagrant" => "1",
         "kalauser" => "vagrant",
+        "kalahost" => "192.168.42.1",
       }
     end
   
