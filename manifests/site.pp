@@ -11,6 +11,7 @@ node "default" {
   include puppet
   include git
   include unzip
+  include nfs
 
   # initialize LEMP stack
   include phpfpm

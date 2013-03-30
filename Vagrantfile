@@ -34,8 +34,8 @@ Vagrant.configure("2") do |config|
     # the path on the host to the actual folder. The second argument is
     # the path on the guest to mount the folder. And the optional third
     # argument is a set of non-required options.
-    kalabox.vm.synced_folder "~/kalabox/www", "/var/www", :create => true
-    kalabox.vm.synced_folder "~/kalabox/drush", "/var/www/.drush", :create => true
+    kalabox.vm.synced_folder "~/kalabox/www", "/var/www", :create => true, :nfs => true
+    kalabox.vm.synced_folder "~/kalabox/drush", "/var/www/.drush", :create => true, :nfs => true
   
     # Set some SSH config
     # config.ssh.username = "kala"
