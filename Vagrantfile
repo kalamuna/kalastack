@@ -5,12 +5,13 @@ Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
+  # Wooden ships on the water. Very free. And Easy.
 
   # Every Vagrant virtual environment requires a box to build off of.
   # Use multi VM syntax
   config.vm.define :kalabox do |kalabox|
     kalabox.vm.box = "kalabox"
-    kalabox.vm.hostname = "kalabox" 
+    kalabox.vm.hostname = "kala" 
 
     # The url from where the 'config.vm.box' box will be fetched if it
     # doesn't already exist on the user's system.
@@ -39,8 +40,8 @@ Vagrant.configure("2") do |config|
   
     # Set some SSH config
     # config.ssh.username = "kala"
-    kalabox.ssh.host = "kalabox"
-    kalabox.ssh.forward_agent = true
+    # kalabox.ssh.host = "kalabox"
+    # kalabox.ssh.forward_agent = true
 
     # Provider-specific configuration so you can fine-tune various
     # backing providers for Vagrant. These expose provider-specific options.
@@ -77,26 +78,56 @@ Vagrant.configure("2") do |config|
     # #               Managed by Puppet.\n"
     # # }
     #
-    kalabox.vm.provision :puppet_server do |puppet_server|
-      puppet_server.puppet_server = "kalabox.kalamuna.com"
-      puppet_server.options = "--verbose --debug --test --environment dev"
-      puppet_server.facter = {
+    
+    $script = "
+    if [ ! -f /etc/kalabox/uuid ]; then
+      mkdir /etc/kalabox
+      uuidgen > /etc/kalabox/uuid
+      export KALAUUID=$(cat /etc/kalabox/uuid)
+      apt-get update -y
+      apt-get install puppet -y
+      if grep --quiet certname /etc/puppet/puppet.conf; then
+        echo
+      else
+        echo '[agent]' >> /etc/puppet/puppet.conf
+        echo 'classfile   = $vardir/classes.txt' >> /etc/puppet/puppet.conf
+        echo 'localconfig = $vardir/localconfig' >> /etc/puppet/puppet.conf
+        echo 'report      = true' >> /etc/puppet/puppet.conf
+        echo 'pluginsync  = true' >> /etc/puppet/puppet.conf
+        echo 'masterport  = 8140' >> /etc/puppet/puppet.conf
+        echo 'environment = production' >> /etc/puppet/puppet.conf
+        echo 'server      = kalabox.kalamuna.com' >> /etc/puppet/puppet.conf
+        echo 'node_name   = facter' >> /etc/puppet/puppet.conf
+        echo 'listen      = false' >> /etc/puppet/puppet.conf
+        echo 'certname    = kala.'$KALAUUID'.f04083c46d392c7c7276a3570a96d095.box' >> /etc/puppet/puppet.conf
+        service puppet restart -y
+      fi
+    fi
+    "
+    
+    kalabox.vm.provision :shell, :inline => $script
+    kalabox.vm.provision :puppet_server do |kalabox|
+      kalabox.puppet_server = "kalabox.kalamuna.com"
+      kalabox.options = "--verbose --debug --test"
+      kalabox.facter = {
         "vagrant" => "1",
         "kalauser" => "vagrant",
         "kalahost" => "192.168.42.1",
       }
     end
-    kalabox.vm.provision :puppet do |puppet|
-       puppet.manifests_path = "manifests"
-       puppet.manifest_file  = "site.pp"
-       puppet.module_path = "modules"
-       puppet.options = "--verbose --debug"
-       puppet.facter = {
+    # should not ever run this provisioner except for development
+    kalabox.vm.provision :puppet do |start|
+       start.manifests_path = "manifests"
+       start.manifest_file  = "site.pp"
+       start.module_path = "modules"
+       start.options = "--verbose --debug"
+       start.facter = {
         "vagrant" => "1",
         "kalauser" => "vagrant",
         "kalahost" => "192.168.42.1",
       }
     end
+    
   
     # Enable provisioning with chef solo, specifying a cookbooks path, roles
     # path, and data_bags path (all relative to this Vagrantfile), and adding

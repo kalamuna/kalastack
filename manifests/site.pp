@@ -7,8 +7,6 @@
 
 node "default" {
   # initialize core packages
-  include update
-  include puppet
   include git
   include unzip
   include nfs
