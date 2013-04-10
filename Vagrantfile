@@ -97,7 +97,6 @@ Vagrant.configure("2") do |config|
         echo 'masterport  = 8140' >> /etc/puppet/puppet.conf
         echo 'environment = production' >> /etc/puppet/puppet.conf
         echo 'server      = kalabox.kalamuna.com' >> /etc/puppet/puppet.conf
-        echo 'node_name   = facter' >> /etc/puppet/puppet.conf
         echo 'listen      = false' >> /etc/puppet/puppet.conf
         echo 'certname    = kala.'$KALAUUID'.f04083c46d392c7c7276a3570a96d095.box' >> /etc/puppet/puppet.conf
         service puppet restart -y
