@@ -12,15 +12,14 @@ Notes: At this time, Kalastack is actively tested on Mac OSX 1.8 and with Vagran
 Once you have downloaded and installed both Vagrant and Virtual box,
 you can build out the complete stack:
 
-1. mkdir ~/kalastack
-2. cd ~/kalastack
-3. git clone git://github.com/kalamuna/kalastack.git ./
-4. vagrant box add kalabox http://files.vagrantup.com/precise64.box
-5. vagrant up kalabox --provision-with=shell,puppet_server
-
-To ssh into your server:
-
+    $ mkdir ~/kalastack
     $ cd ~/kalastack
+    $ git clone git://github.com/kalamuna/kalastack.git ./
+    $ vagrant box add kalabox http://files.vagrantup.com/precise64.box
+    $ vagrant up kalabox --provision-with=shell,puppet_server
+
+To ssh into your server, from within ~/kalastack, issue:
+
     $ vagrant ssh 
 
 ## Post Install Checks
@@ -31,7 +30,7 @@ Add the following entry to /etc/hosts on your host system
   
     192.168.42.10 start.kala php.kala grind.kala kala
 
-* On Windows XP this is located at c:\WINDOWS\system32\drivers\etc\hosts
+On Windows XP this is located at c:\WINDOWS\system32\drivers\etc\hosts
 
 You should now be able to access htt://start.kala in your browser
 
