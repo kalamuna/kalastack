@@ -29,7 +29,7 @@ To ssh into your server:
 
 Add the following entry to /etc/hosts on your host system
   
-  192.168.42.10 start.kala php.kala grind.kala kala
+    192.168.42.10 start.kala php.kala grind.kala kala
 
 * On Windows XP this is located at c:\WINDOWS\system32\drivers\etc\hosts
 
@@ -54,8 +54,8 @@ your aliases are functioning correctly by running "drush sa" on your Kalastack.
 You are also going to want to make sure you create and add your Kalabox ssh public key to 
 Pantheon. This can be a little tricky. See [how to participate](https://github.com/kalamuna/kalastack/wiki/How-to-Participate#ssh-key) for more info
 
-  $ ssh-keygen
-  $ cat ~/.ssh/id_rsa.pub
+    $ ssh-keygen
+    $ cat ~/.ssh/id_rsa.pub
 
 ## DRUSH
 
@@ -67,47 +67,48 @@ naming convention as your pantheon aliases 	(PANTHEON.SITENAME.ENV) but you will
 omit the @. You are using the alias name as an argument, not as an alias.
 Here are the commands.
 
-	1. drush build SITENAME.dev   
+     $ drush build SITENAME.dev   
 
-		Will completely build your pantheon site on your Kalastack, this will 
-		edit settings.php and set up a vhost. After running this command and
-		adding your server name to your hosts /etc/hosts file you should be
-		able to visit the site in your web browser.
+Will completely build your Pantheon site on your Kalastack, this will 
+edit settings.php and set up a vhost. After running this command and
+adding your server name to your hosts /etc/hosts file you should be
+able to visit the site in your web browser.
 
-	2. drush krefresh SITENAME.dev 
+    $ drush krefresh SITENAME.dev 
 
-		Will refresh the code, database and files on your Kalastack from your 
-		pantheon site
+Will refresh the code, database and files on your Kalastack from your 
+pantheon site
 
-	3. drush crush SITENAME.dev
+    $ drush crush SITENAME.dev
 
-		Will completely remove SITENAME.dev from your Kalastack.
-		
-	4. drush kala
-    
-    Will show helpful info
-        
-	5. drush code SITENAME.dev    
+Will completely remove SITENAME.dev from your Kalastack.
 
-		Will either git clone or git pull from your pantheon codebase to your 
-		Kalabox at /var/www/SITENAME on your guest and ~/kalabox/www/SITENAME 
-    on your guest.
-    
-	6. drush data SITENAME.dev    
+    $ drush kala
 
-		Will download and import your pantheon dev mysql database to your 
-		Kalabox in a DB named SITENAME_kala
-		
-	7. drush files SITENAME.dev   
+Will show helpful info
 
-		Will sync your pantheon dev files to your Kalastack, accessible from 
-		/var/www/SITENAME/sites/default/files when ssh'd in to your stack, and from
-    ~/kalabox/www/SITENAME/sites/default/files on your host.
-		
-	8. drush vhost SITENAME.dev   
+    $ drush code SITENAME.dev    
 
-		Will build and enable a nginx vhost file of your pantheon site on your 
-		Kalastack at SITENAME.kala
+Will either git clone or git pull from your Pantheon codebase to your 
+Kalabox at /var/www/SITENAME on your guest and ~/kalabox/www/SITENAME 
+on your guest.
+
+    $ drush data SITENAME.dev    
+
+Will download and import your Pantheon dev MySQL database to your 
+Kalabox in a DB named SITENAME_kala
+
+    $ drush files SITENAME.dev   
+
+Will sync your pantheon dev files to your Kalastack, accessible from 
+/var/www/SITENAME/sites/default/files when ssh'd in to your stack, and from
+~/kalabox/www/SITENAME/sites/default/files on your host.
+
+    $ drush vhost SITENAME.dev   
+
+Will build and enable a nginx vhost file of your Pantheon site on your 
+Kalastack at SITENAME.kala
+
 
 ### UPDATING YOUR HOST HOSTS FILE
 
@@ -115,7 +116,7 @@ Remember that the Kalastack does not automatically update the /etc/hosts file on
 your HOST so you will have to add each new site line manually in order 
 to visit http://SITENAME.kala in your web browser!
 
-	"192.168.42.10    SITENAME.kala"
+    192.168.42.10    SITENAME.kala
 
 ## Xdebux
 
