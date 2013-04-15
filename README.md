@@ -32,7 +32,7 @@ Add the following entry to /etc/hosts on your host system
 
 On Windows XP this is located at c:\WINDOWS\system32\drivers\etc\hosts
 
-You should now be able to access htt://start.kala in your browser
+You should now be able to access http://start.kala in your browser
 
 ### YOUR FILES
 
