@@ -117,7 +117,7 @@ to visit http://SITENAME.kala in your web browser!
 
     192.168.42.10    SITENAME.kala
 
-## Xdebux
+## Xdebug
 
 Kalastack ships with xdebug for both debugging and profiling. 
 
