@@ -107,22 +107,22 @@ Vagrant.configure("2") do |config|
     "
     
     kalabox.vm.provision :shell, :inline => $script
-    kalabox.vm.provision :puppet_server do |kalabox|
-      kalabox.puppet_server = "kalabox.kalamuna.com"
-      kalabox.options = "--verbose --debug --test"
-      kalabox.facter = {
+    kalabox.vm.provision :puppet_server do |puppet|
+      puppet.puppet_server = "kalabox.kalamuna.com"
+      puppet.options = "--verbose --debug --test"
+      puppet.facter = {
         "vagrant" => "1",
         "kalauser" => "vagrant",
         "kalahost" => "192.168.42.1",
       }
     end
     # should not ever run this provisioner except for development
-    kalabox.vm.provision :puppet do |start|
-       start.manifests_path = "manifests"
-       start.manifest_file  = "site.pp"
-       start.module_path = "modules"
-       start.options = "--verbose --debug"
-       start.facter = {
+    kalabox.vm.provision :puppet do |puppet|
+       puppet.manifests_path = "manifests"
+       puppet.manifest_file  = "site.pp"
+       puppet.module_path = "modules"
+       puppet.options = "--verbose --debug"
+       puppet.facter = {
         "vagrant" => "1",
         "kalauser" => "vagrant",
         "kalahost" => "192.168.42.1",
