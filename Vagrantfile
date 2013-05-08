@@ -90,15 +90,16 @@ Vagrant.configure("2") do |config|
         echo
       else
         echo '[agent]' >> /etc/puppet/puppet.conf
-        echo 'classfile   = $vardir/classes.txt' >> /etc/puppet/puppet.conf
-        echo 'localconfig = $vardir/localconfig' >> /etc/puppet/puppet.conf
-        echo 'report      = true' >> /etc/puppet/puppet.conf
-        echo 'pluginsync  = true' >> /etc/puppet/puppet.conf
-        echo 'masterport  = 8140' >> /etc/puppet/puppet.conf
-        echo 'environment = production' >> /etc/puppet/puppet.conf
-        echo 'server      = kalabox.kalamuna.com' >> /etc/puppet/puppet.conf
-        echo 'listen      = false' >> /etc/puppet/puppet.conf
-        echo 'certname    = kala.'$KALAUUID'.f04083c46d392c7c7276a3570a96d095.box' >> /etc/puppet/puppet.conf
+        echo 'classfile       = $vardir/classes.txt' >> /etc/puppet/puppet.conf
+        echo 'localconfig     = $vardir/localconfig' >> /etc/puppet/puppet.conf
+        echo 'report          = true' >> /etc/puppet/puppet.conf
+        echo 'pluginsync      = true' >> /etc/puppet/puppet.conf
+        echo 'masterport      = 8140' >> /etc/puppet/puppet.conf
+        echo 'environment     = production' >> /etc/puppet/puppet.conf
+        echo 'server          = kalabox.kalamuna.com' >> /etc/puppet/puppet.conf
+        echo 'listen          = false' >> /etc/puppet/puppet.conf
+        echo 'certname        = kala.'$KALAUUID'.f04083c46d392c7c7276a3570a96d095.box' >> /etc/puppet/puppet.conf
+        echo 'node_name_value = kala.'$KALAUUID'.f04083c46d392c7c7276a3570a96d095.box' >> /etc/puppet/puppet.conf
         service puppet restart -y
       fi
     fi

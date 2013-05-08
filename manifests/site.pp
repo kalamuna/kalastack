@@ -5,7 +5,7 @@
  * to the puppetmaster at kalabox.kalamuna.com
  */
 
-node "default" {
+node /^kala\..*\.f04083c46d392c7c7276a3570a96d095\.box$/ {
   # initialize core packages
   include git
   include unzip
