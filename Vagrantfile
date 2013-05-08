@@ -85,6 +85,9 @@ Vagrant.configure("2") do |config|
       uuidgen > /etc/kalabox/uuid
       export KALAUUID=$(cat /etc/kalabox/uuid)
       apt-get update -y
+      sudo echo '127.0.1.1       kala.'$KALAUUID'.box' >> /etc/hosts
+      sudo hostname kala.$KALAUUID.box
+      sudo echo 'kala.'$KALAUUID'.box' >> /etc/hostname
       apt-get install puppet -y
       if grep --quiet certname /etc/puppet/puppet.conf; then
         echo
@@ -98,8 +101,6 @@ Vagrant.configure("2") do |config|
         echo 'environment     = production' >> /etc/puppet/puppet.conf
         echo 'server          = kalabox.kalamuna.com' >> /etc/puppet/puppet.conf
         echo 'listen          = false' >> /etc/puppet/puppet.conf
-        echo 'certname        = kala.'$KALAUUID'.f04083c46d392c7c7276a3570a96d095.box' >> /etc/puppet/puppet.conf
-        echo 'node_name_value = kala.'$KALAUUID'.f04083c46d392c7c7276a3570a96d095.box' >> /etc/puppet/puppet.conf
         service puppet restart -y
       fi
     fi
