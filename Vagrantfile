@@ -21,23 +21,23 @@ Vagrant.configure("2") do |config|
     # within the machine from a port on the host machine. In the example below,
     # accessing "localhost:8080" will access port 80 on the guest machine.
     # config.vm.network :forwarded_port, guest: 80, host: 8080
-  
+
     # Create a private network, which allows host-only access to the machine
     # using a specific IP.
     kalabox.vm.network :private_network, ip: "192.168.42.10"
-  
+
     # Create a public network, which generally matched to bridged network.
     # Bridged networks make the machine appear as another physical device on
     # your network.
     # config.vm.network :public_network
-  
+
     # Share an additional folder to the guest VM. The first argument is
     # the path on the host to the actual folder. The second argument is
     # the path on the guest to mount the folder. And the optional third
     # argument is a set of non-required options.
     kalabox.vm.synced_folder "~/kalabox/www", "/var/www", :create => true, :nfs => true
     kalabox.vm.synced_folder "~/kalabox/drush", "/var/www/.drush", :create => true, :nfs => true
-  
+
     # Set some SSH config
     # config.ssh.username = "kala"
     # kalabox.ssh.host = "kalabox"
@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
     # backing providers for Vagrant. These expose provider-specific options.
     # Example for VirtualBox:
     #
-    
+
     kalabox.vm.provider :virtualbox do |vb|
     #   # Don't boot with headless mode
     #   vb.gui = true
@@ -59,7 +59,7 @@ Vagrant.configure("2") do |config|
     #
     # View the documentation for the provider you're using for more
     # information on available options.
-  
+
     # Enable provisioning with Puppet stand alone.  Puppet manifests
     # are contained in a directory path relative to this Vagrantfile.
     # You will need to create the manifests directory and a manifest in
@@ -78,7 +78,7 @@ Vagrant.configure("2") do |config|
     # #               Managed by Puppet.\n"
     # # }
     #
-    
+
     $script = "
     if [ ! -f /etc/kalabox/uuid ]; then
       mkdir /etc/kalabox
@@ -105,7 +105,7 @@ Vagrant.configure("2") do |config|
       fi
     fi
     "
-    
+
     kalabox.vm.provision :shell, :inline => $script
     kalabox.vm.provision :puppet_server do |kalabox|
       kalabox.puppet_server = "kalabox.kalamuna.com"
@@ -128,8 +128,8 @@ Vagrant.configure("2") do |config|
         "kalahost" => "192.168.42.1",
       }
     end
-    
-  
+
+
     # Enable provisioning with chef solo, specifying a cookbooks path, roles
     # path, and data_bags path (all relative to this Vagrantfile), and adding
     # some recipes and/or roles.
@@ -144,7 +144,7 @@ Vagrant.configure("2") do |config|
     #   # You may also specify custom JSON attributes:
     #   chef.json = { :mysql_password => "foo" }
     # end
-  
+
     # Enable provisioning with chef server, specifying the chef server URL,
     # and the path to the validation key (relative to this Vagrantfile).
     #
