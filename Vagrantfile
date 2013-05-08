@@ -25,7 +25,6 @@ Vagrant.configure("2") do |config|
     # Create a private network, which allows host-only access to the machine
     # using a specific IP.
     kalabox.vm.network :private_network, ip: "192.168.42.10"
-    kalabox.vm.hostname = "kala"
     kalabox.hostsupdater.aliases = ["start.kala", "php.kala", "grind.kala"]
   
     # Create a public network, which generally matched to bridged network.
