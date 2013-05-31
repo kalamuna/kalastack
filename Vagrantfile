@@ -87,7 +87,7 @@ Vagrant.configure("2") do |config|
       apt-get update -y
       sudo echo '127.0.1.1       kala.'$KALAUUID'.box' >> /etc/hosts
       sudo hostname kala.$KALAUUID.box
-      sudo echo 'kala.'$KALAUUID'.box' >> /etc/hostname
+      sudo echo 'kala.'$KALAUUID'.box' > /etc/hostname
       apt-get install puppet -y
       if grep --quiet certname /etc/puppet/puppet.conf; then
         echo
