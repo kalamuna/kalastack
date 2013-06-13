@@ -76,8 +76,7 @@ Kalastack ships with 8 custom drush commands designed specifically for Pantheon
 and Kalastack. They depend on a Pantheon site alias file.
 
 These commands only work with your dev environments. You will pass your kalabox site as an
-argument to these commands. Site names are derived from the pantheon aliases file on your Kalastack
-(@PANTHEON.SITENAME.ENV) and interact with your Pantehon DEV environment.
+argument to these commands. Site names are derived from the pantheon aliases file on your Kalastack and interact with your Pantehon DEV environment.
 
      $ drush build SITENAME.dev
 
@@ -138,9 +137,8 @@ Kalastack ships with xdebug for both debugging and profiling.
 
 Debugging is best done with an IDE such as netbeans or eclipse on your host OS.
 The xdebug setup should already be done on the Kalabox end so you should
-only need to set up your IDE. Here is some [useful documentation](
-http://brianfisher.name/content/drupal-development-environment-os-x-mamp-pro-eclipse-xdebug-and-drush
-http://wiki.netbeans.org/HowToConfigureXDebug) to help.
+only need to set up your IDE. Here is some useful documentation [for eclipse](
+http://brianfisher.name/content/drupal-development-environment-os-x-mamp-pro-eclipse-xdebug-and-drush) and [netbeans](http://wiki.netbeans.org/HowToConfigureXDebug) to help.
 
 ### PROFILING
 
@@ -149,7 +147,7 @@ with your Kalabox and is located at http://grind.kala.
 
 Profiling on every page has a performance impact so you must trigger what pages
 you want to profile by manually appending ?XDEBUG_PROFILE to
-the URL (see http://xdebug.org/docs/profiler for more detail) and then
+the URL (see [xdebug documentation](http://xdebug.org/docs/profiler) for more detail) and then
 checking [webgrind](http://grind.kala).
 
 Many broswers also offer automated tools/plugins to turn profiling on and off, i.e. [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc) for google Chrome.
