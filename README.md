@@ -23,7 +23,7 @@ $ vagrant up kalabox --provision-with=shell,puppet_server
 To ssh into your server, from within ~/kalastack, issue:
 ```bash
 $ vagrant ssh
-````
+```
 ## Post Install Checks
 
 ### VHOSTS
@@ -45,14 +45,14 @@ machine. This way you can use your local IDE to edit files on your server.
 ### SITE ALIASES
 
 Download your aliases from within the Pantheon dashboard, then move and rename the alias file from ```pantheon.aliases.drushrc.php``` to ```aliases.drushrc.php``` and put it in ```/kalabox/drush/```
-````bash
+```bash
 $ mv pantheon.aliases.drushrc.php /kalabox/drush/aliases.drushrc.php
-````
+```
 
 You can verify your aliases are functioning correctly by running on your Kalastack:
-````bash
+```bash
 $ drush sa
-````
+```
 
 
 ## SSH KEYS
@@ -60,14 +60,14 @@ $ drush sa
 if you want to test Pantheon integration, you will need to make sure that your kalabox SSH key is associated with your account. Kalabox will very soon [use Vagrant to forward your native OS's SSH key](http://docs.vagrantup.com/v2/vagrantfile/ssh_settings.html), but for now you need to manually copy your ssh key into the box. You will need to redo this EVERY TIME you recreate the box (for now).
 
 Logged into your host machine shell:
-````bash
+```bash
 $ cp -r ~/.ssh ~/kalabox/www/.ssh
-````
+```
 Then, log into the box and copy the keys:
-````bash
+```bash
 $ vagrant ssh
 $ cp -r /var/www/.ssh ~/.ssh
-````
+```
 
 
 ## DRUSH
@@ -87,7 +87,7 @@ adding your server name to your hosts /etc/hosts file you should be
 able to visit the site in your web browser.
 ```bash
 $ drush krefresh SITENAME.dev
-````
+```
 Will refresh the code, database and files on your Kalastack from your
 pantheon site
 ```bash
@@ -102,23 +102,23 @@ Kalabox at /var/www/SITENAME on your guest and ~/kalabox/www/SITENAME
 on your guest.
 ```bash
 $ drush data SITENAME.dev
-````
+```
 Will download and import your Pantheon dev MySQL database to your
 Kalabox in a DB named SITENAME_kala
 ```bash
 $ drush files SITENAME.dev
-````
+```
 Will sync your pantheon dev files to your Kalastack, accessible from
 /var/www/SITENAME/sites/default/files when ssh'd in to your stack, and from
 ~/kalabox/www/SITENAME/sites/default/files on your host.
 ```bash
 $ drush vhost SITENAME.dev
-````
+```
 Will build and enable a nginx vhost file of your Pantheon site on your
 Kalastack at SITENAME.kala
 ```bash
 $ drush kala
-````
+```
 Will show helpful info
 
 ### UPDATING YOUR HOST HOSTS FILE
@@ -160,19 +160,18 @@ Many broswers also offer automated tools/plugins to turn profiling on and off, i
 ###Start/Stop
 
 Don't start the box in Virualbox, but instead, from within the kalastack codebase use the command line to spin up the stack:
-````bash
+```bash
 $ vagrant up --no-provision
-````
+```
 and log in via:
-````bash
+```bash
 $ vagrant ssh
-````
+```
 and spin down the box with:
-````bash
+```bash
 $ vagrant halt
-````
+```
 
-
-################################################################################
-
+  
+-------------------------------------------------------------------------------------
 (C) 2013 Kalamuna LLC
