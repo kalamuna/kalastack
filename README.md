@@ -17,6 +17,7 @@ you can build out the complete stack:
 $ mkdir ~/kalastack
 $ cd ~/kalastack
 $ git clone git://github.com/kalamuna/kalastack.git ./
+$ vagrant plugin install vagrant-vbguest
 $ vagrant box add kalabox http://files.vagrantup.com/precise64.box
 $ vagrant up kalabox --provision-with=shell,puppet_server
 ```
