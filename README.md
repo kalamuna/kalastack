@@ -6,7 +6,7 @@ are managed by Vagrant. Kalastack was built to run primarily on Ubuntu Server 12
 
 ## Quickstart
 
-Kalastack requires [Vagrant 1.1.2](http://downloads.vagrantup.com/tags/v1.1.2) and [VirtualBox 4.28](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
+Kalastack requires [Vagrant 1.1.2](http://downloads.vagrantup.com/tags/v1.1.2) and [VirtualBox 4.2.8](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
 
 *Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.1.2 and VirtualBox 4.2.8.
 
@@ -17,7 +17,6 @@ you can build out the complete stack:
 $ mkdir ~/kalastack
 $ cd ~/kalastack
 $ git clone git://github.com/kalamuna/kalastack.git ./
-$ vagrant box add kalabox http://files.vagrantup.com/precise64.box
 $ vagrant up kalabox --provision-with=shell,puppet_server
 ```
 To ssh into your server, from within ~/kalastack, issue:
