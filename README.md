@@ -6,7 +6,7 @@ are managed by Vagrant. Kalastack was built to run primarily on Ubuntu Server 12
 
 ## Quickstart
 
-Kalastack requires [Vagrant 1.1.2](http://downloads.vagrantup.com/tags/v1.1.2) and [VirtualBox 4.28](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
+Kalastack requires [Vagrant 1.1.2](http://downloads.vagrantup.com/tags/v1.1.2) and [VirtualBox 4.2.8](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
 
 *Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.1.2 and VirtualBox 4.2.8.
 
@@ -61,12 +61,12 @@ if you want to test Pantheon integration, you will need to make sure that your k
 
 Logged into your host machine shell:
 ```bash
-$ cp -r ~/.ssh ~/kalabox/www/.ssh
+$ cp -r ~/.ssh ~/kalabox/www/
 ```
 Then, log into the box and copy the keys:
 ```bash
 $ vagrant ssh
-$ cp -r /var/www/.ssh ~/.ssh
+$ cp -r /var/www/.ssh ~/
 ```
 
 
@@ -98,7 +98,7 @@ $ drush code SITENAME.dev
 ```
 Will either git clone or git pull from your Pantheon codebase to your
 Kalabox at /var/www/SITENAME on your guest and ~/kalabox/www/SITENAME
-on your guest.
+on your host.
 ```bash
 $ drush data SITENAME.dev
 ```
