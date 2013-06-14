@@ -96,22 +96,6 @@ Vagrant.configure("2") do |config|
   # # }
   #
   
-  $script = "
-    apt-get update -y
-    apt-get install puppet -y
-    echo '[agent]' >> /etc/puppet/puppet.conf
-    echo 'classfile       = $vardir/classes.txt' >> /etc/puppet/puppet.conf
-    echo 'localconfig     = $vardir/localconfig' >> /etc/puppet/puppet.conf
-    echo 'report          = true' >> /etc/puppet/puppet.conf
-    echo 'pluginsync      = true' >> /etc/puppet/puppet.conf
-    echo 'masterport      = 8140' >> /etc/puppet/puppet.conf
-    echo 'environment     = production' >> /etc/puppet/puppet.conf
-    echo 'server          = kalabox.kalamuna.com' >> /etc/puppet/puppet.conf
-    echo 'listen          = false' >> /etc/puppet/puppet.conf
-    service puppet restart -y
-  "
-  
-  config.vm.provision :shell, :inline => $script
   config.vm.provision :puppet_server do |ps|
     ps.puppet_node = File.read(".kalabox/uuid")
     ps.puppet_server = "kalabox.kalamuna.com"
