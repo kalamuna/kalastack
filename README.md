@@ -17,22 +17,18 @@ you can build out the complete stack:
 $ mkdir ~/kalastack
 $ cd ~/kalastack
 $ git clone git://github.com/kalamuna/kalastack.git ./
+$ vagrant plugin install vagrant-hostsupdater
 $ vagrant box add kalabox http://files.vagrantup.com/precise64.box
 $ vagrant up kalabox --provision-with=shell,puppet_server
 ```
+
+You should now be able to access http://start.kala in your browser!
+
 To ssh into your server, from within ~/kalastack, issue:
 ```bash
 $ vagrant ssh
 ```
 ## Post Install Checks
-
-### VHOSTS
-
-Add the following entry to /etc/hosts on your host system. On Windows XP this is located at c:\WINDOWS\system32\drivers\etc\hosts
-
-    192.168.42.10 start.kala php.kala grind.kala kala
-
-You should now be able to access http://start.kala in your browser!
 
 
 ### YOUR FILES
