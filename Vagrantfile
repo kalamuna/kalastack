@@ -3,6 +3,8 @@
 
 # Need to run some install tasks first
 #   vagrant plugin install vagrant-hostsupdater
+#
+# This all needs to be run from the parent directory of kalastack
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
@@ -157,4 +159,49 @@ Vagrant.configure("2") do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
+  
+  # Delete UUID when box is destroyed
+  
+  module VagrantPlugins
+    module KUUID
+      module Action
+        class RemoveKUUID
+
+          def initialize(app, env)
+            @app = app
+            @machine = env[:machine]
+            @ui = env[:ui]
+          end
+  
+          def call(env)
+            machine_action = env[:machine_action]
+            if machine_action == :destroy
+              if File.exist?(".kalabox/uuid")
+                File.delete(".kalabox/uuid")
+                @ui.info "Removing UUID"
+              end
+            end
+          end
+  
+        end
+      end
+    end
+  end
+  
+  module VagrantPlugins
+    module KUUID
+      class Plugin < Vagrant.plugin('2')
+        name 'KUUID'
+        description <<-DESC
+          This plugin removes the UUID on box destroy
+        DESC
+  
+        action_hook("KUUID", :machine_action_destroy) do |hook|
+          hook.append(Action::RemoveKUUID)
+        end
+
+      end
+    end
+  end
+  
 end
