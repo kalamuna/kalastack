@@ -150,7 +150,7 @@ you want to profile by manually appending ?XDEBUG_PROFILE to
 the URL (see [xdebug documentation](http://xdebug.org/docs/profiler) for more detail) and then
 checking [webgrind](http://grind.kala).
 
-Many broswers also offer automated tools/plugins to turn profiling on and off, i.e. [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc) for google Chrome.
+Many browsers also offer automated tools/plugins to turn profiling on and off, i.e. [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc) for google Chrome.
 
 
 ## Working with Kalabox
