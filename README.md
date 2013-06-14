@@ -18,8 +18,7 @@ $ mkdir ~/kalastack
 $ cd ~/kalastack
 $ git clone git://github.com/kalamuna/kalastack.git ./
 $ vagrant plugin install vagrant-hostsupdater
-$ vagrant box add kalabox http://files.kalamuna.com/kalabox64.box
-$ vagrant up kalabox --provision-with=shell,puppet_server
+$ vagrant up kalabox --provision-with=puppet_server
 ```
 
 You should now be able to access http://start.kala in your browser!
