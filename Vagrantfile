@@ -1,6 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Need to run some install tasks first
+#   vagrant plugin install vagrant-hostsupdater
+
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
@@ -9,23 +12,27 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   # Use multi VM syntax
-  config.vm.box = "kalabox"
-  unless File.directory?("~/.kalabox")
-    FileUtils.mkdir_p("~/.kalabox")
+  
+  # Generate a UUID to identify this box to the puppet master
+  unless File.directory?(".kalabox")
+    FileUtils.mkdir_p(".kalabox")
   end
-  unless File.exist?("~/.kalabox/uuid")
-    kalauuid = "kala." + Digest::SHA1.hexdigest("some-random-string")[8..16] + ".box"
-    File.new("~/.kalabox/uuid", 'w')
-    File.open("~/.kalabox/uuid", "wb") do |file|
+  unless File.exist?(".kalabox/uuid")
+    require 'securerandom'; 
+    kalauuid = "kala." + SecureRandom.hex + ".box"
+    File.new(".kalabox/uuid", 'w')
+    File.open(".kalabox/uuid", "wb") do |file|
       file.write(kalauuid)
     end
   end
+  
+  config.vm.box = "kalabox"
+  config.vm.hostname = File.read(".kalabox/uuid")
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  # config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  config.vm.box_url = "http://files.kalamuna.com/kalabox64.box"
   
- 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
@@ -34,7 +41,7 @@ Vagrant.configure("2") do |config|
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   config.vm.network :private_network, ip: "192.168.42.10"
-  # config.hostsupdater.aliases = ["start.kala", "php.kala", "grind.kala"]
+  config.hostsupdater.aliases = ["start.kala", "php.kala", "grind.kala"]
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -50,8 +57,8 @@ Vagrant.configure("2") do |config|
 
   # Set some SSH config
   # config.ssh.username = "kala"
-  # kalabox.ssh.host = "kalabox"
-  # kalabox.ssh.forward_agent = true
+  # config.ssh.host = "kalabox"
+  # config.ssh.forward_agent = true
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -103,10 +110,10 @@ Vagrant.configure("2") do |config|
     echo 'listen          = false' >> /etc/puppet/puppet.conf
     service puppet restart -y
   "
-    
+  
   config.vm.provision :shell, :inline => $script
   config.vm.provision :puppet_server do |ps|
-    ps.puppet_node = File.read("~/.kalabox/uuid")
+    ps.puppet_node = File.read(".kalabox/uuid")
     ps.puppet_server = "kalabox.kalamuna.com"
     ps.options = "--verbose --debug --test"
     ps.facter = {

@@ -5,8 +5,9 @@
  * to the puppetmaster at kalabox.kalamuna.com
  */
 
-node /^kala\.[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\.box$/  {
+node /^kala\.[a-f0-9]{32}\.box$/  {
   # initialize core packages
+  include apt
   include git
   include unzip
   include nfs
@@ -33,5 +34,5 @@ node /^kala\.[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\.box$/
     enabled     => "FALSE",
     custom      => "# THIS IS MEANT TO BE USED FOR BUILDING OTHER DRUPAL VHOSTS"
   }
-
+  
 }
