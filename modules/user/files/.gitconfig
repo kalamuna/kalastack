@@ -1,0 +1,20 @@
+# Git settings.
+# Link to ~/.gitconfig with: ln -s ~/dot-files/gitconfig ~/.gitconfig
+
+[color]
+  ui = always
+[color "branch"]
+  current = green black
+  local = green black
+  remote = green black
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = green black
+  changed = green black
+  untracked = green black
+[core]
+  excludesfile = ~/.gitignore

@@ -1,0 +1,5 @@
+#Load all other config files
+for file in ~/{.colors,.exports,.aliases,.git-completion.bash}; do
+  [ -r "$file" ] && source "$file"
+done
+unset file

@@ -1,0 +1,12 @@
+# Editor & IDE project files:
+nbproject/
+*.sublime-project
+*.sublime-workspace
+*.sublime-projectcompletions
+.project
+.buildpath
+.settings
+
+# OS Files:
+._*
+*.DS_Store

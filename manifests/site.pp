@@ -10,6 +10,7 @@ node /^kala\.[a-f0-9]{32}\.box$/  {
   include apt
   include git
   include unzip
+  include user
 
   # initialize LEMP stack
   include phpfpm
