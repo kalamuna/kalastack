@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network :private_network, ip: "192.168.42.10"
+  config.vm.network :private_network, ip: "1.3.3.7"
   config.hostsupdater.aliases = ["start.kala", "php.kala", "grind.kala"]
 
   # Create a public network, which generally matched to bridged network.
@@ -105,7 +105,7 @@ Vagrant.configure("2") do |config|
     ps.facter = {
       "vagrant" => "1",
       "kalauser" => "vagrant",
-      "kalahost" => "192.168.42.1",
+      "kalahost" => "1.3.3.7",
     }
   end
   # should not ever run this provisioner except for development
@@ -117,7 +117,7 @@ Vagrant.configure("2") do |config|
      p.facter = {
       "vagrant" => "1",
       "kalauser" => "vagrant",
-      "kalahost" => "192.168.42.1",
+      "kalahost" => "1.3.3.7",
     }
   end
   

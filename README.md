@@ -122,7 +122,7 @@ Remember that the Kalastack does not automatically update the /etc/hosts file on
 your machine, so you'll need add each new site manually in order
 to visit http://SITENAME.kala in your web browser!
 
-    192.168.42.10    SITENAME.kala
+    1.3.3.7    SITENAME.kala
 
 
 ## Xdebug
