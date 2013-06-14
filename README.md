@@ -6,7 +6,7 @@ are managed by Vagrant. Kalastack was built to run primarily on Ubuntu Server 12
 
 ## Quickstart
 
-Kalastack requires [Vagrant 1.1.2](http://downloads.vagrantup.com/tags/v1.1.2) and [VirtualBox 4.28](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
+Kalastack requires [Vagrant 1.1.2](http://downloads.vagrantup.com/tags/v1.1.2) and [VirtualBox 4.2.8](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
 
 *Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.1.2 and VirtualBox 4.2.8.
 
@@ -26,7 +26,7 @@ You should now be able to access http://start.kala in your browser!
 To ssh into your server, from within ~/kalastack, issue:
 ```bash
 $ vagrant ssh
-````
+```
 ## Post Install Checks
 
 
@@ -40,14 +40,14 @@ machine. This way you can use your local IDE to edit files on your server.
 ### SITE ALIASES
 
 Download your aliases from within the Pantheon dashboard, then move and rename the alias file from ```pantheon.aliases.drushrc.php``` to ```aliases.drushrc.php``` and put it in ```/kalabox/drush/```
-````bash
+```bash
 $ mv pantheon.aliases.drushrc.php /kalabox/drush/aliases.drushrc.php
-````
+```
 
 You can verify your aliases are functioning correctly by running on your Kalastack:
-````bash
+```bash
 $ drush sa
-````
+```
 
 
 ## SSH KEYS
@@ -55,14 +55,14 @@ $ drush sa
 if you want to test Pantheon integration, you will need to make sure that your kalabox SSH key is associated with your account. Kalabox will very soon [use Vagrant to forward your native OS's SSH key](http://docs.vagrantup.com/v2/vagrantfile/ssh_settings.html), but for now you need to manually copy your ssh key into the box. You will need to redo this EVERY TIME you recreate the box (for now).
 
 Logged into your host machine shell:
-````bash
-$ cp -r ~/.ssh ~/kalabox/www/.ssh
-````
+```bash
+$ cp -r ~/.ssh ~/kalabox/www/
+```
 Then, log into the box and copy the keys:
-````bash
+```bash
 $ vagrant ssh
-$ cp -r /var/www/.ssh ~/.ssh
-````
+$ cp -r /var/www/.ssh ~/
+```
 
 
 ## DRUSH
@@ -71,8 +71,7 @@ Kalastack ships with 8 custom drush commands designed specifically for Pantheon
 and Kalastack. They depend on a Pantheon site alias file.
 
 These commands only work with your dev environments. You will pass your kalabox site as an
-argument to these commands. Site names are derived from the pantheon aliases file on your Kalastack
-(@PANTHEON.SITENAME.ENV) and interact with your Pantehon DEV environment.
+argument to these commands. Site names are derived from the pantheon aliases file on your Kalastack and interact with your Pantehon DEV environment.
 
      $ drush build SITENAME.dev
 
@@ -82,7 +81,7 @@ adding your server name to your hosts /etc/hosts file you should be
 able to visit the site in your web browser.
 ```bash
 $ drush krefresh SITENAME.dev
-````
+```
 Will refresh the code, database and files on your Kalastack from your
 pantheon site
 ```bash
@@ -94,26 +93,26 @@ $ drush code SITENAME.dev
 ```
 Will either git clone or git pull from your Pantheon codebase to your
 Kalabox at /var/www/SITENAME on your guest and ~/kalabox/www/SITENAME
-on your guest.
+on your host.
 ```bash
 $ drush data SITENAME.dev
-````
+```
 Will download and import your Pantheon dev MySQL database to your
 Kalabox in a DB named SITENAME_kala
 ```bash
 $ drush files SITENAME.dev
-````
+```
 Will sync your pantheon dev files to your Kalastack, accessible from
 /var/www/SITENAME/sites/default/files when ssh'd in to your stack, and from
 ~/kalabox/www/SITENAME/sites/default/files on your host.
 ```bash
 $ drush vhost SITENAME.dev
-````
+```
 Will build and enable a nginx vhost file of your Pantheon site on your
 Kalastack at SITENAME.kala
 ```bash
 $ drush kala
-````
+```
 Will show helpful info
 
 ### UPDATING YOUR HOST HOSTS FILE
@@ -133,9 +132,8 @@ Kalastack ships with xdebug for both debugging and profiling.
 
 Debugging is best done with an IDE such as netbeans or eclipse on your host OS.
 The xdebug setup should already be done on the Kalabox end so you should
-only need to set up your IDE. Here is some [useful documentation](
-http://brianfisher.name/content/drupal-development-environment-os-x-mamp-pro-eclipse-xdebug-and-drush
-http://wiki.netbeans.org/HowToConfigureXDebug) to help.
+only need to set up your IDE. Here is some useful documentation [for eclipse](
+http://brianfisher.name/content/drupal-development-environment-os-x-mamp-pro-eclipse-xdebug-and-drush) and [netbeans](http://wiki.netbeans.org/HowToConfigureXDebug) to help.
 
 ### PROFILING
 
@@ -144,10 +142,10 @@ with your Kalabox and is located at http://grind.kala.
 
 Profiling on every page has a performance impact so you must trigger what pages
 you want to profile by manually appending ?XDEBUG_PROFILE to
-the URL (see http://xdebug.org/docs/profiler for more detail) and then
+the URL (see [xdebug documentation](http://xdebug.org/docs/profiler) for more detail) and then
 checking [webgrind](http://grind.kala).
 
-Many broswers also offer automated tools/plugins to turn profiling on and off, i.e. [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc) for google Chrome.
+Many browsers also offer automated tools/plugins to turn profiling on and off, i.e. [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc) for google Chrome.
 
 
 ## Working with Kalabox
@@ -155,19 +153,18 @@ Many broswers also offer automated tools/plugins to turn profiling on and off, i
 ###Start/Stop
 
 Don't start the box in Virualbox, but instead, from within the kalastack codebase use the command line to spin up the stack:
-````bash
+```bash
 $ vagrant up --no-provision
-````
+```
 and log in via:
-````bash
+```bash
 $ vagrant ssh
-````
+```
 and spin down the box with:
-````bash
+```bash
 $ vagrant halt
-````
+```
 
-
-################################################################################
-
+  
+-------------------------------------------------------------------------------------
 (C) 2013 Kalamuna LLC
