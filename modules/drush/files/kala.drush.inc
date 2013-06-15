@@ -276,13 +276,6 @@ function kala_data(){
   	
     drush_print('Dear sir! We are now attempting a database download, please standby...');
     
-    if (drush_shell_exec("mysqldump -u" . $pantheon['db_user'] . " -h" . $pantheon['db_host'] ." -P" . $pantheon['db_port'] ." -p" . $pantheon['db_pass'] . " --opt " . $pantheon['db_db'] ." > /tmp/" . $pantheon['kaladb'] .".sql")) {    
-      drush_log('Indeed! Your data is now in our sweet sweet hands.', 'success');
-    }
-    else {
-      drush_log('Bollocks! We could not retrieve your data!', 'error');
-    }
-    
     if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost -e \"create database " . $pantheon['kaladb'] . "\"")) {
       drush_log('Dearest friend, a new database called ' . $pantheon['kaladb'] . ' hath been created', 'success');
     }
@@ -290,14 +283,13 @@ function kala_data(){
       drush_log('This database already exists! What are you trying to do!!!', 'notice');
     }
     
-    if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost " . $pantheon['kaladb'] . " < /tmp/" . $pantheon['kaladb'] .".sql")) {
+    if (drush_shell_exec("cd /var/www/" . $pantheon['site'] . " && drush pipe @" . $pantheon['site'] . ".dev default -y")) {
       drush_log('SOMETHING SOMETHING SOMETHING IMPORT COMPLETE', 'success');
     }
     else {
       drush_log('Sadface: pantheon data unable to be imported', 'error');
     }
     
-    drush_shell_exec("rm /tmp/" . $pantheon['kaladb'] .".sql");
   }
   else {
     return;
