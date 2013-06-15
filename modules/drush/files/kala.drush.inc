@@ -283,7 +283,7 @@ function kala_data(){
       drush_log('This database already exists! What are you trying to do!!!', 'notice');
     }
     
-    if (drush_shell_exec("cd /var/www/" . $pantheon['site'] . " && drush pipe @" . $pantheon['site'] . ".dev default -y")) {
+    if (drush_shell_exec("cd /var/www/" . $pantheon['site'] . " && drush pipe @" . $pantheon['site'] . ".dev default -y --disable=pantheon_apachesolr")) {
       drush_log('SOMETHING SOMETHING SOMETHING IMPORT COMPLETE', 'success');
     }
     else {
