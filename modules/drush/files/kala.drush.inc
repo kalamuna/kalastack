@@ -361,6 +361,10 @@ function kala_build(){
     
     drush_shell_exec("sudo drush vhost " . $args[0]);
     
+    drush_shell_exec("cd /var/www/" . $args[0]);
+    drush_shell_exec("drush cc all -y");
+    drush_log('Drush: We clear yo cache', 'success');
+    
     drush_log('Build: Success!', 'success');
 
   }
