@@ -1,4 +1,4 @@
-To use, put following in ~/.bashrc:
+# To use, put following in ~/.bashrc:
 # Include my custom dot files
   if [ -f ~/.mallis_money ]; then
     . ~/.mallis_money

@@ -2,7 +2,9 @@
 # vi: set ft=ruby :
 
 # Need to run some install tasks first
+#
 #   vagrant plugin install vagrant-hostsupdater
+#   vagrant plugin install vagrant-vbguest # if you want to ensure guest addition parity
 #
 # This all needs to be run from the parent directory of kalastack
 
