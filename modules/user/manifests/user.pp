@@ -21,7 +21,6 @@ class user::config {
       source  => "puppet:///modules/user/.gitignore",
     }
     
-    
     file { "/home/$::kalauser/.colors":
       ensure  => file,
       mode    => 755,

@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
   #
     # Use VBoxManage to customize the VM. For example to change memory:
     vb.customize ["modifyvm", :id, "--memory", "2048"]
-    vb.name = "Kalabox"
+    vb.name = File.read(".kalabox/uuid")
   end
   #
   # View the documentation for the provider you're using for more
