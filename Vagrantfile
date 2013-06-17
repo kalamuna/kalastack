@@ -107,7 +107,7 @@ Vagrant.configure("2") do |config|
     ps.facter = {
       "vagrant" => "1",
       "kalauser" => "vagrant",
-      "kalahost" => "1.3.3.7",
+      "kalahost" => "1.3.3.1",
     }
   end
   # should not ever run this provisioner except for development
@@ -119,7 +119,7 @@ Vagrant.configure("2") do |config|
      p.facter = {
       "vagrant" => "1",
       "kalauser" => "vagrant",
-      "kalahost" => "1.3.3.7",
+      "kalahost" => "1.3.3.1",
     }
   end
   
