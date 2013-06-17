@@ -283,11 +283,21 @@ function kala_data(){
       drush_log('This database already exists! What are you trying to do!!!', 'notice');
     }
     
-    if (drush_shell_exec("cd /var/www/" . $pantheon['site'] . " && drush pipe @" . $pantheon['site'] . ".dev default -y --disable=pantheon_apachesolr")) {
+    if (drush_shell_exec("cd /var/www/" . $pantheon['site'] . " && drush pipe @" . $pantheon['site'] . ".dev default -y --disable=pantheon_apachesolr --ssh-options='" . $pantheon['ssh'] . "'")) {
       drush_log('SOMETHING SOMETHING SOMETHING IMPORT COMPLETE', 'success');
     }
     else {
-      drush_log('Sadface: pantheon data unable to be imported', 'error');
+      drush_log('SQL-SYNC seemed to fail... trying to rock it old school instead', 'notice');
+      
+      if (drush_shell_exec("mysqldump -u" . $pantheon['db_user'] . " -h" . $pantheon['db_host'] ." -P" . $pantheon['db_port'] ." -p" . $pantheon['db_pass'] . " -CceKqQ --add-drop-table --add-locks --create-options --no-autocommit --single-transaction " . $pantheon['db_db'] ." > /tmp/" . $pantheon['id'] .".sql")) {    
+        drush_log('data downloaded from pantheon', 'success');
+      }
+      else {
+        drush_log('could not get data from pantheon', 'error');
+      }
+      if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost " . $pantheon['kaladb'] . " < /tmp/" . $pantheon['id'] .".sql")) {
+        drush_log('your pantheon data has been imported to ' . $pantheon['kaladb'], 'success');
+      }
     }
     
   }
@@ -342,18 +352,18 @@ function kala_build(){
     kala_code($args[0]);
     drush_log('Codebase: Q\'Plah!', 'success');
     
+    _kala_reset_settings($pantheon);
+    drush_log('Settings: Rebuilt!, Check git status', 'success');
+    
     kala_data($args[0]);
     drush_log('Database: Q\'Plah!', 'success');
     
     kala_files($args[0]);
     drush_log('Files: Q\'Plah!', 'success');
     
-    _kala_reset_settings($pantheon);
-    drush_log('Settings: Rebuilt!, Check git status', 'success');
-    
     drush_shell_exec("sudo drush vhost " . $args[0]);
     
-    drush_shell_exec("cd /var/www/" . $args[0]);
+    drush_shell_exec("cd /var/www/" . $pantheon['site']);
     drush_shell_exec("drush cc all -y");
     drush_log('Drush: We clear yo cache', 'success');
     
@@ -562,5 +572,3 @@ function _kala_reset_settings($pantheon) {
     }
   }
 }
-
-
