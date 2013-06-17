@@ -1,0 +1,2 @@
+Host *drush.in
+StrictHostKeyChecking no

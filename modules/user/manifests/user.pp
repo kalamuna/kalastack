@@ -53,4 +53,12 @@ class user::config {
       source  => "puppet:///modules/user/.git-completion.bash",
     }
     
+    file { "/home/$::kalauser/.ssh/config":
+      ensure  => file,
+      mode    => 755,
+      owner   => $::kalauser,
+      group   => $::kalauser,
+      source  => "puppet:///modules/user/ssh-config",
+    }
+    
 }

@@ -319,7 +319,7 @@ function kala_files(){
     }
     
     drush_log('Doing that funky file sync tango. It feels good. Please wait...', 'success');
-    drush_shell_exec("rsync -rlztv --ipv4 -e 'ssh -p 2222' --exclude 'js' --exclude 'css' --exclude 'ctools' --exclude 'imagecache' --exclude 'xmlsitemap' --exclude 'backup_migrate' --exclude 'styles' --exclude 'less' " . $pantheon['env'] . "." . $pantheon['id'] . "@appserver." . $pantheon['env'] . "." . $pantheon['id'] . ".drush.in:files /var/www/" . $pantheon['site'] . "/sites/default/");    
+    drush_shell_exec("rsync -rlztv --ipv4 -e 'ssh " . $pantheon['ssh'] . "' --exclude 'js' --exclude 'css' --exclude 'ctools' --exclude 'imagecache' --exclude 'xmlsitemap' --exclude 'backup_migrate' --exclude 'styles' --exclude 'less' " . $pantheon['env'] . "." . $pantheon['id'] . "@appserver." . $pantheon['env'] . "." . $pantheon['id'] . ".drush.in:files /var/www/" . $pantheon['site'] . "/sites/default/");    
     drush_log('Consider your files N*SYNC', 'success');
   }
   else {
@@ -487,7 +487,7 @@ function _kala_get_pantheon($sitename) {
       $pantheon['env'] = $user[0];
       $pantheon['site'] = $siteal[0];
       $pantheon['id'] = $user[1];
-      $pantheon['ssh'] = $aliases['@' . $sitename]['ssh-options'];
+      $pantheon['ssh'] = $aliases['@' . $sitename]['ssh-options'] . ' -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no';
       $pantheon['db_url'] = $aliases['@' . $sitename]['db-url'];
       
       $regex = '/^mysql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)$/';
