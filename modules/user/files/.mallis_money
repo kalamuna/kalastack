@@ -1,5 +1,10 @@
-#Load all other config files
-for file in ~/{.colors,.exports,.aliases,.git-completion.bash}; do
+# Load all other config files
+for file in ~/{.colors}; do
   [ -r "$file" ] && source "$file"
 done
 unset file
+
+# Load Git autocompletion script if it's available.
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi

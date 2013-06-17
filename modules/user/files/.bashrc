@@ -4,5 +4,5 @@
     . ~/.mallis_money
   fi
 
-#Inspirations:
-  # https://github.com/paulirish/dotfiles
+# Inspirations:
+# https://github.com/paulirish/dotfiles

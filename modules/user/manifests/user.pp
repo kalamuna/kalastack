@@ -21,13 +21,6 @@ class user::config {
       source  => "puppet:///modules/user/.gitignore",
     }
     
-    file { "/home/$::kalauser/.aliases":
-      ensure  => file,
-      mode    => 755,
-      owner   => $::kalauser,
-      group   => $::kalauser,
-      source  => "puppet:///modules/user/.aliases",
-    }
     
     file { "/home/$::kalauser/.colors":
       ensure  => file,
@@ -35,14 +28,6 @@ class user::config {
       owner   => $::kalauser,
       group   => $::kalauser,
       source  => "puppet:///modules/user/.colors",
-    }
-    
-    file { "/home/$::kalauser/.exports":
-      ensure  => file,
-      mode    => 755,
-      owner   => $::kalauser,
-      group   => $::kalauser,
-      source  => "puppet:///modules/user/.exports",
     }
     
     file { "/home/$::kalauser/.bashrc":
