@@ -274,8 +274,6 @@ function kala_data(){
 
   	$pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
   	
-    drush_print('Dear sir! We are now attempting a database download, please standby...');
-    
     if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost -e \"create database " . $pantheon['kaladb'] . "\"")) {
       drush_log('Dearest friend, a new database called ' . $pantheon['kaladb'] . ' hath been created', 'success');
     }
@@ -283,6 +281,12 @@ function kala_data(){
       drush_log('This database already exists! What are you trying to do!!!', 'notice');
     }
     
+    drush_log('Making sure the beast is awake...', 'success');
+    if (drush_shell_exec("drush @" . $pantheon['site'] . ".dev status")) {
+      drush_log('THE BEAST AWAKENS!', 'success');
+    }
+    
+    drush_print('Dear sir! We are now attempting a database download, please standby...');
     if (drush_shell_exec("cd /var/www/" . $pantheon['site'] . " && drush pipe @" . $pantheon['site'] . ".dev default -y --disable=pantheon_apachesolr --ssh-options='" . $pantheon['ssh'] . "'")) {
       drush_log('SOMETHING SOMETHING SOMETHING IMPORT COMPLETE', 'success');
     }
