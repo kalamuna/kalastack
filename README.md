@@ -19,7 +19,7 @@ $ cd ~/kalastack
 $ git clone git://github.com/kalamuna/kalastack.git ./
 $ vagrant plugin install vagrant-hostsupdater
 $ vagrant plugin install vagrant-vbguest # if you want to ensure guest addition parity
-$ vagrant up --provision-with=puppet_server
+$ vagrant up
 ```
 
 You should now be able to access http://start.kala in your browser!
