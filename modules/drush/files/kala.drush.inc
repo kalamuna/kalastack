@@ -569,7 +569,7 @@ function _kala_reset_settings($pantheon) {
       $output .= "  // Presumed kalabox db settings \n";
       $output .= "  \$databases['default']['default'] = array( \n";
       $output .= "    'driver' => 'mysql',\n";
-      $output .= "    'database' => 'kalademo_kala',\n";
+      $output .= "    'database' => '" . $pantheon['kaladb'] . "', \n";
       $output .= "    'username' => 'root',\n";
       $output .= "    'password' => 'password',\n";
       $output .= "    'host' => 'localhost',\n";
