@@ -328,8 +328,9 @@ function kala_files(){
       mkdir("/var/www/" . $pantheon['site'] . "/sites/default/files");     
       mkdir("/var/www/" . $pantheon['site'] . "/sites/default/private");
       drush_log('Building up some sweet sweet files directories for you', 'success');
-      drush_shell_exec("chmod 775 /var/www/" . $pantheon['site'] . "/sites/default/files");
-      drush_shell_exec("chmod 775 /var/www/" . $pantheon['site'] . "/sites/default/private");
+      // settings this to 777 for now because its the only way to get file uploads to work properly with nfs sharing
+      drush_shell_exec("chmod 777 /var/www/" . $pantheon['site'] . "/sites/default/files");
+      drush_shell_exec("chmod 777 /var/www/" . $pantheon['site'] . "/sites/default/files/private");
     }
     
     drush_log('Doing that funky file sync tango. It feels good. Please wait...', 'success');
