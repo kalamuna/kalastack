@@ -9,7 +9,7 @@ fi
 # This basically exists only so drush
 # kaladata runs. We are also setting it
 # through nginx. @todo is this dumb?  
-export KALABOX = on
+export KALABOX=on
 
 # Inspirations:
 # https://github.com/paulirish/dotfiles
