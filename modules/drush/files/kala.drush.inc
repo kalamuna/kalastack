@@ -527,18 +527,23 @@ function _kala_reset_settings($pantheon) {
   require_once("/var/www/" . $pantheon['site'] . "/sites/default/settings.php");
   $pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
   
+  $output = '';
   if (isset($db_url)) {
   	if (strpos($db_url, $pantheon['kaladb']) === FALSE) { 
 	  $settingsfile = "/var/www/" . $pantheon['site'] . "/sites/default/settings.php";
 	  $fh = fopen($settingsfile, 'a') or die("can't open file");
-	  $settings =
-	  '
-	  /**
-	   * Kalabox local settings
-	   */
-	   
-	  $db_url = \'mysql://root:password@localhost/' . $pantheon['kaladb'] . '\';';
 	  
+    $output .= "/** \n";
+    $output .= " * Kalabox local settings \n";
+    $output .= " */ \n";
+    $output .= "// Only use these settings if on Kalabox \n";
+    $output .= "if(\$_SERVER['KALABOX'] === 'on') { \n";
+    $output .= "  // Presumed kalabox db settings \n";
+    $output .= "  \$db_url = 'mysql://root:password@localhost/" . $pantheon["kaladb"] . ";\n";
+    $output .= "}\n";
+	  
+    $settings = $output;
+
 	  fwrite($fh, $settings);
 	  fclose($fh);
   	}
@@ -551,22 +556,34 @@ function _kala_reset_settings($pantheon) {
       
       $settingsfile = "/var/www/" . $pantheon['site'] . "/sites/default/settings.php";
       $fh = fopen($settingsfile, 'a') or die("can't open file");
-      $settings =
-      '
-      /**
-      * Kalabox local settings
-      */
-       
-      $databases[\'default\'][\'default\'] = array(
-      \'driver\' => \'mysql\',
-      \'database\' => \'' . $pantheon['kaladb'] . '\',
-      \'username\' => \'root\',
-      \'password\' => \'password\',
-      \'host\' => \'localhost\',
-      \'prefix\' => \'\',
-      );
-    
-      ';
+      
+      $output .= "/** \n";
+      $output .= " * Kalabox local settings \n";
+      $output .= " */ \n";
+      $output .= "// Only use these settings if on Kalabox \n";
+      $output .= "if(\$_SERVER['KALABOX'] === 'on') { \n";
+      $output .= "  // Presumed kalabox db settings \n";
+      $output .= "  \$databases['default']['default'] = array( \n";
+      $output .= "    'driver' => 'mysql',\n";
+      $output .= "    'database' => 'kalademo_kala',\n";
+      $output .= "    'username' => 'root',\n";
+      $output .= "    'password' => 'password',\n";
+      $output .= "    'host' => 'localhost',\n";
+      $output .= "    'prefix' => '',\n";
+      $output .= "  );\n";
+      $output .= "\n";
+      $output .= "  // Set some common desirable local vars  \n";
+      $output .= "  \$conf['file_temporary_path'] = '/tmp';\n";
+      $output .= "  \$conf['file_public_path'] = 'sites/default/files';  \n";
+      $output .= "  \$conf['file_private_path'] = 'sites/default/files/private';  \n";
+      $output .= "  \$conf['reroute_email_enable'] = 1;  \n";
+      $output .= "  \$conf['cache'] = 0;  \n";
+      $output .= "  \$conf['css_gzip_compression'] = FALSE;  \n";
+      $output .= "  \$conf['js_gzip_compression'] = FALSE;  \n";
+      $output .= "}\n";
+      $output .= "\n";
+
+      $settings = $output;
       fwrite($fh, $settings);
       fclose($fh);
     }
