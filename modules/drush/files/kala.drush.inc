@@ -529,7 +529,7 @@ function _kala_get_pantheon($sitename) {
  */
 function _kala_reset_settings($pantheon) {
   require_once("/var/www/" . $pantheon['site'] . "/sites/default/settings.php");
-  $pantheon['kaladb']  = str_replace("-", "_", $pantheon['site'] . "_kala");
+  $pantheon['kaladb'] = str_replace("-", "_", $pantheon['site'] . "_kala");
   
   $output = '';
   if (isset($db_url)) {
