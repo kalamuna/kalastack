@@ -62,7 +62,7 @@ Vagrant.configure("2") do |config|
   # Set some SSH config
   # config.ssh.username = "kala"
   # config.ssh.host = "kalabox"
-  # config.ssh.forward_agent = true
+  config.ssh.forward_agent = true
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

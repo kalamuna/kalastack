@@ -16,9 +16,10 @@ you can build out the complete stack:
 ```bash
 $ mkdir ~/kalastack
 $ cd ~/kalastack
-$ git clone git://github.com/kalamuna/kalastack.git ./
+$ git clone git://github.com/kalamuna/kalastack.git ./ 
+  (or download and expand the latest 2.x tarball from https://github.com/kalamuna/kalastack/tags)
 $ vagrant plugin install vagrant-hostsupdater
-$ vagrant plugin install vagrant-vbguest # if you want to ensure guest addition parity
+$ vagrant plugin install vagrant-vbguest
 $ vagrant up
 ```
 
@@ -29,7 +30,6 @@ To ssh into your server, from within ~/kalastack, issue:
 $ vagrant ssh
 ```
 ## Post Install Checks
-
 
 ### YOUR FILES
 
@@ -53,18 +53,19 @@ $ drush sa
 
 ## SSH KEYS
 
-if you want to test Pantheon integration, you will need to make sure that your kalabox SSH key is associated with your account. Kalabox will very soon [use Vagrant to forward your native OS's SSH key](http://docs.vagrantup.com/v2/vagrantfile/ssh_settings.html), but for now you need to manually copy your ssh key into the box. You will need to redo this EVERY TIME you recreate the box (for now).
+Kalastack will forward your host's SSH key into the box. This will let you connect to any Pantheon, github or other SSH services that you are currently connecting to on your host. 
+If you don't currently have a SSH key set up on your host you can generate one by running from the command line.
 
-Logged into your host machine shell:
 ```bash
-$ cp -r ~/.ssh ~/kalabox/www/
-```
-Then, log into the box and copy the keys:
-```bash
-$ vagrant ssh
-$ cp -r /var/www/.ssh ~/
+$ ssh-keygen
 ```
 
+Once this is done you will want to make sure you add your public key to whatever service you are attempting to SSH into. 
+You can view it for copy/paste by running the following on your host machine.
+
+```bash
+$ cat ~/.ssh/id_rsa.pub
+```
 
 ## DRUSH
 
