@@ -29,13 +29,13 @@ function kala_drush_command() {
   );
   $items['kalavhost'] = array(
     'callback' => 'kala_vhost',
-    'description' => dt('Builds a basic Drupal nginx vhost. Must use valid Pantheon alias as first argument.'),
+    'description' => dt('Builds a basic Drupal nginx vhost. Must use a sitename alias (format "sitename.dev") derived from a valid Pantheon alias as first argument.'),
     'aliases' => array('vhost', 'kvh'),
     'examples' => array(
-      'drush kvh pantheon.sitename.dev' => 'Builds a nginx vhost with info from pantheon.sitename.dev at sitename.kala',
+      'drush kvh sitename.dev' => 'Builds a nginx vhost with info from (pantheon).sitename.dev at sitename.kala',
      ),
      'arguments' => array(
-       'site' => 'A valid Pantheon site alias. Do not use the @ convention for this alias as we are not using it as our site.',
+       'site' => 'A sitename.dev, derived from a valid Pantheon site alias. Do not use the @pantheon convention for this alias as we are not using it as our site.',
      ),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
@@ -44,10 +44,10 @@ function kala_drush_command() {
     'description' => dt('Git clones your Pantheon site codebase'),
     'aliases' => array('code', 'kc'),
     'examples' => array(
-      'drush code pantheon.sitename.dev' => 'Git clone of your pantheon site. Must use valid Pantheon alias as first argument.',
+      'drush code sitename.dev' => 'Git clone of your pantheon site. Must use a sitename alias (format "sitename.dev") derived from a valid Pantheon alias as first argument.',
     ),
     'arguments' => array(
-      'site' => 'A valid Pantheon site alias. Do not use the @ convention for this alias as we are not using it as our site.',
+      'site' => 'A sitename.dev, derived from a valid Pantheon site alias. Do not use the @pantheon convention for this alias as we are not using it as our site.',
     ),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
@@ -56,10 +56,10 @@ function kala_drush_command() {
     'description' => dt('Imports your Pantheon site database'),
     'aliases' => array('data', 'kd'),
     'examples' => array(
-      'drush data pantheon.sitename.dev' => 'Import the DB of your pantheon site. Must use valid Pantheon alias as first argument.',
+      'drush data sitename.dev' => 'Import the DB of your pantheon site. Must use a sitename alias (format "sitename.dev") derived from a valid Pantheon alias as first argument.',
     ),
     'arguments' => array(
-      'site' => 'A valid Pantheon site alias. Do not use the @ convention for this alias as we are not using it as our site.',
+      'site' => 'A sitename.dev, derived from a valid Pantheon site alias. Do not use the @pantheon convention for this alias as we are not using it as our site.',
     ),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
@@ -68,10 +68,10 @@ function kala_drush_command() {
     'description' => dt('Imports your Pantheon site files'),
     'aliases' => array('files', 'kf'),
     'examples' => array(
-      'drush files pantheon.sitename.dev' => 'Imports the files of your pantheon site. Must use valid Pantheon alias as first argument.',
+      'drush files sitename.dev' => 'Imports the files of your pantheon site. Must use a sitename alias (format "sitename.dev") derived from a valid Pantheon alias as first argument.',
     ),
     'arguments' => array(
-      'site' => 'A valid Pantheon site alias. Do not use the @ convention for this alias as we are not using it as our site.',
+      'site' => 'A sitename.dev, derived from a valid Pantheon site alias. Do not use the @pantheon convention for this alias as we are not using it as our site.',
     ),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
@@ -80,10 +80,10 @@ function kala_drush_command() {
     'description' => dt('Imports your Pantheon site'),
     'aliases' => array('build', 'kb'),
     'examples' => array(
-      'drush build pantheon.sitename.dev' => 'Imports the code, data and files of your pantheon site. Must use valid Pantheon alias as first argument.',
+      'drush build sitename.dev' => 'Imports the code, data and files of your pantheon site. Must use a sitename alias (format "sitename.dev") derived from a valid Pantheon alias as first argument.',
     ),
     'arguments' => array(
-      'site' => 'A valid Pantheon site alias. Do not use the @ convention for this alias as we are not using it as our site.',
+      'site' => 'A sitename.dev, derived from a valid Pantheon site alias. Do not use the @pantheon convention for this alias as we are not using it as our site.',
     ),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
@@ -92,10 +92,10 @@ function kala_drush_command() {
     'description' => dt('Refreses your Pantheon site'),
     'aliases' => array('krefresh', 'kr'),
     'examples' => array(
-      'drush kr pantheon.sitename.dev' => 'Refreshes the code, data and files of your pantheon site. Must use valid Pantheon alias as first argument.',
+      'drush kr sitename.dev' => 'Refreshes the code, data and files of your pantheon site. Must use a sitename alias (format "sitename.dev") derived from a valid Pantheon alias as first argument.',
     ),
     'arguments' => array(
-      'site' => 'A valid Pantheon site alias. Do not use the @ convention for this alias as we are not using it as our site.',
+      'site' => 'A sitename.dev, derived from a valid Pantheon site alias. Do not use the @pantheon convention for this alias as we are not using it as our site.',
     ),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
@@ -104,10 +104,10 @@ function kala_drush_command() {
   	'description' => dt('Removes a pantheon site'),
   	'aliases' => array('destroy', 'crush', 'wmb', 'kd'),
   	'examples' => array(
-  	  'drush crush pantheon.sitename.dev' => 'Deletes the Pantheon site. Must use valid Pantheon alias as first argument.',
+  	  'drush crush sitename.dev' => 'Deletes the Pantheon site. Must use a sitename alias (format "sitename.dev") derived from a valid Pantheon alias as first argument.',
      ),
   	'arguments' => array(
-      'site' => 'A valid Pantheon site alias. Do not use the @ convention for this alias as we are not using it as our site.',
+      'site' => 'A sitename.dev, derived from a valid Pantheon site alias. Do not use the @pantheon convention for this alias as we are not using it as our site.',
   	),
   	'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
