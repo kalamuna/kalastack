@@ -40,9 +40,9 @@ machine. This way you can use your local IDE to edit files on your server.
 
 ### SITE ALIASES
 
-Download your aliases from within the Pantheon dashboard, then move and rename the alias file from ```pantheon.aliases.drushrc.php``` to ```aliases.drushrc.php``` and put it in ```/kalabox/drush/```
+Download your aliases from within the Pantheon dashboard, then move and rename the alias file from ```pantheon.aliases.drushrc.php``` to ```aliases.drushrc.php``` and put it in ```~/kalabox/drush/```
 ```bash
-$ mv pantheon.aliases.drushrc.php /kalabox/drush/aliases.drushrc.php
+$ mv pantheon.aliases.drushrc.php ~/kalabox/drush/aliases.drushrc.php
 ```
 
 You can verify your aliases are functioning correctly by running on your Kalastack:
