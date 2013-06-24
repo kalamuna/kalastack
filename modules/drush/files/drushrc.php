@@ -259,7 +259,10 @@ $options['alias-path'] = array('/var/www/.drush');
  * commands when the "--structure-tables-key=common" option is provided.
  * You may add specific tables to the existing array or add a new element.
  */
-$options['structure-tables']['common'] = array('cache', 'cache_filter', 'cache_menu', 'cache_page', 'history', 'sessions', 'watchdog');
+
+$options['structure-tables']['common'] = array('cache', 'cache_filter', 'cache_menu', 'cache_page', 'history', 'sessions', 'watchdog',
+  'cache_admin_menu', 'cache_block', 'cache_bootstrap', 'cache_field', 'cache_form', 'cache_image', 'cache_path', 'cache_rules',
+  'cache_token', 'cache_update', 'cache_views', 'cache_views_data');
 
 /**
  * List of tables to be omitted entirely from SQL dumps made by the 'sql-dump'
