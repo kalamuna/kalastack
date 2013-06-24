@@ -328,6 +328,13 @@ $options['structure-tables']['common'] = array('cache', 'cache_filter', 'cache_m
  */
 # $command_specific['core-cli'] = array('override' => 'help,dd,sa');
 
+$command_specific['rsync'] = array(
+  'verbose' => TRUE,
+  'exclude-paths' => '.git:.DS_Store:.gitignore:.gitmodules',
+  //'mode' => 'rlptDz',
+);
+
+
 /**
  * Load a drushrc file from the 'drush' folder at the root of the current
  * git repository.  Example script below by grayside.  Customize as desired.
