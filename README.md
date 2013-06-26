@@ -6,9 +6,9 @@ are managed by Vagrant. Kalastack was built to run primarily on Ubuntu Server 12
 
 ## Quickstart
 
-Kalastack requires [Vagrant 1.1.2](http://downloads.vagrantup.com/tags/v1.1.2) and [VirtualBox 4.2.8](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
+Kalastack requires [Vagrant 1.2.2](http://downloads.vagrantup.com/tags/v1.2.2) and [VirtualBox 4.2.8](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
 
-*Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.1.2 and VirtualBox 4.2.8.
+*Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.2.2 and VirtualBox 4.2.8.
 
 Once you have downloaded and installed both Vagrant and Virtual box,
 you can build out the complete stack:
@@ -16,7 +16,7 @@ you can build out the complete stack:
 ```bash
 $ mkdir ~/kalastack
 $ cd ~/kalastack
-$ git clone git://github.com/kalamuna/kalastack.git ./ 
+$ git clone git://github.com/kalamuna/kalastack.git ./
   (or download and expand the latest 2.x tarball from https://github.com/kalamuna/kalastack/tags)
 $ vagrant plugin install vagrant-hostsupdater
 $ vagrant plugin install vagrant-vbguest
@@ -53,14 +53,14 @@ $ drush sa
 
 ## SSH KEYS
 
-Kalastack will forward your host's SSH key into the box. This will let you connect to any Pantheon, github or other SSH services that you are currently connecting to on your host. 
+Kalastack will forward your host's SSH key into the box. This will let you connect to any Pantheon, github or other SSH services that you are currently connecting to on your host.
 If you don't currently have a SSH key set up on your host you can generate one by running from the command line.
 
 ```bash
 $ ssh-keygen
 ```
 
-Once this is done you will want to make sure you add your public key to whatever service you are attempting to SSH into. 
+Once this is done you will want to make sure you add your public key to whatever service you are attempting to SSH into.
 You can view it for copy/paste by running the following on your host machine.
 
 ```bash
@@ -167,6 +167,6 @@ and spin down the box with:
 $ vagrant halt
 ```
 
-  
+
 -------------------------------------------------------------------------------------
 (C) 2013 Kalamuna LLC
