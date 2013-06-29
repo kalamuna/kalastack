@@ -100,19 +100,8 @@ Vagrant.configure("2") do |config|
   # # }
   #
   
-  config.vm.provision :puppet_server do |ps|
-    ps.puppet_node = File.read(".kalabox/uuid")
-    ps.puppet_server = "kalabox.kalamuna.com"
-    ps.options = "--verbose --debug --test"
-    ps.facter = {
-      "vagrant" => "1",
-      "kalauser" => "vagrant",
-      "kalahost" => "1.3.3.1",
-      "kalaversion" => "2.0-beta4",
-    }
-  end
-  # should not ever run this provisioner except for development
-  config.vm.provision :puppet do |p|
+  if ENV['KALABOX_DEV']=='TRUE' then
+   config.vm.provision :puppet do |p|
      p.manifests_path = "manifests"
      p.manifest_file  = "site.pp"
      p.module_path = "modules"
@@ -122,8 +111,20 @@ Vagrant.configure("2") do |config|
       "kalauser" => "vagrant",
       "kalahost" => "1.3.3.1",
     }
+    end
+  else
+    config.vm.provision :puppet_server do |ps|
+      ps.puppet_node = File.read(".kalabox/uuid")
+      ps.puppet_server = "kalabox.kalamuna.com"
+      ps.options = "--verbose --debug --test"
+      ps.facter = {
+        "vagrant" => "1",
+        "kalauser" => "vagrant",
+        "kalahost" => "1.3.3.1",
+        "kalaversion" => "2.0-beta4",
+      }
+    end
   end
-  
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
   # path, and data_bags path (all relative to this Vagrantfile), and adding
