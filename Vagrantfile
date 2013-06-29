@@ -165,7 +165,6 @@ Vagrant.configure("2") do |config|
   #   chef.validation_client_name = "ORGNAME-validator"
   
   # Delete UUID when box is destroyed
-  
   module VagrantPlugins
     module KUUID
       module Action
@@ -202,6 +201,49 @@ Vagrant.configure("2") do |config|
   
         action_hook("KUUID", :machine_action_destroy) do |hook|
           hook.append(Action::RemoveKUUID)
+        end
+
+      end
+    end
+  end
+  
+  # Try to wake up the puppet server first
+  module VagrantPlugins
+    module KWAKE
+      module Action
+        class WakeMaster
+        
+          def initialize(app, env)
+            @app = app
+            @machine = env[:machine]
+            @ui = env[:ui]
+          end
+
+          def call(env)
+            machine_action = env[:machine_action]
+            if machine_action == :up
+              require 'open-uri'
+              contents = open('http://kalabox.kalamuna.com') {|io| io.read}
+              @ui.info "Making sure puppet master is awake"
+            end
+            @app.call(env)
+          end
+  
+        end
+      end
+    end
+  end
+  
+  module VagrantPlugins
+    module KWAKE
+      class Plugin < Vagrant.plugin('2')
+        name 'KWAKE'
+        description <<-DESC
+          This plugin wakes up the puppet master before upping
+        DESC
+  
+        action_hook("KWAKE", :machine_action_up) do |hook|
+          hook.prepend(Action::WakeMaster)
         end
 
       end
