@@ -543,7 +543,7 @@ function _kala_reset_settings($pantheon) {
     $output .= "// Only use these settings if on Kalabox \n";
     $output .= "if(isset(\$_SERVER['KALABOX']) &&  \$_SERVER['KALABOX'] === 'on') { \n";
     $output .= "  // Presumed kalabox db settings \n";
-    $output .= "  \$db_url = 'mysql://root:password@localhost/" . $pantheon["kaladb"] . ";\n";
+    $output .= "  \$db_url = 'mysql://root:password@localhost/" . $pantheon["kaladb"] . "';\n";
     $output .= "}\n";
 
     $settings = $output;
