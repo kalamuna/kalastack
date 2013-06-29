@@ -13,6 +13,14 @@ class drush::config {
       require => [Class["drush::install"], Class["drush::upgrade"]],
     }
     
+    file { "/etc/drush":
+      ensure  => directory,
+      owner   => root,
+      group   => root,
+      mode    => 777,
+      require => [Class["drush::install"], Class["drush::upgrade"]],
+    }
+    
     file { "/usr/share/drush/commands/kala/kala.drush.inc":
       ensure  => file,
       owner   => root,
@@ -28,6 +36,6 @@ class drush::config {
       group   => root,
       mode    => 644,
       source  => "puppet:///modules/drush/drushrc.php",
-      require => [Class["drush::install"], Class["drush::upgrade"]],
+      require => File["/etc/drush"],
     }  
 }

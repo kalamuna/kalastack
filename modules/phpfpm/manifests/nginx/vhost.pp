@@ -33,10 +33,10 @@ define phpfpm::nginx::vhost (
 	}
 	
 	file { $root:
-	    ensure => "directory",
-	    owner  => $::kalauser,
-	    group  => $::kalauser,
-	    mode   => 755,
+    ensure => "directory",
+	  owner  => $::kalauser,
+	  group  => $::kalauser,
+	  mode   => 755,
 	}
 	
 }
