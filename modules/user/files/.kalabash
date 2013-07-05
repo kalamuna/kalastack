@@ -1,0 +1,17 @@
+# Load all other config files
+for file in ~/{.colors, .kalabox}; do
+  [ -r "$file" ] && source "$file"
+done
+unset file
+
+# Load Git autocompletion script if it's available.
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
+# We set this environmental variable so 
+# it is ingested into $_SERVER by php
+# This basically exists only so drush
+# db connections runs. We are also setting it
+# through nginx. @todo is this dumb?  
+export KALABOX=on

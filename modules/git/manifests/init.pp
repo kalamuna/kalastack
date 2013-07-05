@@ -5,6 +5,6 @@
  */
 class git {
     
-    include git::install
+    include git::install, git::config
     
 }

@@ -1,0 +1,8 @@
+# To use, put following in ~/.bashrc:
+# Include my custom dot files
+if [ -f ~/.kalabash ]; then
+  . ~/.kalabash
+fi
+
+# Inspirations:
+# https://github.com/paulirish/dotfiles

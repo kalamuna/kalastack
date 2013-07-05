@@ -17,4 +17,4 @@
   changed = green black
   untracked = green black
 [core]
-  excludesfile = ~/.gitignore
+  excludesfile = /etc/gitignore
