@@ -156,7 +156,7 @@ $options['shell-aliases']['dis-all'] = '!drush -y dis $(drush pml --status=enabl
  * line, paths may be separated by a colon (:) on Unix-based systems or a
  * semi-colon (;) on Windows.
  */
-$options['alias-path'] = array('/var/www/.drush');
+$options['alias-path'] = array('/etc/drush');
 
 /**
  * Specify the folder where 'sql-sync' should store persistent dump files.
