@@ -57,7 +57,7 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   config.vm.synced_folder "~/kalabox/www", "/var/www", :create => true, :nfs => true
-  config.vm.synced_folder "~/kalabox/drush_aliases", "/etc/drush", :create => true, :nfs => true
+  config.vm.synced_folder "~/kalabox/drush_aliases", "/etc/drush/aliases", :create => true, :nfs => true
 
   # Use for drush debugging
   # config.vm.synced_folder "~/kalabox/drush", "/usr/share/drush", :create => true, :nfs => true
