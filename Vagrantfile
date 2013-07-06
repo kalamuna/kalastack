@@ -16,27 +16,27 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   # Use multi VM syntax
-  
+
   # Generate a UUID to identify this box to the puppet master
   unless File.directory?(".kalabox")
     FileUtils.mkdir_p(".kalabox")
   end
   unless File.exist?(".kalabox/uuid")
-    require 'securerandom'; 
+    require 'securerandom';
     kalauuid = "kala." + SecureRandom.hex + ".box"
     File.new(".kalabox/uuid", 'w')
     File.open(".kalabox/uuid", "wb") do |file|
       file.write(kalauuid)
     end
   end
-  
+
   config.vm.box = "kalabox"
   config.vm.hostname = File.read(".kalabox/uuid")
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   config.vm.box_url = "http://files.kalamuna.com/kalabox64.box"
-  
+
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
@@ -57,7 +57,10 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   config.vm.synced_folder "~/kalabox/www", "/var/www", :create => true, :nfs => true
-  config.vm.synced_folder "~/kalabox/drush", "/etc/drush", :create => true, :nfs => true
+  config.vm.synced_folder "~/kalabox/drush_aliases", "/etc/drush", :create => true, :nfs => true
+
+  # Use for drush debugging
+  # config.vm.synced_folder "~/kalabox/drush", "/usr/share/drush", :create => true, :nfs => true
 
   # Set some SSH config
   # config.ssh.username = "kala"
@@ -68,7 +71,7 @@ Vagrant.configure("2") do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  
+
   config.vm.provider :virtualbox do |vb|
   #   # Don't boot with headless mode
   #   vb.gui = true
@@ -99,7 +102,7 @@ Vagrant.configure("2") do |config|
   # #               Managed by Puppet.\n"
   # # }
   #
-  
+
   if ENV['KALABOX_DEV']=='TRUE' then
    config.vm.provision :puppet do |p|
      p.manifests_path = "manifests"
@@ -163,7 +166,7 @@ Vagrant.configure("2") do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
-  
+
   # Delete UUID when box is destroyed
   module VagrantPlugins
     module KUUID
@@ -175,7 +178,7 @@ Vagrant.configure("2") do |config|
             @machine = env[:machine]
             @ui = env[:ui]
           end
-  
+
           def call(env)
             machine_action = env[:machine_action]
             if machine_action == :destroy
@@ -185,12 +188,12 @@ Vagrant.configure("2") do |config|
               end
             end
           end
-  
+
         end
       end
     end
   end
-  
+
   module VagrantPlugins
     module KUUID
       class Plugin < Vagrant.plugin('2')
@@ -198,7 +201,7 @@ Vagrant.configure("2") do |config|
         description <<-DESC
           This plugin removes the UUID on box destroy
         DESC
-  
+
         action_hook("KUUID", :machine_action_destroy) do |hook|
           hook.append(Action::RemoveKUUID)
         end
@@ -206,13 +209,13 @@ Vagrant.configure("2") do |config|
       end
     end
   end
-  
+
   # Try to wake up the puppet server first
   module VagrantPlugins
     module KWAKE
       module Action
         class WakeMaster
-        
+
           def initialize(app, env)
             @app = app
             @machine = env[:machine]
@@ -228,12 +231,12 @@ Vagrant.configure("2") do |config|
             end
             @app.call(env)
           end
-  
+
         end
       end
     end
   end
-  
+
   module VagrantPlugins
     module KWAKE
       class Plugin < Vagrant.plugin('2')
@@ -241,7 +244,7 @@ Vagrant.configure("2") do |config|
         description <<-DESC
           This plugin wakes up the puppet master before upping
         DESC
-  
+
         action_hook("KWAKE", :machine_action_up) do |hook|
           hook.prepend(Action::WakeMaster)
         end
@@ -249,5 +252,5 @@ Vagrant.configure("2") do |config|
       end
     end
   end
-  
+
 end
