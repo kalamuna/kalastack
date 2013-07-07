@@ -7,6 +7,7 @@
 
 node /^kala\.[a-f0-9]{32}\.box$/  {
   # initialize core packages
+  include kalabox
   include apt
   include git
   include unzip
@@ -34,5 +35,5 @@ node /^kala\.[a-f0-9]{32}\.box$/  {
     enabled     => "FALSE",
     custom      => "# THIS IS MEANT TO BE USED FOR BUILDING OTHER DRUPAL VHOSTS"
   }
-  
+
 }
