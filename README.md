@@ -111,15 +111,6 @@ $ drush files SITENAME.dev
 Will sync your pantheon dev files to your Kalastack, accessible from
 /var/www/SITENAME/sites/default/files when ssh'd in to your stack, and from
 ~/kalabox/www/SITENAME/sites/default/files on your host.
-```bash
-$ drush vhost SITENAME.dev
-```
-Will build and enable a nginx vhost file of your Pantheon site on your
-Kalastack at SITENAME.kala
-```bash
-$ drush kala
-```
-Will show helpful info
 
 ### UPDATING YOUR HOST HOSTS FILE
 
