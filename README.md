@@ -2,13 +2,13 @@ Kalastack
 =========================
 
 Kalastack is a basic LEMP stack built for Drupal. At its core it is a series of puppet manifests that
-are managed by Vagrant. Kalastack was built to run primarily on Ubuntu Server 12.04, though it will welcome to multiple architectures in the future.
+are managed by Vagrant. Kalastack was built to run primarily on Ubuntu Server 12.04, though it will welcome multiple architectures in the future.
 
 ## Quickstart
 
 Kalastack requires [Vagrant 1.2.2](http://downloads.vagrantup.com/tags/v1.2.2) and [VirtualBox 4.2.8](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
 
-*Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.2.2 and VirtualBox 4.2.8.
+*Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.2.2 and VirtualBox 4.2.8. It has also been used on Ubuntu 12.04 both natively and using VirtualBox and Vagrant. You may have to play around with the VT Intel settings on your machine to get it to work. That all said it is not a recommended or supported environment at this time.
 
 Once you have downloaded and installed both Vagrant and Virtual box,
 you can build out the complete stack:
@@ -42,10 +42,10 @@ machine. This way you can use your local IDE to edit files on your server.
 
 Download your aliases from within the Pantheon dashboard, then move and rename the alias file from ```pantheon.aliases.drushrc.php``` to ```aliases.drushrc.php``` and put it in ```~/kalabox/drush_aliases/```
 ```bash
-$ mv pantheon.aliases.drushrc.php ~/kalabox/drush/aliases.drushrc.php
+$ mv pantheon.aliases.drushrc.php ~/kalabox/drush_aliases/aliases.drushrc.php
 ```
 
-You can verify your aliases are functioning correctly by running on your Kalastack:
+You can verify your aliases are functioning correctly by running the following from within your Kalastack:
 ```bash
 $ drush sa
 ```
@@ -69,16 +69,19 @@ $ cat ~/.ssh/id_rsa.pub
 
 ## DRUSH
 
-Kalastack ships with 8 custom drush commands designed specifically for Pantheon
-and Kalastack. They depend on a Pantheon site alias file.
+Kalastack ships with 8 custom drush commands. These commands are used primarily to interact with your Pantheon sites however they can also be used to spin up a new site.
+You will need to have valid pantheon aliases to take advantage of the pantheon integration. See above for instructions on using your aliases with Kalastack.
 
 These commands only work with your dev environments. You will pass your kalabox site as an
 argument to these commands. Site names are derived from the pantheon aliases file on your Kalastack and interact with your Pantehon DEV environment.
 
-     $ drush build SITENAME.dev
-
-Will completely build your Pantheon site on your Kalastack, this will
-edit settings.php and set up a vhost. After running this command and
+```bash
+$ drush build SITENAME.dev # This will pull down and build a pantheon site defined in your aliases file on your Kalastack
+$ drush build SITENAME # This will spin up a new Panopoly site at SITENAME.kala with user:admin, pass:admin
+$ drush build SITENAME --profile=MYDISTRO # this will spin up a new MYSDISTRO site at SITENAME.kala with user:admin, pass:admin
+```
+Drush build will either completely build your Pantheon site on your Kalastack or spin up a new site. This will
+edit settings.php and set up a vhost as needed. After running this command and
 adding your server name to your hosts /etc/hosts file you should be
 able to visit the site in your web browser.
 ```bash
@@ -87,9 +90,10 @@ $ drush krefresh SITENAME.dev
 Will refresh the code, database and files on your Kalastack from your
 pantheon site
 ```bash
-$ drush crush SITENAME.dev
+$ drush crush SITENAME.dev # Will remove a Pantheon site from your Kalastack
+$ drush crush SITENAME # Will remove a site from your Kalastack
 ```
-Will completely remove SITENAME.dev from your Kalastack.
+Will completely remove SITENAME.dev or SITENAME from your Kalastack.
 ```bash
 $ drush code SITENAME.dev
 ```
