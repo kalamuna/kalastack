@@ -7,6 +7,7 @@ class phpfpm::extensions::xdebug (
   $remote_host        = "host.kala",
   $remote_port        = 9000,
   $remote_handler     = "dbgp",
+  $remote_cb          = 1,
   $profiler_enable    = 1,
   $profile_output_dir = "/tmp/xprofile",
   $collect_params     = "On",
@@ -16,8 +17,8 @@ class phpfpm::extensions::xdebug (
   exec { "appendxdebug":
     path    => "/bin:/usr/bin",
     unless  => "grep xdebug.remote_enable /etc/php5/conf.d/xdebug.ini",
-    command => 
-    "sed -i '\$a xdebug.remote_enable=${remote_enable}' /etc/php5/conf.d/xdebug.ini && sed -i '\$a xdebug.remote_host=${remote_host}' /etc/php5/conf.d/xdebug.ini && sed -i '\$a xdebug.remote_port=${remote_port}' /etc/php5/conf.d/xdebug.ini && sed -i '\$a xdebug.remote_handler=${remote_handler}' /etc/php5/conf.d/xdebug.ini",
+    command =>
+    "sed -i '\$a xdebug.remote_enable=${remote_enable}' /etc/php5/conf.d/xdebug.ini && sed -i '\$a xdebug.remote_host=${remote_host}' /etc/php5/conf.d/xdebug.ini && sed -i '\$a xdebug.remote_port=${remote_port}' /etc/php5/conf.d/xdebug.ini && sed -i '\$a xdebug.remote_handler=${remote_handler}' && sed -i '\$a xdebug.remote_connect_back=${remote_cb}' /etc/php5/conf.d/xdebug.ini",
     require => Package["php5-xdebug"],
     notify  => [Class["phpfpm::service"], Class["nginx::service"]],
   }

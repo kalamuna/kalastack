@@ -50,7 +50,7 @@ define phpfpm::nginx::kalabox (
     mode   => 777,
     source => "puppet:///modules/phpfpm/kalaboxv2.png",
   }
-  
+
   file { "${root}/kalaboxv2.ico":
     ensure => present,
     owner  => $::kalauser,
