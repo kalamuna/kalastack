@@ -19,7 +19,7 @@ class user::config {
     group  => $::kalauser,
     source => "puppet:///modules/user/.bashrc.kala",
   }
-  
+
   file { "/home/$::kalauser/.kalabash":
     ensure => file,
     mode   => 755,
@@ -35,17 +35,18 @@ class user::config {
     group  => $::kalauser,
     source => "puppet:///modules/user/ssh-config",
   }
-  
+
   exec { "extendbashrc":
     path    => "/bin:/usr/bin",
     unless  => "cat /home/$::kalauser/.bashrc | grep kalabash",
     command => "cat /home/$::kalauser/.bashrc.kala >> /home/$::kalauser/.bashrc",
     require => File["/home/$::kalauser/.bashrc.kala"],
   }
-  
+
   # Thanks @tizzo!
-  user { "$::kalauser": 
-    groups => ['dialout'] 
+  user { "$::kalauser":
+    groups => ['dialout', 'mysql'],
+    require => Class["mysql::server::install"],
   }
 
 }

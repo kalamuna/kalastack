@@ -156,7 +156,7 @@ function kala_vhost() {
   $site = _kala_build_site($args[1]);
 
   $sitename = $site['site'];
-  if (!file_exists("/etc/nginx/sites-available/" . $sitename)) {
+  if (!file_exists("/etc/kalastack/vhosts/sites-available/" . $sitename)) {
     if (is_dir("/var/www/" . $sitename)) {
       drush_shell_exec("cp /etc/nginx/sites-available/drupaldefault /tmp/" . $sitename);
       $vhost_default_string = kala_get_file("/tmp/" . $sitename);
@@ -165,13 +165,13 @@ function kala_vhost() {
       $replace = array($sitename . ".kala", "/var/www/" . $sitename, "");
       $vhost_default_string = str_replace($search, $replace, $vhost_default_string);
 
-
       kala_write_file("/tmp/" . $sitename, $vhost_default_string);
-      drush_shell_exec ("cp /tmp/" . $sitename . " /etc/nginx/sites-available/" . $sitename);
-      drush_shell_exec ("ln -s /etc/nginx/sites-available/" . $sitename . " /etc/nginx/sites-enabled/" . $sitename);
+      drush_shell_exec ("cp /tmp/" . $sitename . " /etc/kalastack/vhosts/sites-available/" . $sitename);
+      drush_shell_exec ("ln -s /etc/kalastack/vhosts/sites-available/" . $sitename . " /etc/kalastack/vhosts/sites-enabled/" . $sitename);
 
       drush_shell_exec ("service nginx restart");
       kala_update_etc_hosts($sitename . ".kala");
+      drush_log('New vhost created!', 'success');
     }
   }
   else {
@@ -350,8 +350,7 @@ function kala_build() {
 
   //
   drush_shell_exec("sudo drush vhost " . $args[1]);
-  drush_shell_exec("cd /var/www/" . $site['site']);
-  drush_shell_exec("drush cc all -y");
+  drush_shell_exec("cd /var/www/" . $site['site'] . " && drush cc all -y");
   drush_log('Drush: We clear yo cache', 'success');
 
   drush_log('Build: Success!', 'success');
@@ -377,8 +376,8 @@ function kala_destroy(){
       drush_log('DB = FUCKING CRUSHED', 'success');
     }
 
-    if (drush_shell_exec("sudo rm -rf /etc/nginx/sites-available/" . $site['site'])) {
-      if (drush_shell_exec("sudo rm -rf /etc/nginx/sites-enabled/" . $site['site'])) {
+    if (drush_shell_exec("sudo rm -rf /etc/kalastack/vhosts/sites-available/" . $site['site'])) {
+      if (drush_shell_exec("sudo rm -rf /etc/kalastack/vhosts/sites-enabled/" . $site['site'])) {
         drush_log('VHOST = FUCKING CRUSHED', 'success');
       }
     }
@@ -456,7 +455,6 @@ function _kala_build_site($sitename) {
   $site = array();
   $site['site'] = $siteal[0];
   $site['kaladb'] = str_replace("-", "_", $site['site'] . "_kala");
-  $test == $test;
 
   if (isset($aliases['@' . $sitename])) {
     // honestly don't know what this line is for?

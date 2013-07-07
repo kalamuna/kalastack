@@ -7,15 +7,16 @@ class mysql::server::config {
 
 	mysql::my { "my.cnf":
 	  path => "/etc/mysql/my.cnf",
-	  require => Class["mysql::server::install"],
+	  require => File["/etc/kalastack/mysql"],
 	  notify => Class["mysql::server::service"],
 	}
 
   file { "/etc/kalastack/mysql":
     ensure  => directory,
     mode    => 777,
-    owner   => $::kalauser,
-    group   => $::kalauser,
+    owner   => 501,
+    group   => dialout,
+    require => [Class["mysql::server::install"], Class["kalabox::build"]],
   }
 
 }

@@ -4,7 +4,7 @@
 # You can copy this to one of:
 # - "/etc/mysql/my.cnf" to set global options,
 # - "~/.my.cnf" to set user-specific options.
-# 
+#
 # One can use all long options that the program supports.
 # Run program with --help to get a list of available options and with
 # --print-defaults to see which it would actually understand and use.
@@ -37,7 +37,7 @@ pid-file	= /var/run/mysqld/mysqld.pid
 socket		= <%= socket %>
 port		= <%= port %>
 basedir		= /usr
-datadir		= /var/lib/mysql
+datadir		= <%= data_dir %>
 tmpdir		= /tmp
 lc-messages-dir	= /usr/share/mysql
 skip-external-locking
@@ -134,11 +134,11 @@ max_allowed_packet	= <%= msd_max_allowed_packet %>
 #no-auto-rehash	# faster start of mysql but no tab completition
 
 [isamchk]
-key_buffer = <%= key_buffer %> 
-key_buffer_size = <%= ikey_buffer_size %> 
-sort_buffer_size = <%= isort_buffer_size  %> 
-read_buffer = <%= iread_buffer %> 
-write_buffer = <%= iwrite_buffer %> 
+key_buffer = <%= key_buffer %>
+key_buffer_size = <%= ikey_buffer_size %>
+sort_buffer_size = <%= isort_buffer_size  %>
+read_buffer = <%= iread_buffer %>
+write_buffer = <%= iwrite_buffer %>
 
 #
 # * IMPORTANT: Additional settings that can override those from this file!

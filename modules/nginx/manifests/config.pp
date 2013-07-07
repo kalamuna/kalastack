@@ -4,9 +4,10 @@
  *
  */
 class nginx::config {
+
   nginx::conf { "nginx.conf":
     path    => "/etc/nginx/nginx.conf",
-    require => Class["nginx::install"],
+    require => [Class["nginx::install"], File["/etc/kalastack/vhosts/sites-enabled"]],
     notify  => Class["nginx::service"],
   }
 
@@ -19,7 +20,24 @@ class nginx::config {
   file { "/etc/kalastack/vhosts":
     ensure  => directory,
     mode    => 777,
-    owner   => $::kalauser,
-    group   => $::kalauser,
+    owner   => 501,
+    group   => dialout,
+    require => [Class["nginx::install"], Class["kalabox::build"]],
+  }
+
+  file { "/etc/kalastack/vhosts/sites-available":
+    ensure  => directory,
+    mode    => 777,
+    owner   => 501,
+    group   => dialout,
+    require => File["/etc/kalastack/vhosts"],
+  }
+
+  file { "/etc/kalastack/vhosts/sites-enabled":
+    ensure  => directory,
+    mode    => 777,
+    owner   => 501,
+    group   => dialout,
+    require => File["/etc/kalastack/vhosts"],
   }
 }
