@@ -59,7 +59,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "~/kalabox/www", "/var/www", :create => true, :nfs => true
   config.vm.synced_folder "~/kalabox/drush_aliases", "/etc/drush/aliases", :create => true, :nfs => true
 
-  # Use for drush debugging
+  # Use for drush debugging. Be careful with this!!! It could bork your box.
   # config.vm.synced_folder "~/kalabox/drush", "/usr/share/drush", :create => true, :nfs => true
 
   # Set some SSH config
@@ -124,7 +124,7 @@ Vagrant.configure("2") do |config|
         "vagrant" => "1",
         "kalauser" => "vagrant",
         "kalahost" => "1.3.3.1",
-        "kalaversion" => "2.0-beta5",
+        "kalaversion" => "2.0-beta6",
       }
     end
   end
