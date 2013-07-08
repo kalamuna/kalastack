@@ -334,7 +334,8 @@ function kala_build() {
     // check to see if directory already exists for some weird reason
     if (!is_dir("/var/www/" . $site['site'])) {
       // download distro in webroot
-      drush_shell_exec("drush dl " . $profile . " destination=/var/www --drupal-project-rename=" . $site['site'] . " -y");
+      drush_log('We are now downloading the ' . $profile . ' distribution', 'success');
+      drush_shell_exec("cd /var/www && drush dl " . $profile . " --drupal-project-rename=" . $site['site'] . " -y");
 
       // spin up empty DB
       if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost -e \"create database " . $site['kaladb'] . "\"")) {
