@@ -5,11 +5,12 @@
  */
 class mysql::server::config {
 
-	mysql::my { "my.cnf":
-	  path => "/etc/mysql/my.cnf",
-	  require => File["/etc/kalastack/mysql"],
-	  notify => Class["mysql::server::service"],
-	}
+  mysql::my { "my.cnf":
+    path => "/etc/mysql/my.cnf",
+    #data_dir => "/etc/kalastack/mysql",
+    require => File["/etc/kalastack/mysql"],
+    notify => Class["mysql::server::service"],
+  }
 
   file { "/etc/kalastack/mysql":
     ensure  => directory,

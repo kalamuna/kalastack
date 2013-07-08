@@ -45,8 +45,7 @@ class user::config {
 
   # Thanks @tizzo!
   user { "$::kalauser":
-    groups => ['dialout', 'mysql'],
-    require => Class["mysql::server::install"],
+    groups => ['dialout'],
   }
 
 }
