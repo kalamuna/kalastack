@@ -20,24 +20,18 @@ class nginx::config {
   file { "/etc/kalastack/vhosts":
     ensure  => directory,
     mode    => 777,
-    owner   => 501,
-    group   => dialout,
     require => [Class["nginx::install"], Class["kalabox::build"]],
   }
 
   file { "/etc/kalastack/vhosts/sites-available":
     ensure  => directory,
     mode    => 777,
-    owner   => 501,
-    group   => dialout,
     require => File["/etc/kalastack/vhosts"],
   }
 
   file { "/etc/kalastack/vhosts/sites-enabled":
     ensure  => directory,
     mode    => 777,
-    owner   => 501,
-    group   => dialout,
     require => File["/etc/kalastack/vhosts"],
   }
 }

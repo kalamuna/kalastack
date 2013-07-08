@@ -16,8 +16,6 @@ class mysql::server::config {
   file { "/etc/kalastack/mysql":
     ensure  => directory,
     mode    => 777,
-    owner   => 501,
-    group   => dialout,
     subscribe => File["/etc/kalastack"],
   }
 
