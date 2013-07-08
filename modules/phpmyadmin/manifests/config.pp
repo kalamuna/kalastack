@@ -26,7 +26,7 @@ class phpmyadmin::config {
   # Builds the phpmyadmin config DB
   exec { "phpmyadmindbconfig":
     path    => "/bin:/usr/bin",
-    unless  => "mysql -uroot -p${php_pass} ${pma_db}",
+    unless  => "du -h /etc/kalastack/mysql/phpmyadmin | grep 172K",
     command =>
     "gunzip < /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | mysql -u${pma_user} -p${pma_pass} -h${pma_server}",
     require => Class["phpmyadmin::install"],
