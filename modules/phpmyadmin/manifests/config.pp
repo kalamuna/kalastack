@@ -26,6 +26,7 @@ class phpmyadmin::config {
   # Builds the phpmyadmin config DB
   exec { "phpmyadmindbconfig":
     path    => "/bin:/usr/bin",
+    # This is a super soft check and should be better in the future
     unless  => "du -h /etc/kalastack/mysql/phpmyadmin | grep 172K",
     command =>
     "gunzip < /usr/share/doc/phpmyadmin/examples/create_tables.sql.gz | mysql -u${pma_user} -p${pma_pass} -h${pma_server}",
@@ -35,7 +36,8 @@ class phpmyadmin::config {
   # Adds the pma user
   exec { "phpmyadmincontrolconfig":
     path    => "/bin:/usr/bin",
-    unless  => "mysqladmin -u${pma_user} -p${pma_pass} status",
+    # This is a super soft check and should be better in the future
+    unless  => "du -h /etc/kalastack/mysql | grep 1.1M",
     command =>
     "mysql -u${pma_user} -p${pma_pass} -h${pma_server} -e \"GRANT ALL PRIVILEGES ON ${pma_db}.* TO ${pma_user}@${pma_server} IDENTIFIED BY '${pma_pass}';\"",
     require => Exec["phpmyadmindbconfig"],
