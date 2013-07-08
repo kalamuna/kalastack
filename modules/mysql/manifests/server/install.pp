@@ -13,7 +13,7 @@ class mysql::server::install {
 
   # Install mysql-server
   package { "mysql-server":
-  	ensure => present
+  	ensure => present,
   }
 
   # Install php5 extension

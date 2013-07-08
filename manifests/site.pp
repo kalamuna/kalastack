@@ -8,6 +8,7 @@
 node /^kala\.[a-f0-9]{32}\.box$/  {
   # initialize core packages
   include kalabox
+  include apparmor
   include apt
   include git
   include unzip

@@ -7,9 +7,10 @@ class mysql::server::config {
 
   mysql::my { "my.cnf":
     path => "/etc/mysql/my.cnf",
-    #data_dir => "/etc/kalastack/mysql",
-    require => File["/etc/kalastack/mysql"],
+    data_dir => "/etc/kalastack/mysql",
+    require => Class["mysql::server::install"],
     notify => Class["mysql::server::service"],
+    subscribe => Class["apparmor::service"],
   }
 
   file { "/etc/kalastack/mysql":
@@ -17,7 +18,20 @@ class mysql::server::config {
     mode    => 777,
     owner   => 501,
     group   => dialout,
-    require => [Class["mysql::server::install"], Class["kalabox::build"]],
+    subscribe => File["/etc/kalastack"],
+  }
+
+  exec { "movedata":
+    path    => "/bin:/usr/bin",
+    unless  => "du -h mysql | grep 1.1M && du -h performance_schema | grep 212K && du -h phpmyadmin | grep 172K",
+    command => "sudo service mysql stop && sudo cp -R /var/lib/mysql/mysql /etc/kalastack/mysql && sudo cp -R /var/lib/mysql/performance_schema /etc/kalastack/mysql && sudo cp -R /var/lib/mysql/phpmyadmin /etc/kalastack/mysql",
+    require => File["/etc/kalastack/mysql"],
+    subscribe => Exec["phpmyadmincontrolconfig"],
+  }
+
+  user { "mysql":
+    groups => ['dialout'],
+    require => Class["mysql::server::install"],
   }
 
 }
