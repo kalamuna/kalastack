@@ -8,10 +8,7 @@ class kalabox::build {
   file { "/etc/kalastack":
     ensure  => directory,
     mode    => 777,
-    owner   => $::kalauser,
-    group   => $::kalauser,
+    require => Class["user::config"],
   }
-
-  File["/etc/kalastack"] -> Package <| |>
 
 }
