@@ -21,8 +21,8 @@ class mysql::server::config {
 
   exec { "movedata":
     path    => "/bin:/usr/bin",
-    unless  => "du -h /etc/kalastack/mysql | grep 1.1M && du -h /etc/kalastack/mysql/performance_schema | grep 212K && du -h /etc/kalastack/mysql/phpmyadmin | grep 172K",
-    command => "sudo service mysql stop && sudo cp -R /var/lib/mysql/mysql /etc/kalastack/mysql && sudo cp -R /var/lib/mysql/performance_schema /etc/kalastack/mysql && sudo cp -R /var/lib/mysql/phpmyadmin /etc/kalastack/mysql",
+    unless  => "du -h /etc/kalastack/mysql | grep mysql/mysql && du -h /etc/kalastack/mysql/performance_schema | grep mysql/performance_schema && du -h /etc/kalastack/mysql/phpmyadmin | grep mysql/phpmyadmin",
+    command => "sudo service mysql stop && sudo cp -R /var/lib/mysql/mysql /etc/kalastack/mysql && sudo cp -R /var/lib/mysql/performance_schema /etc/kalastack/mysql && sudo cp -R /var/lib/mysql/phpmyadmin /etc/kalastack/mysql && sudo service mysql start",
     require => File["/etc/kalastack/mysql"],
     subscribe => Exec["phpmyadmincontrolconfig"],
   }
