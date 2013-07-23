@@ -8,6 +8,10 @@ are managed by Vagrant. Kalastack was built to run primarily on Ubuntu Server 12
 
 Kalastack requires [Vagrant 1.2.2](http://downloads.vagrantup.com/tags/v1.2.2) and [VirtualBox 4.2.8](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
 
+**System Requirements:**
+- By default, Kalastack allocates 2GB of RAM to the virtual machine. The wiki provides [instructions for lowering this amount](https://github.com/kalamuna/kalastack/wiki/Alter-RAM-Allocated-to-the-Virtual-Machine).
+- Currently, the virtual machine Kalastack installs is 64-bit and requires a 64-bit machine to run.
+
 *Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.2.2 and VirtualBox 4.2.8. It has also been used on Ubuntu 12.04 both natively and using VirtualBox and Vagrant. You may have to play around with the VT Intel settings on your machine to get it to work. That all said it is not a recommended or supported environment at this time.
 
 Once you have downloaded and installed both Vagrant and Virtual box,
@@ -35,6 +39,23 @@ $ vagrant ssh
 
 Kalastack uses NFS file sharing. You can access your server webroot at ~/kalabox/www on your host
 machine. This way you can use your local IDE to edit files on your server.
+
+## Working with Kalabox
+
+###Start/Stop
+
+Don't start the box in Virualbox, but instead, from within the kalastack codebase use the command line to spin up the stack:
+```bash
+$ vagrant up --no-provision
+```
+and log in via:
+```bash
+$ vagrant ssh
+```
+and spin down the box with:
+```bash
+$ vagrant halt
+```
 
 ## Working with Pantheon
 
@@ -143,24 +164,6 @@ the URL (see [xdebug documentation](http://xdebug.org/docs/profiler) for more de
 checking [webgrind](http://grind.kala).
 
 Many browsers also offer automated tools/plugins to turn profiling on and off, i.e. [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc) for google Chrome.
-
-
-## Working with Kalabox
-
-###Start/Stop
-
-Don't start the box in Virualbox, but instead, from within the kalastack codebase use the command line to spin up the stack:
-```bash
-$ vagrant up --no-provision
-```
-and log in via:
-```bash
-$ vagrant ssh
-```
-and spin down the box with:
-```bash
-$ vagrant halt
-```
 
 
 -------------------------------------------------------------------------------------
