@@ -10,7 +10,8 @@ Kalastack requires [Vagrant 1.2.2](http://downloads.vagrantup.com/tags/v1.2.2) a
 
 **System Requirements:**
 - By default, Kalastack allocates 2GB of RAM to the virtual machine. The wiki provides [instructions for lowering this amount](https://github.com/kalamuna/kalastack/wiki/Alter-RAM-Allocated-to-the-Virtual-Machine).
-- Currently, the virtual machine Kalastack installs is 64-bit and requires a 64-bit machine to run.
+- Currently, the virtual machine Kalastack installs is 64-bit and requires a 64-bit machine to run. You can, however, get it to run on a 32-bit host
+machine by following the [instructions for running on a 32-bit machine](https://github.com/kalamuna/kalastack/wiki/Using-Kalastack-on-32-bit-Machines).
 
 *Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.2.2 and VirtualBox 4.2.8. It has also been used on Ubuntu 12.04 both natively and using VirtualBox and Vagrant. You may have to play around with the VT Intel settings on your machine to get it to work. That all said it is not a recommended or supported environment at this time.
 
