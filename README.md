@@ -165,6 +165,11 @@ checking [webgrind](http://grind.kala).
 
 Many browsers also offer automated tools/plugins to turn profiling on and off, i.e. [Xdebug helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc) for google Chrome.
 
+### APACHE SOLR
+
+Currently, Kalastack doesn't come with Solr installed by default. You can, however,
+easily add it in by following the instructions on the [Adding Solr wiki page](https://github.com/kalamuna/kalastack/wiki/Adding-Solr-to-Kalastack).
+
 
 -------------------------------------------------------------------------------------
 (C) 2013 Kalamuna LLC
