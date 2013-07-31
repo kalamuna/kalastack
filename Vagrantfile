@@ -134,6 +134,18 @@ Vagrant.configure("2") do |config|
       "kalahost" => "1.3.3.1",
     }
     end
+  elsif ENV['KALABOX_SOLR']=='TRUE' then
+    config.vm.provision :puppet do |p|
+      p.manifests_path = "manifests"
+      p.manifest_file  = "solr.pp"
+      p.module_path = "modules"
+      p.options = "--verbose --debug"
+      p.facter = {
+        "vagrant" => "1",
+        "kalauser" => "vagrant",
+        "kalahost" => "1.3.3.1",
+      }
+    end
   else
     config.vm.provision :puppet_server do |ps|
       ps.puppet_node = File.read(".kalabox/uuid")

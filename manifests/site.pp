@@ -23,7 +23,6 @@ node /^kala\.[a-f0-9]{32}\.box$/  {
   include mysql
 
   # initialize bonus shit
-  # include solr
   include drush
   include phpmyadmin
   include webgrind
