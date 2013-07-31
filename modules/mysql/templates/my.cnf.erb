@@ -69,7 +69,7 @@ read_buffer_size = <%= read_buffer_size %>
 # * Query Cache Configuration
 #
 query_cache_limit	= <%= query_cache_limit %>
-query_cache_size        = <%= query_cache_size %>
+query_cache_size = <%= query_cache_size %>
 #
 # * Logging and Replication
 #
@@ -91,8 +91,8 @@ query_cache_size        = <%= query_cache_size %>
 #       other settings you may need to change.
 #server-id		= 1
 #log_bin			= /var/log/mysql/mysql-bin.log
-expire_logs_days	= 10
-max_binlog_size         = 100M
+expire_logs_days = 10
+max_binlog_size = 100M
 #binlog_do_db		= include_database_name
 #binlog_ignore_db	= include_database_name
 #
@@ -113,6 +113,14 @@ max_binlog_size         = 100M
 #innodb_log_buffer_size = 8M
 innodb_flush_log_at_trx_commit = <%= innodb_flush_log_at_trx_commit %>
 #innodb_lock_wait_timeout = 50
+innodb_buffer_pool_size = <%= innodb_buffer_pool_size %>
+innodb_log_buffer_size  = 4M
+innodb_file_per_table   = 1
+innodb_open_files       = 256
+innodb_io_capacity      = 512
+innodb_flush_method     = O_DIRECT
+innodb_thread_concurrency = 8
+innodb_lock_wait_timeout = 120
 #
 # * Security Features
 #

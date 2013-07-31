@@ -29,6 +29,7 @@ define mysql::my (
 
   # innodb
   $innodb_flush_log_at_trx_commit = "0",
+  $innodb_buffer_pool_size = "384M",
 
   # mysqldump
   $msd_max_allowed_packet = "32M",
