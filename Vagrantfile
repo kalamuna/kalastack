@@ -30,12 +30,28 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  # Some basic vm config
   config.vm.box = "kalabox"
   config.vm.hostname = File.read(".kalabox/uuid")
 
+  # Gather some more data about the host machine - this is only test on mac
+  hostarch = %x[ uname -m ].strip
+  #hostker = %x[ uname ].strip
+  #if hostker == "Darwin" then #looking for way to strip newline
+  #  hostmem = Integer(%x[ sysctl hw.memsize ].scan(/\d+/).shift) / 1049000
+  #elsif hostker == "Linux" then
+  #  hostmem = Integer(%x[ grep MemTotal /proc/meminfo ].scan(/\d+/).shift) / 1024
+  #else
+  #  hostmem = 2048
+  #end
+
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "http://files.kalamuna.com/kalabox64.box"
+  if hostarch.include? "64" then
+    config.vm.box_url = "http://files.kalamuna.com/kalabox64.box"
+  else
+    config.vm.box_url = "http://files.kalamuna.com/kalabox32.box"
+  end
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -80,6 +96,7 @@ Vagrant.configure("2") do |config|
   #   vb.gui = true
   #
     # Use VBoxManage to customize the VM. For example to change memory:
+    # vb.customize ["modifyvm", :id, "--memory", (hostmem / 2)]
     vb.customize ["modifyvm", :id, "--memory", "2048"]
     vb.name = File.read(".kalabox/uuid")
   end
