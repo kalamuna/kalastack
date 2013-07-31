@@ -36,14 +36,14 @@ Vagrant.configure("2") do |config|
 
   # Gather some more data about the host machine - this is only test on mac
   hostarch = %x[ uname -m ].strip
-  #hostker = %x[ uname ].strip
-  #if hostker == "Darwin" then #looking for way to strip newline
-  #  hostmem = Integer(%x[ sysctl hw.memsize ].scan(/\d+/).shift) / 1049000
-  #elsif hostker == "Linux" then
-  #  hostmem = Integer(%x[ grep MemTotal /proc/meminfo ].scan(/\d+/).shift) / 1024
-  #else
-  #  hostmem = 2048
-  #end
+  hostker = %x[ uname ].strip
+  if hostker == "Darwin" then #looking for way to strip newline
+    hostmem = Integer(%x[ sysctl hw.memsize ].scan(/\d+/).shift) / 1049000
+  elsif hostker == "Linux" then
+    hostmem = Integer(%x[ grep MemTotal /proc/meminfo ].scan(/\d+/).shift) / 1024
+  else
+    hostmem = 2048
+  end
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -96,8 +96,7 @@ Vagrant.configure("2") do |config|
   #   vb.gui = true
   #
     # Use VBoxManage to customize the VM. For example to change memory:
-    # vb.customize ["modifyvm", :id, "--memory", (hostmem / 2)]
-    vb.customize ["modifyvm", :id, "--memory", "2048"]
+    vb.customize ["modifyvm", :id, "--memory", (hostmem / 2)]
     vb.name = File.read(".kalabox/uuid")
   end
   #
