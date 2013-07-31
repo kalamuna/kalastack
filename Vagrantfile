@@ -172,7 +172,7 @@ Vagrant.configure("2") do |config|
 
   # Delete UUID when box is destroyed
   module VagrantPlugins
-    module KUUID
+    module KBOX
       module Action
         class RemoveKUUID
 
@@ -193,30 +193,7 @@ Vagrant.configure("2") do |config|
           end
 
         end
-      end
-    end
-  end
 
-  module VagrantPlugins
-    module KUUID
-      class Plugin < Vagrant.plugin('2')
-        name 'KUUID'
-        description <<-DESC
-          This plugin removes the UUID on box destroy
-        DESC
-
-        action_hook("KUUID", :machine_action_destroy) do |hook|
-          hook.append(Action::RemoveKUUID)
-        end
-
-      end
-    end
-  end
-
-  # Try to wake up the puppet server first
-  module VagrantPlugins
-    module KWAKE
-      module Action
         class WakeMaster
 
           def initialize(app, env)
@@ -234,21 +211,24 @@ Vagrant.configure("2") do |config|
             end
             @app.call(env)
           end
-
         end
       end
     end
   end
 
   module VagrantPlugins
-    module KWAKE
+    module KBOX
       class Plugin < Vagrant.plugin('2')
-        name 'KWAKE'
+        name 'KBOX'
         description <<-DESC
-          This plugin wakes up the puppet master before upping
+          This plugin does some kalabox stuff
         DESC
 
-        action_hook("KWAKE", :machine_action_up) do |hook|
+        action_hook("RemoveUUID", :machine_action_destroy) do |hook|
+          hook.append(Action::RemoveKUUID)
+        end
+
+        action_hook("WakeMaster", :machine_action_up) do |hook|
           hook.prepend(Action::WakeMaster)
         end
 
