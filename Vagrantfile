@@ -132,6 +132,7 @@ Vagrant.configure("2") do |config|
       "vagrant" => "1",
       "kalauser" => "vagrant",
       "kalahost" => "1.3.3.1",
+      "kalamem" => (hostmem / 2),
     }
     end
   elsif ENV['KALABOX_SOLR']=='TRUE' then
@@ -144,6 +145,7 @@ Vagrant.configure("2") do |config|
         "vagrant" => "1",
         "kalauser" => "vagrant",
         "kalahost" => "1.3.3.1",
+        "kalamem" => (hostmem / 2),
       }
     end
   else
@@ -156,6 +158,7 @@ Vagrant.configure("2") do |config|
         "kalauser" => "vagrant",
         "kalahost" => "1.3.3.1",
         "kalaversion" => "2.0-beta6",
+        "kalamem" => (hostmem / 2),
       }
     end
   end
