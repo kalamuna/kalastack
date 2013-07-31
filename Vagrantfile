@@ -206,7 +206,7 @@ Vagrant.configure("2") do |config|
             machine_action = env[:machine_action]
             if machine_action == :up
               require 'open-uri'
-              contents = open('http://kalabox.kalamuna.com') {|io| io.read}
+              contents = open('http://foreman.kalamuna.com') {|io| io.read}
               @ui.info "Making sure puppet master is awake"
             end
             @app.call(env)
