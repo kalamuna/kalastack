@@ -8,12 +8,14 @@
 class phpfpm::config {
 
 	# Dynamically set php memory limit, but don't exceed 1G
-	$php_mem_limit = $::kalamem / 4
+	# Trick puppet into thinking this is a number
+	$php_mem_limit = 0 + $::kalamem
+	$php_mem_limit = $php_mem_limit / 4
 	if ($php_mem_limit > 1024) {
 		$php_mem_limit_use = 1024
 	}
 	else {
-		$php_mem_limit_use = $::kalamem / 4
+		$php_mem_limit_use = $php_mem_limit / 4
 	}
 
 	php5::ini { "fpm":
