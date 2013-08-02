@@ -656,4 +656,3 @@ function _kala_reset_settings($site) {
     }
   }
 }
-}
