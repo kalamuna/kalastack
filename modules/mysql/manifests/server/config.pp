@@ -6,7 +6,9 @@
 class mysql::server::config {
 
   # Dynamically set buffer pool
-  $buffer_pool = $::kalamem / 4
+  # Trick puppet into thinking this is a numer
+  $buffer_total_mem = 0 + $::kalamem
+  $buffer_pool = $buffer_total_mem / 4
 
   mysql::my { "my.cnf":
     path => "/etc/mysql/my.cnf",

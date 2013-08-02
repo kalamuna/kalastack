@@ -16,7 +16,7 @@ class phpfpm::config {
 		$php_mem_limit_use = 1024
 	}
 	else {
-		$php_mem_limit_use = $php_mem_limit / 4
+		$php_mem_limit_use = $php_mem_limit
 	}
 
 	php5::ini { "fpm":

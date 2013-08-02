@@ -11,12 +11,15 @@ class phpfpm::extensions::apc (
 ){
 
   # Dynamically set shmsize, but don't exceed 1G
-  $apc_shm_size = $::kalamem / 10
+  # Trick puppe tinto thinking this is a number
+
+  $apc_total_mem = 0 + $::kalamem
+  $apc_shm_size = $apc_total_mem / 10
   if ($apc_shm_size > 256) {
     $shm_size = "256M"
   }
   else {
-    $shm_size = $::kalamem / 10
+    $shm_size = $apc_shm_size
     $shm_size = "${shm_size}M"
   }
 
