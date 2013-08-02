@@ -82,6 +82,13 @@ function kala_drush_command() {
         'description' => 'Comma delimited list of spreads.',
         'example-value' => 'panopoly,openatrium',
       ),
+      'site-name' => array(
+        'description' => 'Human readable meta data',
+        'example-value' => '"My Awesome Site",BeastMode',
+      ),
+      'files' => array(
+        'description' => 'Use this flag to also download your files',
+      ),
     ),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
@@ -153,9 +160,9 @@ function kala_drush_help($section) {
 function kala_vhost() {
 
   $args = drush_get_arguments();
-  $site = _kala_build_site($args[1]);
-
-  $sitename = $site['site'];
+  $siteal = explode('.', $args[1]);
+  $sitename = $siteal[0];
+  $test == $test;
   if (!file_exists("/etc/kalastack/vhosts/sites-available/" . $sitename)) {
     if (is_dir("/var/www/" . $sitename)) {
       drush_shell_exec("cp /etc/nginx/sites-available/drupaldefault /tmp/" . $sitename);
@@ -182,11 +189,12 @@ function kala_vhost() {
 /**
  *
  */
-function kala_code(){
+function kala_code($site = NULL){
 
   $args = drush_get_arguments();
-  $site = _kala_build_site($args[1]);
-  $test == $test;
+  if (!is_array($site)) {
+    $site = _kala_build_site($args[1]);
+  }
 
   if ($site['pantheon'] === TRUE) {
     drush_print('Coder, do you already have a local codebase for this site?');
@@ -228,10 +236,12 @@ function kala_code(){
 /**
  *
  */
-function kala_data(){
+function kala_data($site = NULL){
 
   $args = drush_get_arguments();
-  $site = _kala_build_site($args[1]);
+  if (!is_array($site)) {
+    $site = _kala_build_site($args[1]);
+  }
 
   if ($site['pantheon'] === TRUE) {
     if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost -e \"create database " . $site['kaladb'] . "\"")) {
@@ -273,10 +283,12 @@ function kala_data(){
 /**
  *
  */
-function kala_files(){
+function kala_files($site){
 
   $args = drush_get_arguments();
-  $site = _kala_build_site($args[1]);
+  if (!is_array($site)) {
+    $site = _kala_build_site($args[1]);
+  }
 
   if ($site['pantheon'] === TRUE) {
     drush_print('We are now in the process of checking to see whether or not you have tried to sync these here filez before!');
@@ -308,31 +320,38 @@ function kala_build() {
 
   $args = drush_get_arguments();
   $profile = drush_get_option('profile');
+  $files = drush_get_option('files');
+  $site_name = drush_get_option('site-name');
   if (!isset($profile)) {
     $profile = 'panopoly';
   }
   $site = _kala_build_site($args[1]);
-
   drush_print('WE GONE BUILD THIS HERE SITE NOW! STANDBY LADDY/LASS');
 
   // Get data from panthoen
   if (isset($site['pantheon']) && $site['pantheon'] === TRUE) {
-    kala_code($args[1]);
+    kala_code($site);
     drush_log('Codebase: Q\'Plah!', 'success');
 
     _kala_reset_settings($site);
     drush_log('Settings: Rebuilt!, Check git status', 'success');
 
-    kala_data($args[1]);
+    kala_data($site);
     drush_log('Database: Q\'Plah!', 'success');
 
-    kala_files($args[1]);
-    drush_log('Files: Q\'Plah!', 'success');
+    // Only run if option is set to do so
+    if ($files) {
+      kala_files($site);
+      drush_log('Files: Q\'Plah!', 'success');
+    }
   }
   // build a new site
   else {
     // check to see if directory already exists for some weird reason
     if (!is_dir("/var/www/" . $site['site'])) {
+      // set sitename
+      $site['site-name'] = $site_name ? $site_name : $site['site'];
+
       // download distro in webroot
       drush_log('We are now downloading the ' . $profile . ' distribution', 'success');
       drush_shell_exec("cd /var/www && drush dl " . $profile . " --drupal-project-rename=" . $site['site'] . " -y");
@@ -349,12 +368,11 @@ function kala_build() {
     }
   }
 
-  //
+  // Vhost and cleanupz
   drush_shell_exec("sudo drush vhost " . $args[1]);
   drush_shell_exec("cd /var/www/" . $site['site'] . " && drush cc all -y");
   drush_log('Drush: We clear yo cache', 'success');
-
-  drush_log('Build: Success!', 'success');
+  drush_log('Success: ' . $site['site-name'] .   ' has been built!', 'success');
 
   return;
 }
@@ -478,6 +496,12 @@ function _kala_build_site($sitename) {
       $site['id'] = $user[1];
       $site['ssh'] = $aliases['@' . $sitename]['ssh-options'] . ' -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no';
       $site['db_url'] = $aliases['@' . $sitename]['db-url'];
+
+      // Get Human Readable Sitename
+      drush_shell_exec("drush @" . $sitename . " vget site_name");
+      $drush_site_name = drush_shell_exec_output();
+      preg_match('/\"([^\"]+)\"/', $drush_site_name[0], $matches);
+      $site['site-name'] = $matches[1];
 
       $regex = '/^mysql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)$/';
       $matches = array();
