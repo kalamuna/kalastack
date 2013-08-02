@@ -22,7 +22,6 @@ $ cd ~/kalastack
 $ git clone git://github.com/kalamuna/kalastack.git ./
   (or download and expand the latest 2.x tarball from https://github.com/kalamuna/kalastack/tags)
 $ vagrant plugin install vagrant-hostsupdater
-$ vagrant plugin install vagrant-vbguest
 $ vagrant up
 ```
 
