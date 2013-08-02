@@ -155,73 +155,84 @@ function kala_drush_help($section) {
 
 
 /**
- *
+ * Creates a vhost for a newly built or created site
  */
 function kala_vhost() {
-
+  // Get the site machine name and parse it correctly
   $args = drush_get_arguments();
   $siteal = explode('.', $args[1]);
   $sitename = $siteal[0];
-  $test == $test;
+
+  // Create a vhost if it doesnt already exit
   if (!file_exists("/etc/kalastack/vhosts/sites-available/" . $sitename)) {
+    // Make sure a site is actually where it is supposed to be
     if (is_dir("/var/www/" . $sitename)) {
       drush_shell_exec("cp /etc/nginx/sites-available/drupaldefault /tmp/" . $sitename);
       $vhost_default_string = kala_get_file("/tmp/" . $sitename);
 
+      //  Load up default drupal vhost and update with new site info
       $search = array("drupal.kala", "/var/www/drupal", "# THIS IS MEANT TO BE USED FOR BUILDING OTHER DRUPAL VHOSTS");
       $replace = array($sitename . ".kala", "/var/www/" . $sitename, "");
       $vhost_default_string = str_replace($search, $replace, $vhost_default_string);
 
+      // Write the file and symlink it to sites-enabled
       kala_write_file("/tmp/" . $sitename, $vhost_default_string);
       drush_shell_exec ("cp /tmp/" . $sitename . " /etc/kalastack/vhosts/sites-available/" . $sitename);
       drush_shell_exec ("ln -s /etc/kalastack/vhosts/sites-available/" . $sitename . " /etc/kalastack/vhosts/sites-enabled/" . $sitename);
 
+      // Restart nginx so the site actually is active
       drush_shell_exec ("service nginx restart");
       kala_update_etc_hosts($sitename . ".kala");
       drush_log('New vhost created!', 'success');
     }
   }
   else {
+    // File already exists!
     drush_log('Seriously, the vhost file already exists!', 'warning');
   }
 }
 
 /**
- *
+ * [kala_code description]
+ * @param  array or string $site an array of the sites info or the uparsed machine argument
+ * @return only on error
  */
 function kala_code($site = NULL){
-
+  // Load up site only if it hasnt been passed in
   $args = drush_get_arguments();
   if (!is_array($site)) {
     $site = _kala_build_site($args[1]);
   }
 
+  // Only attempt if this is a pantheon site
   if ($site['pantheon'] === TRUE) {
     drush_print('Coder, do you already have a local codebase for this site?');
+    // The codebase might already exist
     if (is_dir("/var/www/" . $site['site'])) {
       if (drush_shell_exec("cat /var/www/" . $site['site'] . "/.git/config | grep url")) {
         drush_log('It looks like you might!', 'warning');
-
         drush_shell_exec("cat /var/www/" . $site['site'] . "/.git/config | grep url > /tmp/gitconfig" . $site['site']);
         $gitconfig_string = trim(file_get_contents("/tmp/gitconfig" . $site['site']));
         drush_shell_exec("rm /tmp/gitconfig" . $site['site']);
-
+        // Codebase does exist
         if ($gitconfig_string == "url = ssh://codeserver.dev." . $site['id'] . "@codeserver.dev." . $site['id'] . ".drush.in:2222/~/repository.git") {
           drush_log('Oh you! You have already downloaded this code. I guess we will just refresh it then.', 'warning');
           drush_shell_exec("git --git-dir=/var/www/" . $site['site']. "/.git pull");
           drush_log('And... we refreshed that stale stale code!', 'success');
         }
+        // A codebase exists but it is the wrong one
         else {
           drush_log('Directory /var/www/' . $site['site'] . ' exists... and is not empty... and is a codebase but not the right codebase. Please remove this directory before you attempt to download your codebase. Chump!', 'error');
         }
       }
+      // Files alraedy in the folder that arent a git repo
       else {
         drush_log('Directory /var/www/' . $site['site'] . ' exists... and is not empty... and is not a codebase. Please remove this directory before you attempt to download your codebase. You vicious knave you!', 'error');
       }
     }
+    // Git clone for the first time
     else {
       drush_print('Coder, your code fields are fertile and unblemished. Prepare to receive a potent load of code seed. Also this may take a few minutes so please be patient...');
-      // try to connect via ssh
       if (drush_shell_exec("git clone ssh://codeserver.dev." . $site['id'] . "@codeserver.dev." . $site['id'] . ".drush.in:2222/~/repository.git /var/www/" . $site['site'])) {
           drush_log('Your code fields bloom!', 'success');
       }
@@ -234,16 +245,20 @@ function kala_code($site = NULL){
 
 
 /**
- *
+ * This creates a new DB and fills it with data from pantheon, or refreshs that data if it already exists
+ * @param  array or string $site an array of the sites info or the uparsed machine argument
+ * @return only on failure
  */
 function kala_data($site = NULL){
-
+  // Load uo site only if it hasnt been passed in
   $args = drush_get_arguments();
   if (!is_array($site)) {
     $site = _kala_build_site($args[1]);
   }
 
+  // Only try this if its a pantheon site
   if ($site['pantheon'] === TRUE) {
+    // Create a new database if it doesnt already exist
     if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost -e \"create database " . $site['kaladb'] . "\"")) {
       drush_log('Dearest friend, a new database called ' . $site['kaladb'] . ' hath been created', 'success');
     }
@@ -251,15 +266,19 @@ function kala_data($site = NULL){
       drush_log('This database already exists! What are you trying to do!!!', 'notice');
     }
 
+    // Making sure the pantheon DB server is awake
     drush_log('Making sure the beast is awake...', 'success');
     if (drush_shell_exec("drush @" . $site['site'] . ".dev status")) {
       drush_log('THE BEAST AWAKENS!', 'success');
     }
 
+    // Downloading and importing the data
     drush_print('Dear sir! We are now attempting a database download, please standby...');
+    // Trying SQL-SYNC-PIPE first
     if (drush_shell_exec("cd /var/www/" . $site['site'] . " && drush pipe @" . $site['site'] . ".dev default -y --disable=pantheon_apachesolr --ssh-options='" . $site['ssh'] . "'")) {
       drush_log('SOMETHING SOMETHING SOMETHING IMPORT COMPLETE', 'success');
     }
+    // Using ghetto method if SSP fails
     else {
       drush_log('SQL-SYNC seemed to fail... trying to rock it old school instead', 'notice');
 
@@ -281,29 +300,35 @@ function kala_data($site = NULL){
 }
 
 /**
- *
+ * Downloads or refreshs pantheon files
+ * @param  array or string $site an array of the sites info or the uparsed machine argument
+ * @return if fails
  */
 function kala_files($site){
-
+  // Load up site byt only if not passed in
   $args = drush_get_arguments();
   if (!is_array($site)) {
     $site = _kala_build_site($args[1]);
   }
 
+  // Only run if its a panthoen site
   if ($site['pantheon'] === TRUE) {
+    // Checking ot see ig the files firectory exists already
     drush_print('We are now in the process of checking to see whether or not you have tried to sync these here filez before!');
     if (is_dir("/var/www/" . $site['site'] . "/sites/default/files")) {
       drush_log('you have!', 'success');
     }
+    // Build the files directory and set its permissions if it doesnt exist yet
     else {
       mkdir("/var/www/" . $site['site'] . "/sites/default/files");
       mkdir("/var/www/" . $site['site'] . "/sites/default/private");
       drush_log('Building up some sweet sweet files directories for you', 'success');
-      // settings this to 777 for now because its the only way to get file uploads to work properly with nfs sharing
+      // Settings this to 777 for now because its the only way to get file uploads to work properly with nfs sharing
       drush_shell_exec("chmod 777 /var/www/" . $site['site'] . "/sites/default/files");
       drush_shell_exec("chmod 777 /var/www/" . $site['site'] . "/sites/default/files/private");
     }
 
+    // RSYNCing files from pantheon
     drush_log('Doing that funky file sync tango. It feels good. Please wait...', 'success');
     drush_shell_exec("rsync -rlztv --ipv4 -e 'ssh " . $site['ssh'] . "' --exclude 'js' --exclude 'css' --exclude 'ctools' --exclude 'imagecache' --exclude 'xmlsitemap' --exclude 'backup_migrate' --exclude 'styles' --exclude 'less' " . $site['env'] . "." . $site['id'] . "@appserver." . $site['env'] . "." . $site['id'] . ".drush.in:files /var/www/" . $site['site'] . "/sites/default/");
     drush_log('Consider your files N*SYNC', 'success');
@@ -313,54 +338,68 @@ function kala_files($site){
   }
 }
 
+
+
 /**
- *
+ * Create a new and fully instantiated site or build one that already exist on pantheon
+ * @return when complete
  */
 function kala_build() {
 
+  // Grab arguments and options
   $args = drush_get_arguments();
   $profile = drush_get_option('profile');
   $files = drush_get_option('files');
   $site_name = drush_get_option('site-name');
+
+  // Set a default profile if not set
   if (!isset($profile)) {
     $profile = 'panopoly';
   }
+
+  // Build an array of info for the site
   $site = _kala_build_site($args[1]);
+
+  // START IT UP!
   drush_print('WE GONE BUILD THIS HERE SITE NOW! STANDBY LADDY/LASS');
 
-  // Get data from panthoen
+  // Build a pantheon site
   if (isset($site['pantheon']) && $site['pantheon'] === TRUE) {
+    // Get the code
     kala_code($site);
     drush_log('Codebase: Q\'Plah!', 'success');
 
+    // Add some settings for kalabox
     _kala_reset_settings($site);
     drush_log('Settings: Rebuilt!, Check git status', 'success');
 
+    // Get the data
     kala_data($site);
     drush_log('Database: Q\'Plah!', 'success');
 
-    // Only run if option is set to do so
+    // Get the files but only run if option is set to do so
     if ($files) {
       kala_files($site);
       drush_log('Files: Q\'Plah!', 'success');
     }
   }
-  // build a new site
+  // Spin up a new site
   else {
-    // check to see if directory already exists for some weird reason
+    // Check to see if directory already exists for some weird reason
     if (!is_dir("/var/www/" . $site['site'])) {
-      // set sitename
+      // Set sitename
       $site['site-name'] = $site_name ? $site_name : $site['site'];
 
-      // download distro in webroot
+      // Download distro in webroot
       drush_log('We are now downloading the ' . $profile . ' distribution', 'success');
       drush_shell_exec("cd /var/www && drush dl " . $profile . " --drupal-project-rename=" . $site['site'] . " -y");
 
-      // spin up empty DB
+      // Spin up empty DB
       if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost -e \"create database " . $site['kaladb'] . "\"")) {
         drush_log('Dearest friend, a new database called ' . $site['kaladb'] . ' hath been created', 'success');
       }
 
+      // Run the site install
       drush_log('Building a new ' . $profile . 'site.', 'success');
       if (drush_shell_exec("cd /var/www/" . $site['site'] . " && drush site-install " . $profile . " -y --db-url=mysql://root:password@localhost/" . $site['kaladb'] . " --account-pass=admin")) {
         drush_log('Build complete', 'success');
@@ -378,32 +417,39 @@ function kala_build() {
 }
 
 /**
- *
+ * Oblierate a local site
  */
 function kala_destroy(){
 
+  // Get and parse sitename
   $args = drush_get_arguments();
   $site = _kala_build_site($args[1]);
 
+  // If that site actually exists...
   if (isset($site['site'])) {
   drush_print('PREPARE TO RIDE ON EL CRUSH BUS');
 
+    // Remove Code and Files
     if (drush_shell_exec("rm -rf /var/www/" . $site['site'])) {
       drush_log('CODES/FILES = FUCKING CRUSHED', 'success');
     }
+
+    // Remove Data
     if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost -e \"drop database " . $site['kaladb'] . "\"")) {
       drush_log('DB = FUCKING CRUSHED', 'success');
     }
 
+    // Remove VHOST
     if (drush_shell_exec("sudo rm -rf /etc/kalastack/vhosts/sites-available/" . $site['site'])) {
       if (drush_shell_exec("sudo rm -rf /etc/kalastack/vhosts/sites-enabled/" . $site['site'])) {
         drush_log('VHOST = FUCKING CRUSHED', 'success');
       }
     }
 
-    if (drush_shell_exec("sudo service nginx restart")) {
-    }
+    // Restart nginx
+    drush_shell_exec("sudo service nginx restart");
 
+    // Remove hosts entry
     kala_remove_etc_hosts($site['site'] . ".kala");
     drush_log('SITE = FUCKING CRUSHED', 'success');
   }
@@ -442,8 +488,12 @@ function kala_write_file($filename, $contents) {
   }
 }
 
+/**
+ * Update the hosts file
+ * @param  [string] $hostname [the hostname to be added]
+ */
 function kala_update_etc_hosts($hostname) {
-    // create new hosts file and reload server
+    // Create new hosts file
     $hosts_file_str = file_get_contents("/etc/hosts");
     $new_host = "127.0.0.1\t$hostname\n";
     if (!strstr($hosts_file_str, $new_host)) {
@@ -455,8 +505,12 @@ function kala_update_etc_hosts($hostname) {
     }
 }
 
+/**
+ * Remove hostname from hosts file
+ * @param  [string] $hostname [the hostname to be added]
+ */
 function kala_remove_etc_hosts($hostname) {
-  // create new hosts file and reload server
+  // Remove hosts
   drush_shell_exec("sed /" . $hostname . "/d /etc/hosts > /tmp/hosts");
   drush_shell_exec("sudo cp -f /tmp/hosts /etc/hosts");
   drush_shell_exec("rm /tmp/hosts");
@@ -464,23 +518,28 @@ function kala_remove_etc_hosts($hostname) {
 
 
 /**
- * Check for valid pantheon alias
+ * Put together meaningful information about the site about to be created/built
+ * @param  [string] $sitename [machine name of the host]
+ * @return if fails
  */
 function _kala_build_site($sitename) {
-    // load all available aliases
+    // Load all available aliases and remove suffix
   drush_sitealias_load_all();
   $aliases = drush_get_context('site-aliases');
   $siteal = explode('.', $sitename);
   $site = array();
+
+  // Set site machinename and locald b name
   $site['site'] = $siteal[0];
   $site['kaladb'] = str_replace("-", "_", $site['site'] . "_kala");
 
+  // Build some common elements
   if (isset($aliases['@' . $sitename])) {
-    // honestly don't know what this line is for?
+    // Honestly don't know what this line is for?
     // $site = explode('.', $aliases['@' . $sitename]['uri']);
     $user = explode('.', $aliases['@' . $sitename]['remote-user']);
 
-    // weak check if alias is valid pantheon alias
+    // Weak check if alias is valid pantheon alias
     if ($user[0] != 'dev') {
       drush_log('WE ONLY BUILD FROM DEV YO', 'error');
       return FALSE;
@@ -490,7 +549,7 @@ function _kala_build_site($sitename) {
       return FALSE;
     }
     else {
-      // load pantheon environment
+      // Load pantheon environmental vars
       $site['pantheon'] = TRUE;
       $site['env'] = $user[0];
       $site['id'] = $user[1];
@@ -524,13 +583,17 @@ function _kala_build_site($sitename) {
 
 
 /**
- * rebuild settings.php with kala settings
+ * Adds in local kalabox settings to settings.php
+ * @param  [array] $site [useful site info]
  */
 function _kala_reset_settings($site) {
+  // Get the sites settings.php file
   require_once("/var/www/" . $site['site'] . "/sites/default/settings.php");
+  // Replace naughty mysql chars
   $site['kaladb'] = str_replace("-", "_", $site['site'] . "_kala");
 
   $output = '';
+  // Build Drupal 6 DB string
   if (isset($db_url)) {
     if (strpos($db_url, $site['kaladb']) === FALSE) {
     $settingsfile = "/var/www/" . $site['site'] . "/sites/default/settings.php";
@@ -551,6 +614,7 @@ function _kala_reset_settings($site) {
     fclose($fh);
     }
   }
+  // Build Drupal 7 DB array
   else {
     if ($databases['default']['default']['database'] != $site['kaladb'] ) {
 
@@ -591,4 +655,5 @@ function _kala_reset_settings($site) {
       fclose($fh);
     }
   }
+}
 }
