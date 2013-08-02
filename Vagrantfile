@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   config.vm.network :private_network, ip: "1.3.3.7"
-  config.hostsupdater.aliases = ["kala", "start.kala", "php.kala", "grind.kala", "solr.kala"]
+  config.hostsupdater.aliases = ["kala", "start.kala", "php.kala", "grind.kala", "solr.kala", "aliases.kala"]
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
