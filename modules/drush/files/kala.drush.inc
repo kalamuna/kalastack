@@ -411,6 +411,7 @@ function kala_build() {
   drush_shell_exec("sudo drush vhost " . $args[1]);
   drush_shell_exec("cd /var/www/" . $site['site'] . " && drush cc all -y");
   drush_log('Drush: We clear yo cache', 'success');
+  _kala_add_alias($site);
   drush_log('Success: ' . $site['site-name'] .   ' has been built!', 'success');
 
   return;
@@ -451,9 +452,9 @@ function kala_destroy(){
 
     // Remove hosts entry
     kala_remove_etc_hosts($site['site'] . ".kala");
+    _kala_remove_alias($site);
     drush_log('SITE = FUCKING CRUSHED', 'success');
   }
-
 }
 
 /**
@@ -655,4 +656,86 @@ function _kala_reset_settings($site) {
       fclose($fh);
     }
   }
+}
+
+/**
+ * Build a local alias
+ * @param  array or string $site an array of the sites info or the uparsed machine argument
+ */
+function _kala_add_alias($site) {
+  // Load up site but only if not passed in
+  $args = drush_get_arguments();
+  if (!is_array($site)) {
+    $site = _kala_build_site($args[1]);
+  }
+
+  // Create an aliases file if there are no local sites
+  if (!file_exists("/etc/kalastack/aliases/aliases.drushrc.php")) {
+    file_put_contents("/etc/kalastack/aliases/aliases.drushrc.php", "");
+  }
+
+  // Load the kala aliases file
+  require '/etc/kalastack/aliases/aliases.drushrc.php';
+  if (!isset($aliases[$site['site'] . '.kala'])) {
+    // Build the local alias
+    $aliases[$site['site'] . '.kala'] = array(
+      'root' => '.',
+      'uri' => $site['site'] . '.kala',
+      'read-name' => $site['site-name'],
+      'built-from' => $site['site'] . '.dev',
+    );
+  }
+
+  // Build output
+  $output = "<?php \n\n";
+  foreach ($aliases as $key => $value) {
+    $output .= "\$aliases['" . $site['site'] . ".kala'] = array(\n";
+    $output .= "  'root' => '/var/www/" . $site['site'] . "',\n";
+    $output .= "  'uri' => '" . $site['site'] . ".kala',\n";
+    $output .= "  'read-name' => '" . $site['site-name'] .  "',\n";
+    $output .= "  'built-from' => '" . $site['site'] .  ".dev',\n";
+    $output .= ");\n";
+  }
+
+  // Write file
+  file_put_contents("/etc/kalastack/aliases/aliases.drushrc.php", $output);
+}
+
+/**
+ * Remove a local alias
+ * @param  array or string $site an array of the sites info or the uparsed machine argument
+ */
+function _kala_remove_alias($site) {
+  // Load up site but only if not passed in
+  $args = drush_get_arguments();
+  if (!is_array($site)) {
+    $site = _kala_build_site($args[1]);
+  }
+
+  // Load alias file if it exists
+  if (file_exists("/etc/kalastack/aliases/aliases.drushrc.php")) {
+    require '/etc/kalastack/aliases/aliases.drushrc.php';
+  }
+  else {
+    return;
+  }
+
+  // Load the kala aliases file
+  if (isset($aliases[$site['site'] . '.kala'])) {
+    unset($aliases[$site['site'] . '.kala']);
+  }
+
+  // Build output
+  $output = "<?php \n\n";
+  foreach ($aliases as $key => $value) {
+    $output .= "\$aliases['" . $site['site'] . ".kala'] = array(\n";
+    $output .= "  'root' => '/var/www/" . $site['site'] . "',\n";
+    $output .= "  'uri' => '" . $site['site'] . ".kala',\n";
+    $output .= "  'read-name' => '" . $site['site-name'] .  "',\n";
+    $output .= "  'built-from' => '" . $site['site'] .  ".dev',\n";
+    $output .= ");\n";
+  }
+
+  // Write file
+  file_put_contents("/etc/kalastack/aliases/aliases.drushrc.php", $output);
 }
