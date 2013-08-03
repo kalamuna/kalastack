@@ -4,6 +4,6 @@
 
 class kalabox {
 
-  include kalabox::build
+  include kalabox::build, kalabox::start
 
 }

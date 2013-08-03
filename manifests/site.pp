@@ -6,33 +6,28 @@
  */
 
 node /^kala\.[a-f0-9]{32}\.box$/  {
-  # initialize core packages
+  # Initialize core packages
   include kalabox
   include apt
   include git
   include unzip
   include user
 
-  # initialize LEMP stack
+  # Initialize LEMP stack
+  include nginx
   include phpfpm
-
-  phpfpm::nginx::kalabox { "default":
-    server_name => "start.kala",
-    root        => "/usr/share/kalabox",
-  }
   include mysql
 
-  # initialize bonus shit
+  # Initialize bonus shit
   include drush
   include phpmyadmin
   include webgrind
 
-  # build basic drupal site
+  # Build basic drupal site
   drupal::nginx::vhost { "drupaldefault":
     server_name => "drupal.kala",
     root        => "/var/www/drupal",
     enabled     => "FALSE",
     custom      => "# THIS IS MEANT TO BE USED FOR BUILDING OTHER DRUPAL VHOSTS"
   }
-
 }
