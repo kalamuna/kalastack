@@ -558,7 +558,7 @@ function _kala_build_site($sitename) {
       $site['id'] = $user[1];
       $site['ssh'] = $aliases['@' . $sitename]['ssh-options'] . ' -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no';
       $site['db_url'] = $aliases['@' . $sitename]['db-url'];
-      $site['built-from'] = $siteal;
+      $site['built-from'] = $sitename;
 
       // Get Human Readable Sitename
       drush_shell_exec("drush @" . $sitename . " vget site_name");
