@@ -682,7 +682,7 @@ function _kala_add_alias($site) {
   require '/etc/kalastack/aliases/aliases.drushrc.php';
 
   // Restore to first made first listed
-  array_reverse($aliases);
+  $aliases = array_reverse($aliases);
   if (!isset($aliases[$site['site'] . '.kala'])) {
     // Build the local alias
     $aliases[$site['site'] . '.kala'] = array(
@@ -697,7 +697,7 @@ function _kala_add_alias($site) {
   }
 
   // Sort so that last added is listed first
-  array_reverse($aliases);
+  $aliases = array_reverse($aliases);
 
   // Build output
   $output = "<?php \n\n";
