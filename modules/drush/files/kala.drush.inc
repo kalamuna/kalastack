@@ -558,6 +558,7 @@ function _kala_build_site($sitename) {
       $site['id'] = $user[1];
       $site['ssh'] = $aliases['@' . $sitename]['ssh-options'] . ' -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no';
       $site['db_url'] = $aliases['@' . $sitename]['db-url'];
+      $site['built-from'] = $siteal;
 
       // Get Human Readable Sitename
       drush_shell_exec("drush @" . $sitename . " vget site_name");
@@ -565,23 +566,21 @@ function _kala_build_site($sitename) {
       preg_match('/\"([^\"]+)\"/', $drush_site_name[0], $matches);
       $site['site-name'] = $matches[1];
 
+      // Split out database
       $regex = '/^mysql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)$/';
       $matches = array();
       preg_match($regex, $site['db_url'], $matches);
-
       $site['db_user'] = $matches[1];
       $site['db_pass'] = $matches[2];
       $site['db_host'] = $matches[3];
       $site['db_port'] = $matches[4];
       $site['db_db'] = $matches[5];
 
-      $test == $test;
       return $site;
     }
   }
   else {
     $site['env'] = 'kala';
-    $test == $test;
     return $site;
   }
 }
@@ -683,11 +682,14 @@ function _kala_add_alias($site) {
   if (!isset($aliases[$site['site'] . '.kala'])) {
     // Build the local alias
     $aliases[$site['site'] . '.kala'] = array(
-      'root' => '.',
+      'root' => '/var/www/' . $site['site'],
       'uri' => $site['site'] . '.kala',
       'read-name' => $site['site-name'],
-      'built-from' => $site['site'] . '.dev',
     );
+    // If built from somewhere, indicate that here
+    if ($site['built-from']) {
+      $aliases[$site['site'] . '.kala']['built-from'] = $site['built-from'];
+    }
   }
 
   // Build output
@@ -697,7 +699,10 @@ function _kala_add_alias($site) {
     $output .= "  'root' => '" . $value['root'] . "',\n";
     $output .= "  'uri' => '" . $value['uri'] . "',\n";
     $output .= "  'read-name' => '" . $value['read-name'] .  "',\n";
-    $output .= "  'built-from' => '" . $value['built-from'] .  "',\n";
+    // Only include built froms if they exist
+    if ($value['built-from']) {
+      $output .= "  'built-from' => '" . $value['built-from'] .  "',\n";
+    }
     $output .= ");\n";
   }
 
