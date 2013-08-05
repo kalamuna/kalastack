@@ -575,11 +575,13 @@ function _kala_build_site($sitename) {
       $site['db_port'] = $matches[4];
       $site['db_db'] = $matches[5];
 
+      $test == $test;
       return $site;
     }
   }
   else {
     $site['env'] = 'kala';
+    $test == $test;
     return $site;
   }
 }
@@ -691,11 +693,11 @@ function _kala_add_alias($site) {
   // Build output
   $output = "<?php \n\n";
   foreach ($aliases as $key => $value) {
-    $output .= "\$aliases['" . $site['site'] . ".kala'] = array(\n";
-    $output .= "  'root' => '/var/www/" . $site['site'] . "',\n";
-    $output .= "  'uri' => '" . $site['site'] . ".kala',\n";
-    $output .= "  'read-name' => '" . $site['site-name'] .  "',\n";
-    $output .= "  'built-from' => '" . $site['site'] .  ".dev',\n";
+    $output .= "\$aliases['" . $key . "'] = array(\n";
+    $output .= "  'root' => '" . $value['root'] . "',\n";
+    $output .= "  'uri' => '" . $value['uri'] . "',\n";
+    $output .= "  'read-name' => '" . $value['read-name'] .  "',\n";
+    $output .= "  'built-from' => '" . $value['built-from'] .  "',\n";
     $output .= ");\n";
   }
 
@@ -730,11 +732,11 @@ function _kala_remove_alias($site) {
   // Build output
   $output = "<?php \n\n";
   foreach ($aliases as $key => $value) {
-    $output .= "\$aliases['" . $site['site'] . ".kala'] = array(\n";
-    $output .= "  'root' => '/var/www/" . $site['site'] . "',\n";
-    $output .= "  'uri' => '" . $site['site'] . ".kala',\n";
-    $output .= "  'read-name' => '" . $site['site-name'] .  "',\n";
-    $output .= "  'built-from' => '" . $site['site'] .  ".dev',\n";
+    $output .= "\$aliases['" . $key . "'] = array(\n";
+    $output .= "  'root' => '" . $value['root'] . "',\n";
+    $output .= "  'uri' => '" . $value['uri'] . "',\n";
+    $output .= "  'read-name' => '" . $value['read-name'] .  "',\n";
+    $output .= "  'built-from' => '" . $value['built-from'] .  "',\n";
     $output .= ");\n";
   }
 
