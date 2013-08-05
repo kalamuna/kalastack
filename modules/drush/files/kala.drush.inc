@@ -675,10 +675,14 @@ function _kala_add_alias($site) {
   // Create an aliases file if there are no local sites
   if (!file_exists("/etc/kalastack/aliases/aliases.drushrc.php")) {
     file_put_contents("/etc/kalastack/aliases/aliases.drushrc.php", "");
+    $aliases = array();
   }
 
   // Load the kala aliases file
   require '/etc/kalastack/aliases/aliases.drushrc.php';
+
+  // Restore to first made first listed
+  array_reverse($aliases);
   if (!isset($aliases[$site['site'] . '.kala'])) {
     // Build the local alias
     $aliases[$site['site'] . '.kala'] = array(
@@ -691,6 +695,9 @@ function _kala_add_alias($site) {
       $aliases[$site['site'] . '.kala']['built-from'] = $site['built-from'];
     }
   }
+
+  // Sort so that last added is listed first
+  array_reverse($aliases);
 
   // Build output
   $output = "<?php \n\n";
