@@ -236,7 +236,7 @@ function kala_code($site = NULL){
     else {
       drush_print('Coder, your code fields are fertile and unblemished. Prepare to receive a potent load of code seed. Also this may take a few minutes so please be patient...');
       if (drush_shell_exec("git clone ssh://codeserver.dev." . $site['id'] . "@codeserver.dev." . $site['id'] . ".drush.in:2222/~/repository.git /var/www/" . $site['site'])) {
-          drush_log('Your code fields bloom!', 'success');
+        drush_log('Your code fields bloom!', 'success');
       }
     }
   }
@@ -563,7 +563,7 @@ function _kala_build_site($sitename) {
       // Get Human Readable Sitename
       drush_shell_exec("drush @" . $sitename . " vget site_name");
       $drush_site_name = drush_shell_exec_output();
-      preg_match('/\"([^\"]+)\"/', $drush_site_name[0], $matches);
+      preg_match('/\"([^\"]+)\"/', end($drush_site_name), $matches);
       $site['site-name'] = $matches[1];
 
       // Split out database
