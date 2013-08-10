@@ -430,7 +430,7 @@ function kala_destroy(){
 
   // If that site actually exists...
   if (isset($site['site'])) {
-  drush_print('PREPARE TO RIDE ON EL CRUSH BUS');
+    drush_print('PREPARE TO RIDE ON EL CRUSH BUS');
 
     // Remove Code and Files
     if (drush_shell_exec("rm -rf /var/www/" . $site['site'])) {

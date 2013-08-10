@@ -249,6 +249,29 @@ Vagrant.configure("2") do |config|
             @app.call(env)
           end
         end
+
+        class Kalassh
+
+          def initialize(app, env)
+            @app = app
+            @machine = env[:machine]
+            @ui = env[:ui]
+          end
+
+          def call(env)
+            machine_action = env[:machine_action]
+            if machine_action == :up
+              unless File.exist?(File.expand_path "~/.ssh/id_rsa") && File.exist?(File.expand_path "~/.ssh/id_rsa.pub")
+                %x[ ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N "" ]
+                @ui.info "Creating a ssh key"
+              end
+              %x[ ssh-add -k ]
+              @ui.info "Forwarding in your SSH key"
+            end
+            @app.call(env)
+          end
+        end
+
       end
     end
   end
@@ -267,6 +290,10 @@ Vagrant.configure("2") do |config|
 
         action_hook("WakeMaster", :machine_action_up) do |hook|
           hook.prepend(Action::WakeMaster)
+        end
+
+        action_hook("Kalassh", :machine_action_up) do |hook|
+          hook.prepend(Action::Kalassh)
         end
 
       end
