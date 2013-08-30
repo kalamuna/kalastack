@@ -420,7 +420,7 @@ function kala_build() {
 }
 
 /**
- * Oblierate a local site
+ * Obliterate a local site
  */
 function kala_destroy(){
 
@@ -433,7 +433,13 @@ function kala_destroy(){
     drush_print('PREPARE TO RIDE ON EL CRUSH BUS');
 
     // Remove Code and Files
-    if (drush_shell_exec("rm -rf /var/www/" . $site['site'])) {
+    $web_root = "/var/www/" . $site['site'];
+    // Make write-protected directory and files writable so we can remove them.
+    chmod($web_root . '/sites/default', 0755);
+    chmod($web_root . '/sites/default/default.settings.php', 0644);
+    chmod($web_root . '/sites/default/settings.php', 0644);
+    // Remove the webroot and everything in it.
+    if (drush_shell_exec("rm -rf " . $web_root)) {
       drush_log('CODES/FILES = FUCKING CRUSHED', 'success');
     }
 
