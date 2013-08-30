@@ -705,7 +705,7 @@ function _kala_add_alias($site) {
     $output .= "\$aliases['" . $key . "'] = array(\n";
     $output .= "  'root' => '" . $value['root'] . "',\n";
     $output .= "  'uri' => '" . $value['uri'] . "',\n";
-    $output .= "  'read-name' => '" . $value['read-name'] .  "',\n";
+    $output .= "  'read-name' => '" . addslashes($value['read-name']) .  "',\n";
     // Only include built froms if they exist
     if ($value['built-from']) {
       $output .= "  'built-from' => '" . $value['built-from'] .  "',\n";
@@ -747,7 +747,7 @@ function _kala_remove_alias($site) {
     $output .= "\$aliases['" . $key . "'] = array(\n";
     $output .= "  'root' => '" . $value['root'] . "',\n";
     $output .= "  'uri' => '" . $value['uri'] . "',\n";
-    $output .= "  'read-name' => '" . $value['read-name'] .  "',\n";
+    $output .= "  'read-name' => '" . addslashes($value['read-name']) .  "',\n";
     $output .= "  'built-from' => '" . $value['built-from'] .  "',\n";
     $output .= ");\n";
   }
