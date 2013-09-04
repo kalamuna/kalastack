@@ -19,8 +19,7 @@ class phpfpm::extensions::apc (
     $shm_size = "256M"
   }
   else {
-    $shm_size = $apc_shm_size
-    $shm_size = "${shm_size}M"
+    $shm_size = "${$apc_shm_size}M"
   }
 
   phpfpm::extension { "php-apc": version => present, }
