@@ -30,6 +30,18 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  # Some weird maybe bug in Vagrant 1.2.1+ doesn't seem to create the shared folders
+  # if the don't exist and this causes grossness on vagrant up
+  unless File.directory?(Dir.home + "/kalabox")
+    FileUtils.mkdir_p(Dir.home + "/kalabox")
+    unless File.directory?(Dir.home + "/kalabox/www")
+      FileUtils.mkdir_p(Dir.home + "/kalabox/www")
+    end
+    unless File.directory?(Dir.home + "/kalabox/drush_aliases")
+      FileUtils.mkdir_p(Dir.home + "/kalabox/drush_aliases")
+    end
+  end
+
   # Some basic vm config
   config.vm.box = "kalabox"
   config.vm.hostname = File.read(".kalabox/uuid")
@@ -261,8 +273,8 @@ Vagrant.configure("2") do |config|
           def call(env)
             machine_action = env[:machine_action]
             if machine_action == :up
-              unless File.exist?(File.expand_path "~/.ssh/id_rsa") && File.exist?(File.expand_path "~/.ssh/id_rsa.pub")
-                %x[ ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N "" ]
+              unless File.exist?(Dir.home + "/.ssh/id_rsa") && File.exist?(Dir.home + "/.ssh/id_rsa.pub")
+                %x[ ssh-keygen -b 2048 -t rsa -f #{ Dir.home }/.ssh/id_rsa -q -N "" ]
                 @ui.info "Creating a ssh key"
               end
               %x[ ssh-add -k ]
