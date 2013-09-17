@@ -45,6 +45,14 @@ Vagrant.configure("2") do |config|
     hostmem = 2048
   end
 
+  # Set a hard maximum on memsize
+  # This should translate to a 3GB box max
+  if hostmem > 12288 then
+    hostmem = 12288
+  elsif hostmem < 4096 then
+    puts "WARNING: Kalabox is designed to work best with at least 4096MB of RAM! You have #{ hostmem }MB."
+  end
+
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   if hostarch.include? "64" then
@@ -96,7 +104,7 @@ Vagrant.configure("2") do |config|
   #   vb.gui = true
   #
     # Use VBoxManage to customize the VM. For example to change memory:
-    vb.customize ["modifyvm", :id, "--memory", (hostmem / 2)]
+    vb.customize ["modifyvm", :id, "--memory", (hostmem / 4)]
     vb.name = File.read(".kalabox/uuid")
   end
   #
@@ -132,7 +140,7 @@ Vagrant.configure("2") do |config|
       "vagrant" => "1",
       "kalauser" => "vagrant",
       "kalahost" => "1.3.3.1",
-      "kalamem" => (hostmem / 2),
+      "kalamem" => (hostmem / 4),
     }
     end
   elsif ENV['KALABOX_SOLR']=='TRUE' then
@@ -145,7 +153,7 @@ Vagrant.configure("2") do |config|
         "vagrant" => "1",
         "kalauser" => "vagrant",
         "kalahost" => "1.3.3.1",
-        "kalamem" => (hostmem / 2),
+        "kalamem" => (hostmem / 4),
       }
     end
   else
@@ -158,7 +166,7 @@ Vagrant.configure("2") do |config|
         "kalauser" => "vagrant",
         "kalahost" => "1.3.3.1",
         "kalaversion" => "2.0-rc2",
-        "kalamem" => (hostmem / 2),
+        "kalamem" => (hostmem / 4),
       }
     end
   end
