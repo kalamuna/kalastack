@@ -81,8 +81,8 @@ function kala_drush_command() {
     ),
     'options' => array(
       'profile' => array(
-        'description' => 'Comma delimited list of spreads.',
-        'example-value' => 'panopoly,openatrium',
+        'description' => 'Which distribution to install (use drupal7 for regular Drupal).',
+        'example-value' => 'panopoly,openatrium,drupal7',
       ),
       'site-name' => array(
         'description' => 'Human readable meta data',
@@ -393,8 +393,14 @@ function kala_build() {
       $site['site-name'] = $site_name ? $site_name : $site['site'];
 
       // Download distro in webroot
-      drush_log('We are now downloading the ' . $profile . ' distribution', 'success');
-      drush_shell_exec("cd /var/www && drush dl " . $profile . " --drupal-project-rename=" . $site['site'] . " -y");
+      $download = $profile;
+      $download_message = 'We are now downloading the ' . $profile . ' distribution';
+      if ($profile == 'drupal7') { // If vanilla Drupal 7.
+        $download = 'drupal';
+        $download_message = 'We are now downloading Drupal 7';
+      }
+      drush_log($download_message, 'success');
+      drush_shell_exec("cd /var/www && drush dl " . $download . " --drupal-project-rename=" . $site['site'] . " -y");
 
       // Spin up empty DB
       if (drush_shell_exec("mysql -uroot -ppassword -hlocalhost -e \"create database " . $site['kaladb'] . "\"")) {
@@ -402,8 +408,12 @@ function kala_build() {
       }
 
       // Run the site install
+      $install = $profile;
+      if ($profile == 'drupal7') { // If vanilla Drupal 7.
+        $install = 'standard';
+      }
       drush_log('Building a new ' . $profile . 'site.', 'success');
-      if (drush_shell_exec("cd /var/www/" . $site['site'] . " && drush site-install " . $profile . " -y --db-url=mysql://root:password@localhost/" . $site['kaladb'] . " --account-pass=admin")) {
+      if (drush_shell_exec("cd /var/www/" . $site['site'] . " && drush site-install " . $install . " -y --db-url=mysql://root:password@localhost/" . $site['kaladb'] . " --account-pass=admin")) {
         drush_log('Build complete', 'success');
       }
     }
