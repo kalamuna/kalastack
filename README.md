@@ -6,12 +6,12 @@ are managed by Vagrant. Kalastack was built to run primarily on Ubuntu Server 12
 
 ## Quickstart
 
-Kalastack requires [Vagrant 1.2.2](http://downloads.vagrantup.com/tags/v1.2.2) and [VirtualBox 4.2.8](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
+Kalastack requires [Vagrant 1.3.3](http://downloads.vagrantup.com/tags/v1.3.3) and [VirtualBox 4.2.8](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
 
 **System Requirements:**
 - Kalastack works on both 64 and 32 bit architectures and requires at least 2GB of ram.
 
-*Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.2.2 and VirtualBox 4.2.8. It has also been used on Ubuntu 12.04 both natively and using VirtualBox and Vagrant. You may have to play around with the VT Intel settings on your machine to get it to work. That all said it is not a recommended or supported environment at this time.
+*Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.3.3 and VirtualBox 4.2.8. It has also been used on Ubuntu 12.04 both natively and using VirtualBox and Vagrant. You may have to play around with the VT Intel settings on your machine to get it to work. That all said it is not a recommended or supported environment at this time.
 
 Once you have downloaded and installed both Vagrant and Virtual box,
 you can build out the complete stack:

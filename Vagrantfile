@@ -279,36 +279,6 @@ Vagrant.configure("2") do |config|
             @app.call(env)
           end
         end
-
-
-        class Kaladirs
-
-          def initialize(app, env)
-            @app = app
-            @machine = env[:machine]
-            @ui = env[:ui]
-          end
-
-          def call(env)
-            machine_action = env[:machine_action]
-            if machine_action == :up
-              # Some weird maybe bug in Vagrant 1.2.1+ doesn't seem to create the shared folders
-              # if the don't exist and this causes grossness on vagrant up
-              # See: https://github.com/mitchellh/vagrant/issues/2196
-              unless File.directory?(Dir.home + "/kalabox")
-                FileUtils.mkdir_p(Dir.home + "/kalabox")
-                unless File.directory?(Dir.home + "/kalabox/www")
-                  FileUtils.mkdir_p(Dir.home + "/kalabox/www")
-                end
-                unless File.directory?(Dir.home + "/kalabox/drush_aliases")
-                  FileUtils.mkdir_p(Dir.home + "/kalabox/drush_aliases")
-                end
-              end
-            end
-            @app.call(env)
-          end
-        end
-
       end
     end
   end
@@ -331,10 +301,6 @@ Vagrant.configure("2") do |config|
 
         action_hook("Kalassh", :machine_action_up) do |hook|
           hook.prepend(Action::Kalassh)
-        end
-
-        action_hook("Kaladirs", :machine_action_up) do |hook|
-          hook.prepend(Action::Kaladirs)
         end
 
       end
