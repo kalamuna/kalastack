@@ -165,7 +165,7 @@ Vagrant.configure("2") do |config|
         "vagrant" => "1",
         "kalauser" => "vagrant",
         "kalahost" => "1.3.3.1",
-        "kalaversion" => "2.0-rc2",
+        "kalaversion" => "2.0-rc3",
         "kalamem" => (hostmem / 4),
       }
     end

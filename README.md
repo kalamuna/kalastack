@@ -73,11 +73,7 @@ $ drush sa
 ## SSH KEYS
 
 Kalastack will forward your host's SSH key into the box. This will let you connect to any Pantheon, github or other SSH services that you are currently connecting to on your host.
-If you don't currently have a SSH key set up on your host you can generate one by running from the command line.
-
-```bash
-$ ssh-keygen
-```
+If you don't currently have a SSH key set up on your host kalastack should generate one for you automatically.
 
 Once this is done you will want to make sure you add your public key to whatever service you are attempting to SSH into.
 You can view it for copy/paste by running the following on your host machine.
