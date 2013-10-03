@@ -1,4 +1,4 @@
-Kalastack
+Kalastack 3!
 =========================
 
 Kalastack is a basic LEMP stack built for Drupal. At its core it is a series of puppet manifests that
@@ -6,12 +6,12 @@ are managed by Vagrant. Kalastack was built to run primarily on Ubuntu Server 12
 
 ## Quickstart
 
-Kalastack requires [Vagrant 1.3.3](http://downloads.vagrantup.com/tags/v1.3.3) and [VirtualBox 4.2.8](http://download.virtualbox.org/virtualbox/4.2.8/) to be run correctly. Before you begin please download both.
+Kalastack requires [Vagrant 1.3.3](http://downloads.vagrantup.com/tags/v1.3.3) and [VirtualBox 4.2.18](http://download.virtualbox.org/virtualbox/4.2.18/) to be run correctly. Before you begin please download both.
 
 **System Requirements:**
 - Kalastack works on both 64 and 32 bit architectures and requires at least 2GB of ram.
 
-*Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.3.3 and VirtualBox 4.2.8. It has also been used on Ubuntu 12.04 both natively and using VirtualBox and Vagrant. You may have to play around with the VT Intel settings on your machine to get it to work. That all said it is not a recommended or supported environment at this time.
+*Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.3.3 and VirtualBox 4.2.18. It has also been used on Ubuntu 12.04 both natively and using VirtualBox and Vagrant. You may have to play around with the VT Intel settings on your machine to get it to work. That all said it is not a recommended or supported environment at this time.
 
 Once you have downloaded and installed both Vagrant and Virtual box,
 you can build out the complete stack:
@@ -20,7 +20,7 @@ you can build out the complete stack:
 $ mkdir ~/kalastack
 $ cd ~/kalastack
 $ git clone git://github.com/kalamuna/kalastack.git ./
-  (or download and expand the latest 2.x tarball from https://github.com/kalamuna/kalastack/tags)
+  (or download and expand the latest 3.x tarball from https://github.com/kalamuna/kalastack/tags)
 $ vagrant plugin install vagrant-hostsupdater
 $ vagrant up
 ```
@@ -44,7 +44,7 @@ machine. This way you can use your local IDE to edit files on your server.
 
 Don't start the box in Virualbox, but instead, from within the kalastack codebase use the command line to spin up the stack:
 ```bash
-$ vagrant up --no-provision
+$ vagrant up
 ```
 and log in via:
 ```bash
@@ -56,31 +56,6 @@ $ vagrant halt
 ```
 
 ## Working with Pantheon
-
-### SITE ALIASES
-
-Download your aliases from within the Pantheon dashboard, then move and rename the alias file from ```pantheon.aliases.drushrc.php``` to ```aliases.drushrc.php``` and put it in ```~/kalabox/drush_aliases/```
-```bash
-$ mv pantheon.aliases.drushrc.php ~/kalabox/drush_aliases/aliases.drushrc.php
-```
-
-You can verify your aliases are functioning correctly by running the following from within your Kalastack:
-```bash
-$ drush sa
-```
-
-
-## SSH KEYS
-
-Kalastack will forward your host's SSH key into the box. This will let you connect to any Pantheon, github or other SSH services that you are currently connecting to on your host.
-If you don't currently have a SSH key set up on your host kalastack should generate one for you automatically.
-
-Once this is done you will want to make sure you add your public key to whatever service you are attempting to SSH into.
-You can view it for copy/paste by running the following on your host machine.
-
-```bash
-$ cat ~/.ssh/id_rsa.pub
-```
 
 ## DRUSH
 
