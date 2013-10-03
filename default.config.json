@@ -1,0 +1,40 @@
+{
+  "boxname": "kalabox",
+  "boxuser": "vagrant",
+  "version": "3.0-unstable",
+  "default_memory": "2048",
+  "memory_divisor": "4",
+  "box_location": {
+    "32": "http://files.kalamuna.com/kalabox32.box",
+    "64": "http://files.kalamuna.com/kalabox64.box"
+  },
+  "ip": "1.3.3.7",
+  "host_ip": "1.3.3.1",
+  "host_entries": [
+    "kala",
+    "start.kala",
+    "php.kala",
+    "grind.kala",
+    "solr.kala",
+    "aliases.kala",
+    "info.kala"
+  ],
+  "synced_www_folder": {
+    "host_path": "/kalabox/www/",
+    "guest_path": "/var/www/",
+    "nfs": "true",
+    "nfs_version": "3",
+    "create": "true"
+  },
+  "synced_alias_folder": {
+    "host_path": "/kalabox/drush_aliases/",
+    "guest_path": "/etc/drush/aliases/",
+    "nfs": "true",
+    "nfs_version": "3",
+    "create": "true"
+  },
+  "ssh_forwarding": "true",
+  "puppet_master": {
+    "server": "kalabox.kalamuna.com"
+  }
+}
