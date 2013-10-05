@@ -369,7 +369,7 @@ function kala_build() {
   if (isset($site['pantheon']) && $site['pantheon'] === TRUE) {
     // Get the code
     kala_code($site);
-    drush_log('Codebase: Q\'Plah!', 'success');
+    drush_log('Codebase: Qapla\'!', 'success');
 
     // Add some settings for kalabox
     _kala_reset_settings($site);
@@ -377,12 +377,12 @@ function kala_build() {
 
     // Get the data
     kala_data($site);
-    drush_log('Database: Q\'Plah!', 'success');
+    drush_log('Database: Qapla\'!', 'success');
 
     // Get the files but only run if option is set to do so
     if ($files) {
       kala_files($site);
-      drush_log('Files: Q\'Plah!', 'success');
+      drush_log('Files: Qapla\'!', 'success');
     }
   }
   // Spin up a new site
