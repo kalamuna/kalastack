@@ -17,12 +17,6 @@ class drush::config {
       require => [Class["drush::install"], Class["drush::upgrade"]],
     }
 
-    file { "/etc/drush/aliases":
-      ensure  => directory,
-      mode    => 777,
-      require => [Class["drush::install"], Class["drush::upgrade"]],
-    }
-
     file { "/usr/share/drush/commands/kala/kala.drush.inc":
       ensure  => file,
       mode    => 777,

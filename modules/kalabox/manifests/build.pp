@@ -11,10 +11,4 @@ class kalabox::build {
     require => Class["user::config"],
   }
 
-  file { "/etc/kalastack/aliases":
-    ensure  => directory,
-    mode    => 777,
-    require => File["/etc/kalastack"],
-  }
-
 }

@@ -38,8 +38,8 @@ $site_aliases = array(
 
 // Load aliases of built sites.
 $aliases = array();
-if (file_exists('/etc/kalastack/aliases/aliases.drushrc.php')) {
-  include '/etc/kalastack/aliases/aliases.drushrc.php';
+if (file_exists('/etc/drush/kalabox.aliases.drushrc.php')) {
+  include '/etc/drush/kalabox.aliases.drushrc.php';
 }
 $built_sites = $aliases;
 foreach ($built_sites as $name => $built_site) {
@@ -48,8 +48,8 @@ foreach ($built_sites as $name => $built_site) {
 
 // Load aliases of remote sites.
 $aliases = array();
-if (file_exists('/etc/drush/aliases/aliases.drushrc.php')) {
-  include '/etc/drush/aliases/aliases.drushrc.php';
+if (file_exists('/etc/drush/pantheon.aliases.drushrc.php')) {
+  include '/etc/drush/pantheon.aliases.drushrc.php';
 }
 $remote_sites = $aliases;
 

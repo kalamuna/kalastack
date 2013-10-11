@@ -26,13 +26,6 @@
     "nfs_version": "3",
     "create": "true"
   },
-  "synced_alias_folder": {
-    "host_path": "/kalabox/drush_aliases/",
-    "guest_path": "/etc/drush/aliases/",
-    "nfs": "true",
-    "nfs_version": "3",
-    "create": "true"
-  },
   "ssh_forwarding": "true",
   "puppet_master": {
     "server": "kalabox.kalamuna.com"
