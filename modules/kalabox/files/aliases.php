@@ -38,8 +38,8 @@ $site_aliases = array(
 
 // Load aliases of built sites.
 $aliases = array();
-if (file_exists('/etc/drush/kalabox.aliases.drushrc.php')) {
-  include '/etc/drush/kalabox.aliases.drushrc.php';
+if (file_exists('/etc/drush/kalastack.aliases.drushrc.php')) {
+  include '/etc/drush/kalastack.aliases.drushrc.php';
 }
 $built_sites = $aliases;
 foreach ($built_sites as $name => $built_site) {
