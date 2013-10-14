@@ -1,7 +1,7 @@
 {
   "boxname": "kalabox",
   "boxuser": "vagrant",
-  "version": "3.0-unstable",
+  "version": "3.0-beta1",
   "default_memory": "2048",
   "memory_divisor": "4",
   "box_location": {
