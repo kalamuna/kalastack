@@ -199,7 +199,7 @@ Vagrant.configure("2") do |config|
                 contents = open('http://foreman.kalamuna.com') {|io| io.read}
               rescue Exception => e
                 @ui.info "Error connecting to puppet master"
-                ENV['KALABOX_DEV'] = 'TRUE'
+                ENV['KALABOX_LOCAL'] = 'TRUE'
               end
 
             end
