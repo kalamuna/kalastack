@@ -100,7 +100,7 @@ Vagrant.configure("2") do |config|
   # information on available options.
 
   # Use the correct provisioner based on some environmental settings
-  if ENV['KALABOX_DEV']=='TRUE' then
+  if ENV['KALABOX_LOCAL']=='TRUE' then
    config.vm.provision :puppet do |p|
      p.manifests_path = "manifests"
      p.manifest_file  = "site.pp"
@@ -112,6 +112,19 @@ Vagrant.configure("2") do |config|
         "kalahost" => conf["host_ip"],
       "kalamem" => (hostmem / conf["memory_divisor"].to_i),
     }
+    end
+  elsif ENV['KALABOX_DEV']=='TRUE' then
+    config.vm.provision :puppet_server do |ps|
+      ps.puppet_node = File.read(".kalabox/uuid")
+      ps.puppet_server = conf["puppet_master"]["server"]
+      ps.options = "--verbose --debug --test --environment development"
+      ps.facter = {
+        "vagrant" => "1",
+        "kalauser" => conf["boxuser"],
+        "kalahost" => conf["host_ip"],
+        "kalaversion" => conf["version"],
+        "kalamem" => (hostmem / conf["memory_divisor"].to_i),
+      }
     end
   elsif ENV['KALABOX_SOLR']=='TRUE' then
     config.vm.provision :puppet do |p|
