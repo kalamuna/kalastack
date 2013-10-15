@@ -160,7 +160,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision :puppet_server do |ps|
       ps.puppet_node = File.read(".kalabox/uuid")
       ps.puppet_server = "kalabox.kalamuna.com"
-      ps.options = "--verbose --debug --test --environment 2.0"
+      ps.options = "--verbose --debug --test --environment two"
       ps.facter = {
         "vagrant" => "1",
         "kalauser" => "vagrant",
