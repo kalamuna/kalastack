@@ -2,6 +2,7 @@
   "boxname": "kalabox",
   "boxuser": "vagrant",
   "version": "3.0-beta1",
+  "environment": "threebetaone",
   "default_memory": "2048",
   "memory_divisor": "4",
   "box_location": {
