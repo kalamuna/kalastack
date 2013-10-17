@@ -6,9 +6,9 @@ are managed by Vagrant. Kalastack was built to run primarily on Ubuntu Server 12
 
 If you are interested in support for other architectures check out [Proviso](https://github.com/proviso/proviso)
 
-## Quickstart
+## Installation
 
-Kalastack 3 requires [Vagrant 1.3.3](http://downloads.vagrantup.com/tags/v1.3.3) and [VirtualBox 4.2.18](http://download.virtualbox.org/virtualbox/4.2.18/) to be run correctly. Before you begin please download both.
+Kalastack 3 requires [Vagrant 1.3.5](http://downloads.vagrantup.com/tags/v1.3.5) and [VirtualBox 4.2.18](http://download.virtualbox.org/virtualbox/4.2.18/) to be run correctly. Before you begin please download both.
 
 **System Requirements:**
 - Kalastack works on both 64 and 32 bit architectures and requires at least 2GB of ram.
@@ -33,6 +33,24 @@ To ssh into your server, from within ~/kalastack, issue:
 ```bash
 $ vagrant ssh
 ```
+
+## Upgrading from Kalastack 2
+
+Theoretically this should work but it hasn't been tested but here are the steps.
+
+1. Upgrade your VirtualBox and Vagrant to the correct versions.   [Vagrant 1.3.5](http://downloads.vagrantup.com/tags/v1.3.5) and [VirtualBox 4.2.18](http://download.virtualbox.org/virtualbox/4.2.18/)
+2. Checkout the latest version of 3.x aka
+
+```bash
+$ cd ~/kalastack
+$ git fetch --all #This will grab the new branch
+$ git checkout 3.x
+  (or download and expand the latest 3.x tarball from https://github.com/kalamuna/kalastack/tags)
+$ vagrant up --provison
+```
+
+Please contact us on whether this works or doesn't.
+
 ## Post Install Checks
 
 ### YOUR FILES
