@@ -109,7 +109,7 @@ Vagrant.configure("2") do |config|
      p.facter = {
       "vagrant" => "1",
       "kalauser" => conf["boxuser"],
-        "kalahost" => conf["host_ip"],
+      "kalahost" => conf["host_ip"],
       "kalamem" => (hostmem / conf["memory_divisor"].to_i),
     }
     end

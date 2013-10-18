@@ -18,7 +18,8 @@
     "grind.kala",
     "solr.kala",
     "aliases.kala",
-    "info.kala"
+    "info.kala",
+    "root.kala"
   ],
   "synced_www_folder": {
     "host_path": "/kalabox/www/",
