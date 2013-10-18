@@ -28,6 +28,9 @@ function convertAlias($name, $alias) {
   if (isset($alias['read-name'])) {
     $converted['name'] = $alias['read-name'];
   }
+  if (isset($alias['thumbnail'])) {
+    $converted['imgSrc'] = 'http://root.kala/.images/' . $alias['read-name'] . '.png';
+  }
   return $converted;
 }
 
