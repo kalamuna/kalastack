@@ -19,17 +19,4 @@ class mysql::server::config {
     notify => Class["mysql::server::service"],
   }
 
-  file { "/etc/kalastack/mysql":
-    ensure  => directory,
-    mode    => 777,
-    subscribe => File["/etc/kalastack"],
-  }
-
-  /*
-  user { "mysql":
-    groups => ['dialout'],
-    require => Class["mysql::server::install"],
-  }
-  */
-
 }

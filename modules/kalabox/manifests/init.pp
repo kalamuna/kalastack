@@ -4,6 +4,6 @@
 
 class kalabox {
 
-  include kalabox::build, kalabox::start, kalabox::info, kalabox::aliases, kalabox::root
+  include kalabox::build, kalabox::start, kalabox::info, kalabox::aliases, kalabox::images
 
 }

@@ -19,7 +19,7 @@
     "solr.kala",
     "aliases.kala",
     "info.kala",
-    "root.kala"
+    "images.kala"
   ],
   "synced_www_folder": {
     "host_path": "/kalabox/www/",
