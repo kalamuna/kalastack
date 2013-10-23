@@ -16,10 +16,4 @@ class kalabox::images {
     options     => {},
   }
 
-  file { "/etc/kalastack/images":
-    ensure  => directory,
-    mode    => 777,
-    require => Class["user::config"],
-  }
-
 }
