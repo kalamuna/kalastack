@@ -8,7 +8,7 @@ class kalabox::build {
   file { "/etc/kalastack":
     ensure  => directory,
     mode    => 777,
-    subscribe => File["/etc/kalastack"],
+    require => Class["user::config"],
   }
 
 }
