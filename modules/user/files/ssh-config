@@ -1,2 +1,3 @@
 Host *drush.in
-StrictHostKeyChecking no
+  StrictHostKeyChecking no
+  PreferredAuthentications publickey
