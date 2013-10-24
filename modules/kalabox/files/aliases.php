@@ -5,6 +5,9 @@
  * Print all our sites as JSON.
  */
 
+define('THUMBNAIL_LOCATION', '/etc/kalastack/images/');
+define('THUMBNAIL_BASE_URL', 'http://images.kala/');
+
 /**
  * Converts a raw alias to a JSON-friendly, trimmed down version.
  *
@@ -28,8 +31,8 @@ function convertAlias($name, $alias) {
   if (isset($alias['read-name'])) {
     $converted['name'] = $alias['read-name'];
   }
-  if (isset($alias['thumbnail'])) {
-    $converted['imgSrc'] = $alias['thumbnail'];
+  if (file_exists(THUMBNAIL_LOCATION . $alias['machine-name'] . '.png')) {
+    $converted['imgSrc'] = THUMBNAIL_BASE_URL . $alias['machine-name'] . '.png';
   }
   else {
     $converted['imgSrc'] = '/images/kalaboxv2-site.png';
