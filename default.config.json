@@ -1,8 +1,8 @@
 {
   "boxname": "kalabox",
   "boxuser": "vagrant",
-  "version": "testmatrix",
-  "environment": "development",
+  "version": "3.0-beta1",
+  "environment": "threebetatwo",
   "default_memory": "2048",
   "memory_divisor": "4",
   "box_location": {
