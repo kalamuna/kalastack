@@ -31,6 +31,9 @@ function convertAlias($name, $alias) {
   if (isset($alias['read-name'])) {
     $converted['name'] = $alias['read-name'];
   }
+  if (isset($alias['uuid'])) {
+    $converted['pantheonId'] = $alias['uuid'];
+  }
   if (file_exists(THUMBNAIL_LOCATION . $alias['machine-name'] . '.png')) {
     $converted['imgSrc'] = THUMBNAIL_BASE_URL . $alias['machine-name'] . '.png';
   }
