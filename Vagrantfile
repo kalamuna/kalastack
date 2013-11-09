@@ -111,6 +111,7 @@ Vagrant.configure("2") do |config|
       "kalauser" => conf["boxuser"],
       "kalahost" => conf["host_ip"],
       "kalamem" => (hostmem / conf["memory_divisor"].to_i),
+      "terminatur_version" => conf["terminatur_version"],
     }
     end
   elsif ENV['KALABOX_DEV']=='TRUE' then
@@ -122,8 +123,9 @@ Vagrant.configure("2") do |config|
         "vagrant" => "1",
         "kalauser" => conf["boxuser"],
         "kalahost" => conf["host_ip"],
-        "kalaversion" => conf["version"],
+        "kalaversion" => conf["kalastack_version"],
         "kalamem" => (hostmem / conf["memory_divisor"].to_i),
+        "terminatur_version" => conf["terminatur_version"],
       }
     end
   elsif ENV['KALABOX_SOLR']=='TRUE' then
@@ -137,19 +139,21 @@ Vagrant.configure("2") do |config|
         "kalauser" => conf["boxuser"],
         "kalahost" => conf["host_ip"],
         "kalamem" => (hostmem / conf["memory_divisor"].to_i),
+        "terminatur_version" => conf["terminatur_version"],
       }
     end
   else
     config.vm.provision :puppet_server do |ps|
       ps.puppet_node = File.read(".kalabox/uuid")
       ps.puppet_server = conf["puppet_master"]["server"]
-      ps.options = "--verbose --debug --test --environment " + conf["environment"]
+      ps.options = "--verbose --debug --test --environment " + conf["puppet_environment"]
       ps.facter = {
         "vagrant" => "1",
         "kalauser" => conf["boxuser"],
         "kalahost" => conf["host_ip"],
-        "kalaversion" => conf["version"],
+        "kalaversion" => conf["kalastack_version"],
         "kalamem" => (hostmem / conf["memory_divisor"].to_i),
+        "terminatur_version" => conf["terminatur_version"],
       }
     end
   end
