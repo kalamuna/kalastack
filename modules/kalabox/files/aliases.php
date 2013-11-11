@@ -60,8 +60,8 @@ foreach ($built_sites as $name => $built_site) {
 
 // Load aliases of remote sites.
 $aliases = array();
-if (file_exists('/etc/drush/pantheon.aliases.drushrc.php')) {
-  include '/etc/drush/pantheon.aliases.drushrc.php';
+if (file_exists('/etc/drush/terminatur.aliases.drushrc.php')) {
+  include '/etc/drush/terminatur.aliases.drushrc.php';
 }
 $remote_sites = $aliases;
 
