@@ -22,9 +22,11 @@ define('THUMBNAIL_BASE_URL', 'http://images.kala/');
 function convertAlias($name, $alias) {
   $converted = array(
     'aliasName' => $name,
-    'webRoot' => $alias['root'],
     'uri' => $alias['uri']
   );
+  if (isset($alias['root'])) {
+    $converted['webRoot'] = $alias['root'];
+  }
   if (isset($alias['built-from'])) {
     $converted['builtFrom'] = $alias['built-from'];
   }
