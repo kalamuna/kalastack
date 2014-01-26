@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
   elsif hostker == "Linux" then
     hostmem = Integer(%x[ grep MemTotal /proc/meminfo ].scan(/\d+/).shift) / 1024
   else
-    hostmem = conf["default_memory"]
+    hostmem = Integer(conf["default_memory"])
   end
 
   # Set a hard maximum on memsize
