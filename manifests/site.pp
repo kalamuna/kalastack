@@ -6,6 +6,12 @@
  */
 
 node /^kala\.[a-f0-9]{32}\.box$/  {
+
+  exec { 'apt-get update':
+    command => '/usr/bin/apt-get update',
+    require => Exec['add php54 apt-repo']
+  }
+
   # Initialize core packages
   include kalabox
   include apt

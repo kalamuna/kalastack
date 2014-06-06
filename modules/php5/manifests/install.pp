@@ -19,8 +19,13 @@ class php5::install {
     command => '/usr/bin/apt-get update',
   }
 
-  package { "php5-cli":
-    ensure => present,
+  $packages = [
+    "php5",
+    "php5-cli",
+  ]
+
+  package { $packages:
+    ensure => latest,
   }
 
 }
