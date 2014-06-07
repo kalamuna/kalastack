@@ -7,7 +7,7 @@ class drush::config {
   file { "/etc/drush":
     ensure  => directory,
     mode    => 777,
-    require => [Class["drush::install"], Class["drush::upgrade"]],
+    require => Class["drush::install"],
   }
 
   file { "/etc/drush/drushrc.php":
