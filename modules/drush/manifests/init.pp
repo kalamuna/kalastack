@@ -5,6 +5,6 @@
  */
 class drush {
 
-  include drush::composer, drush::install, drush::config, drush::terminatur, drush::refresh
+  include drush::install, drush::upgrade, drush::config, drush::composer, drush::terminatur, drush::refresh
 
 }
