@@ -42,9 +42,9 @@ listen = /tmp/php-fpm.sock
 ; BSD-derived systems allow connections regardless of permissions. 
 ; Default Values: user and group are set as the running user
 ;                 mode is set to 0666
-;listen.owner = <%= kalauser %>
-;listen.group = <%= kalauser %>
-;listen.mode = 0666
+listen.owner = <%= kalauser %>
+listen.group = <%= kalauser %>
+listen.mode = 0666
  
 ; List of ipv4 addresses of FastCGI clients which are allowed to connect.
 ; Equivalent to the FCGI_WEB_SERVER_ADDRS environment variable in the original
