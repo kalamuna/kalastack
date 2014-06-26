@@ -8,12 +8,12 @@ If you are interested in support for other architectures check out [Proviso](htt
 
 ## Installation
 
-Kalastack 3 requires at least [Vagrant 1.3.5](http://downloads.vagrantup.com/tags/v1.3.5) and [VirtualBox 4.2.18](http://download.virtualbox.org/virtualbox/4.2.18/) to be run correctly. Before you begin please download both.
+Kalastack 3 requires at least [Vagrant 1.3.5](http://downloads.vagrantup.com/tags/v1.3.5) and [VirtualBox 4.2.18](http://download.virtualbox.org/virtualbox/4.2.18/) to be run correctly. Before you begin please download both. If you are upgrading to Vagrant 1.5 you may need to go through the Vagrant update process.
 
 **System Requirements:**
 - Kalastack works on both 64 and 32 bit architectures and requires at least 2GB of ram.
 
-*Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.3.3 and VirtualBox 4.2.18. It has also been used on Ubuntu 12.04 both natively and using VirtualBox and Vagrant. You may have to play around with the VT Intel settings on your machine to get it to work. That all said it is not a recommended or supported environment at this time.
+*Notes:* At this time, Kalastack is actively tested on Mac OSX 10.9 and with Vagrant 1.6.3 and VirtualBox 4.3.12. It has also been used on Ubuntu 12.04 both natively and using VirtualBox and Vagrant. You may have to play around with the VT Intel settings on your machine to get it to work. That all said it is not a recommended or supported environment at this time.
 
 Once you have downloaded and installed both Vagrant and VirtualBox,
 you can build out the complete stack:
@@ -38,7 +38,7 @@ $ vagrant ssh
 
 Theoretically this should work but it hasn't been tested but here are the steps.
 
-1. Upgrade your VirtualBox and Vagrant to the correct versions.   [Vagrant 1.3.5](http://downloads.vagrantup.com/tags/v1.3.5) and [VirtualBox 4.2.18](http://download.virtualbox.org/virtualbox/4.2.18/)
+1. Upgrade your VirtualBox and Vagrant to at least the correct versions.   [Vagrant 1.3.5](http://downloads.vagrantup.com/tags/v1.3.5) and [VirtualBox 4.2.18](http://download.virtualbox.org/virtualbox/4.2.18/)
 2. Checkout the latest version of 3.x aka
 
 ```bash
@@ -121,4 +121,4 @@ easily add it in by following the instructions on the [Adding Solr wiki page](ht
 
 
 -------------------------------------------------------------------------------------
-(C) 2013 Kalamuna LLC
+(C) 2014 Kalamuna LLC

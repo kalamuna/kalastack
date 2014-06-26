@@ -100,21 +100,21 @@ Vagrant.configure("2") do |config|
   # information on available options.
 
   # Use the correct provisioner based on some environmental settings
-  if ENV['KALABOX_LOCAL']=='TRUE' then
-   config.vm.provision :puppet do |p|
-     p.manifests_path = "manifests"
-     p.manifest_file  = "site.pp"
-     p.module_path = "modules"
-     p.options = "--verbose --debug"
-     p.facter = {
-      "vagrant" => "1",
-      "kalauser" => conf["boxuser"],
-      "kalahost" => conf["host_ip"],
-      "kalamem" => (hostmem / conf["memory_divisor"].to_i),
-      "terminatur_version" => conf["terminatur_version"],
-    }
+  if ENV['KALABOX_LEGACY']=='TRUE' then
+    config.vm.provision :puppet_server do |ps|
+      ps.puppet_node = File.read(".kalabox/uuid")
+      ps.puppet_server = conf["puppet_master"]["server"]
+      ps.options = "--verbose --debug --test --environment " + conf["puppet_environment"]
+      ps.facter = {
+        "vagrant" => "1",
+        "kalauser" => conf["boxuser"],
+        "kalahost" => conf["host_ip"],
+        "kalaversion" => conf["kalastack_version"],
+        "kalamem" => (hostmem / conf["memory_divisor"].to_i),
+        "terminatur_version" => conf["terminatur_version"],
+      }
     end
-  elsif ENV['KALABOX_DEV']=='TRUE' then
+  elsif ENV['KALABOX_REMOTE']=='TRUE' then
     config.vm.provision :puppet_server do |ps|
       ps.puppet_node = File.read(".kalabox/uuid")
       ps.puppet_server = conf["puppet_master"]["server"]
@@ -143,18 +143,18 @@ Vagrant.configure("2") do |config|
       }
     end
   else
-    config.vm.provision :puppet_server do |ps|
-      ps.puppet_node = File.read(".kalabox/uuid")
-      ps.puppet_server = conf["puppet_master"]["server"]
-      ps.options = "--verbose --debug --test --environment " + conf["puppet_environment"]
-      ps.facter = {
-        "vagrant" => "1",
-        "kalauser" => conf["boxuser"],
-        "kalahost" => conf["host_ip"],
-        "kalaversion" => conf["kalastack_version"],
-        "kalamem" => (hostmem / conf["memory_divisor"].to_i),
-        "terminatur_version" => conf["terminatur_version"],
-      }
+    config.vm.provision :puppet do |p|
+     p.manifests_path = "manifests"
+     p.manifest_file  = "site.pp"
+     p.module_path = "modules"
+     p.options = "--verbose --debug"
+     p.facter = {
+      "vagrant" => "1",
+      "kalauser" => conf["boxuser"],
+      "kalahost" => conf["host_ip"],
+      "kalamem" => (hostmem / conf["memory_divisor"].to_i),
+      "terminatur_version" => conf["terminatur_version"],
+    }
     end
   end
 
@@ -203,7 +203,7 @@ Vagrant.configure("2") do |config|
                 contents = open('http://foreman.kalamuna.com') {|io| io.read}
               rescue Exception => e
                 @ui.info "Error connecting to puppet master"
-                ENV['KALABOX_LOCAL'] = 'TRUE'
+                delete('KALABOX_REMOTE')
               end
 
             end
@@ -247,9 +247,10 @@ Vagrant.configure("2") do |config|
         action_hook("RemoveUUID", :machine_action_destroy) do |hook|
           hook.append(Action::RemoveKUUID)
         end
-
-        action_hook("WakeMaster", :machine_action_up) do |hook|
-          hook.prepend(Action::WakeMaster)
+        if ENV['KALABOX_REMOTE']=='TRUE' then
+          action_hook("WakeMaster", :machine_action_up) do |hook|
+            hook.prepend(Action::WakeMaster)
+          end
         end
 
         action_hook("Kalassh", :machine_action_up) do |hook|
