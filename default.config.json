@@ -29,7 +29,7 @@
     "nfs_version": "3",
     "create": "true"
   },
-  "ssh_forwarding": "true",
+  "ssh_forwarding": "false",
   "puppet_master": {
     "server": "kalabox.kalamuna.com"
   }
