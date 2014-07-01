@@ -2,7 +2,7 @@
   "boxname": "kalabox",
   "boxuser": "vagrant",
   "kalastack_version": "3.0-beta4",
-  "terminatur_version": "1.0-alpha5",
+  "terminatur_version": "1.0-alpha7",
   "puppet_environment": "deprecated",
   "default_memory": "2048",
   "memory_divisor": "4",
