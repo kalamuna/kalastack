@@ -22,6 +22,7 @@ node /^kala\.[a-f0-9]{32}\.box$/  {
   include drush
   include phpmyadmin
   include webgrind
+  include vim
 
   # Build basic drupal site
   drupal::nginx::vhost { "drupaldefault":
