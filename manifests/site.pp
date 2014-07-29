@@ -10,6 +10,7 @@ node /^kala\.[a-f0-9]{32}\.box$/  {
   include kalabox
   include apt
   include git
+  include grub
   include unzip
   include user
 
