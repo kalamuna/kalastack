@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder Dir.home + conf["synced_www_folder"]["host_path"], conf["synced_www_folder"]["guest_path"], :create => conf["synced_www_folder"]["create"], :nfs => conf["synced_www_folder"]["nfs"], :nfs_version => conf["synced_www_folder"]["nfs_version"]
+  config.vm.synced_folder Dir.home + conf["synced_www_folder"]["host_path"], conf["synced_www_folder"]["guest_path"], :create => conf["synced_www_folder"]["create"], :nfs => conf["synced_www_folder"]["nfs"], :nfs_version => conf["synced_www_folder"]["nfs_version"], :mount_options => ['nolock']
 
   # Use for drush debugging. Be careful with this!!! It could bork your box.
   # config.vm.synced_folder "~/kalabox/drush/", "/usr/share/drush/", :create => true, :nfs => true
