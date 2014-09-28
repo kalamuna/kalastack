@@ -142,6 +142,20 @@ Vagrant.configure("2") do |config|
         "terminatur_version" => conf["terminatur_version"],
       }
     end
+  elsif ENV['KALABOX_FRONTEND']=='TRUE' then
+    config.vm.provision :puppet do |p|
+      p.manifests_path = "manifests"
+      p.manifest_file  = "frontend.pp"
+      p.module_path = "modules"
+      p.options = "--verbose --debug"
+      p.facter = {
+        "vagrant" => "1",
+        "kalauser" => conf["boxuser"],
+        "kalahost" => conf["host_ip"],
+        "kalamem" => (hostmem / conf["memory_divisor"].to_i),
+        "terminatur_version" => conf["terminatur_version"],
+      }
+    end
   else
     config.vm.provision :puppet do |p|
      p.manifests_path = "manifests"
