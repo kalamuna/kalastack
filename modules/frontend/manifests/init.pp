@@ -5,6 +5,6 @@
  */
 class frontend {
 
-  include frontend::prepare, frontend::install
+  include frontend::prepare, frontend::install, frontend::packages
 
 }
