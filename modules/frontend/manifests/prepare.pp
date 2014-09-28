@@ -1,6 +1,7 @@
 /**
  *
- * Sets our PPA things
+ * Sets our PPA things and also sets the node prefix so we dont have to
+ * sudo install our global pacakges
  *
  */
 class frontend::prepare {
