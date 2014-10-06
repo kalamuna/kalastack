@@ -119,6 +119,11 @@ Many browsers also offer automated tools/plugins to turn profiling on and off, i
 Currently, Kalastack doesn't come with Solr installed by default. You can, however,
 easily add it in by following the instructions on the [Adding Solr wiki page](https://github.com/kalamuna/kalastack/wiki/Adding-Solr-to-Kalastack).
 
+### FRONTEND TOOLING
+
+Currently, Kalastack doesn't come with front end tooling like `grunt`, `bower`, `sass`, `compass` and `yo` installed by default.
+You can, however, easily add it in by following the instructions on the [Adding front end tooling](https://github.com/kalamuna/kalastack/wiki/Adding-front-end-tooling).
+
 
 -------------------------------------------------------------------------------------
 (C) 2014 Kalamuna LLC
