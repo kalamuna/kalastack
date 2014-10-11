@@ -13,6 +13,8 @@ Kalastack requires [Vagrant 1.3.3](http://downloads.vagrantup.com/tags/v1.3.3) a
 
 *Notes:* At this time, Kalastack is actively tested on Mac OSX 10.8 and with Vagrant 1.3.3 and VirtualBox 4.2.18. It has also been used on Ubuntu 12.04 both natively and using VirtualBox and Vagrant. You may have to play around with the VT Intel settings on your machine to get it to work. That all said it is not a recommended or supported environment at this time.
 
+*More Notes: On Ubuntu 12.04 with a Kernel of 3.9.0-x or greater, you may have issues with the 4.2.18 VBnot working properly.  This is resolved by using the a version of 4.3.x.
+
 Once you have downloaded and installed both Vagrant and Virtual box,
 you can build out the complete stack:
 
