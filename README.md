@@ -81,9 +81,8 @@ $ vagrant halt
 
 Add your first custom website to the nginix server.  
 The following example was done on OS X 10.9
-<ol>
 
-<li> Add a new vhost entry to nginix
+1 Add a new vhost entry to nginix
 ```bash
 $ # ssh into the virtual host
 $ vagrant ssh
@@ -108,7 +107,7 @@ $ # restart nginx to put changes into effect
 $ sudo service nginx restart
 ```
  
-<li> add basic website content
+2 add basic website content
 ```bash
 $ cd /var/www
 $ mkdir myfirstsite
@@ -117,7 +116,7 @@ $ echo "<?php echo 'this is myfirstsite'"; > index.php
 ``` 
 exit ssh session
 
-<li> Update host computer's hosts file
+3 Update host computer's hosts file
 
 Remember that the Kalastack does not automatically update the /etc/hosts file on
 your host machine, so you'll need add each new site manually in order
@@ -130,10 +129,8 @@ $ sudo vi hosts
 add a line to resolve your new website
 1.3.3.7 myfirstsite.kala
 
-<li> Try it out
+4 Try it out
 In a browser, go to address http://myfirstsite.kala
-
-</ol>
 
 ## Working with Pantheon
 
