@@ -107,7 +107,7 @@ $ # restart nginx to put changes into effect
 $ sudo service nginx restart
 ```
  
-2 add basic website content
+2 Add basic website content
 ```bash
 $ cd /var/www
 $ mkdir myfirstsite
