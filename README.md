@@ -127,7 +127,7 @@ $ cd /etc
 $ sudo vi hosts
 ```
 add a line to resolve your new website
-1.3.3.7 myfirstsite.kala
+<br>1.3.3.7 myfirstsite.kala
 
 4 Try it out
 In a browser, go to address http://myfirstsite.kala
