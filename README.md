@@ -77,6 +77,45 @@ and spin down the box with:
 $ vagrant halt
 ```
 
+## Adding a website
+
+Add your first custom website to the nginix server.  
+The following example was done on OS X 10.9
+
+### Add a new vhost entry to nginix
+```bash
+$ # ssh into the virtual host
+$ vagrant ssh
+$ # go to the kalastack vhosts dir for nginx
+$ cd /etc/nginx
+$ # go to the sites-available
+$ cd sites-available
+$ # copy an existing site to our new site name
+$ sudo cp start myfirstsite
+```
+using your favorite editor, edit myfirstsite, and 
+find server_name - change start.kala to myfirstsite.kala
+find root - change /usr/share/kalabox to /var/www/myfirstsite
+(optional) find index - change index.php to index.html 
+save and quit
+
+add new site definition to site s available
+```bash
+$ cd /etc/nginx/sites-enabled
+$ ln -s /etc/nginx/sites-available/myfirstsite myfirstsite
+$ # restart nginx to put changes into effect
+$ sudo service nginx restart
+```
+ 
+make something to see
+```bash
+$ cd /var/www
+$ mkdir myfirstsite
+$ cd myfirstsite
+$ echo "<?php echo 'this is myfirstsite'"; > index.php 
+``` 
+exit ssh session
+
 ## Working with Pantheon
 
 Kalastack makes use of the [Terminatur](https://github.com/kalamuna/terminatur) which is built on top of the amazing [Terminus](https://github.com/pantheon-systems/terminus). Please
