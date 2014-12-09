@@ -133,6 +133,7 @@ add a line to resolve your new website
 <li> Try it out
 In a browser, go to address http://myfirstsite.kala
 
+</ol>
 
 ## Working with Pantheon
 
