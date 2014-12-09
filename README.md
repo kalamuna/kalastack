@@ -94,12 +94,12 @@ $ # copy an existing site to our new site name
 $ sudo cp start myfirstsite
 ```
 using your favorite editor, edit myfirstsite, and 
-find server_name - change start.kala to myfirstsite.kala
-find root - change /usr/share/kalabox to /var/www/myfirstsite
-(optional) find index - change index.php to index.html 
-save and quit
+<br>find server_name - change start.kala to myfirstsite.kala
+<br>find root - change /usr/share/kalabox to /var/www/myfirstsite
+<br>(optional) find index - change index.php to index.html 
+<br>save and quit
 
-add new site definition to site s available
+add new site definition to sites available
 ```bash
 $ cd /etc/nginx/sites-enabled
 $ ln -s /etc/nginx/sites-available/myfirstsite myfirstsite
@@ -107,7 +107,7 @@ $ # restart nginx to put changes into effect
 $ sudo service nginx restart
 ```
  
-make something to see
+### add basic website content
 ```bash
 $ cd /var/www
 $ mkdir myfirstsite
@@ -116,19 +116,28 @@ $ echo "<?php echo 'this is myfirstsite'"; > index.php
 ``` 
 exit ssh session
 
+### Update host computer's hosts file
+
+Remember that the Kalastack does not automatically update the /etc/hosts file on
+your host machine, so you'll need add each new site manually in order
+to visit http://myfirstsite.kala in your web browser! 
+<br>Kalastack does, however, manage the hosts file in your VM.
+```bash
+$ cd /etc
+$ sudo vi hosts
+```
+add a line to resolve your new website
+1.3.3.7 myfirstsite.kala
+
+### Try it out
+In a browser, go to address http://myfirstsite.kala
+
+
 ## Working with Pantheon
 
 Kalastack makes use of the [Terminatur](https://github.com/kalamuna/terminatur) which is built on top of the amazing [Terminus](https://github.com/pantheon-systems/terminus). Please
 consult the [Terminatur Documentation](https://github.com/kalamuna/terminatur) for a complete run down on how to use Kalastack with your Pantheon sites.
 
-### UPDATING YOUR HOST HOSTS FILE
-
-Remember that the Kalastack does not automatically update the /etc/hosts file on
-your host machine, so you'll need add each new site manually in order
-to visit http://SITENAME.kala in your web browser! Kalastack does, however, manage the hosts
-file in your VM.
-
-1.3.3.7    SITENAME.kala
 
 ## Xdebug
 
