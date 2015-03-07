@@ -1,7 +1,11 @@
 Kalastack 3!
 =========================
 
-**THIS PROJECT IS CURRENTLY APPROACHING END OF LIFE IN FAVOR OF [Kalabox2](https://github.com/kalabox/kalabox). IF YOU ARE A BRAVE AND DARING SOUL AND WANT TO HELP US TEST THE LATEST AND GREATEST HEAD OVER THAT WAY!**
+## Deprecated.
+
+Many components of this software have reached end of life and the project is no longer actively maintained
+
+Please check out the successor project [Kalabox2](https://github.com/kalabox/kalabox). This project is still under development but it very actively supported and should reach feature parity with Kalabox 1 shortly. 
 
 Kalastack is a basic LEMP stack built for Drupal. At its core it is a series of puppet manifests that
 are managed by Vagrant. Kalastack was built to run primarily on Ubuntu Server 12.04, though it will welcome multiple architectures in the future.
