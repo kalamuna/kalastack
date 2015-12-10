@@ -21,7 +21,7 @@ class frontend::prepare {
   exec { "keydir":
     unless  => "ls -a /home/$::kalauser | grep .gnupg",
     path    => "/bin:/usr/bin",
-    command => "mkdir /home/$::kalauser/.gnupg",
+    command => "sudo -u$::kalauser mkdir /home/$::kalauser/.gnupg",
   }
 
   exec { "rubykey":
