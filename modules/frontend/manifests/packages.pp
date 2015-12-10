@@ -7,8 +7,7 @@ class frontend::packages {
 
   exec { "nodepackages":
     path    => "/bin:/usr/bin",
-    unless  => "npm list -g --depth=0 | grep grunt-cli",
-    command => "npm install -g coffee-script bower grunt-cli gulp component yo",
+    command => "echo Node.js $(node --version) - npm $(npm --version)",
     require => Exec["preparepackages"],
   }
 
