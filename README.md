@@ -1,3 +1,14 @@
+TRY OUT LANDO CLI BETA (AKA KALASTACK 3.0)!
+-----------------------------------------
+
+IF YOU:
+
+* ARE A KALABOX CLI OR KALASTACK USER 
+* ARE HAVING ISSUES WITH KALABOX/VAGRANT/KALASTACK
+* WANT THE BEST LOCAL DEV IN THE GALAXY
+
+THEN WE **HIGHLY HIGHLY RECOMMEND** YOU CHECK OUT [LANDO](https://github.com/kalabox/lando)
+
 Kalastack 3!
 =========================
 
